@@ -18,5 +18,6 @@ int	main(void)
 	printf("%d\n", ft_printf("WTF%d WT%c2 %s\n", 1, 'F', "WTF3" ));
 	printf("%d", printf("WTF%d WT%c2 %s\n", 1, 'F', NULL));
 	//printf("%zu", ft_strlen("WTF1 2WTF2\n"));
+	123;456;
 	return (0);
 }
