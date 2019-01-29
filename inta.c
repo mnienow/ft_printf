@@ -12,35 +12,43 @@
 
 #include "ft_printf.h"
 
-char	*inta(va_list ap, char *str)
+void	inta(va_list ap, char **str)
 {
 	int		integer;
 	char	*tmp;
 	char	*tmp2;
 
 	integer = va_arg(ap,int);
-	tmp = str;
+	tmp = *str;
 	tmp2 = ft_itoa(integer);
-	str = ft_strjoin(str, tmp2);
+	*str = ft_strjoin(*str, tmp2);
 	free(tmp);
 	free(tmp2);
-	return (str);
 }
 
-char	*ch(va_list ap, char *str)
+size_t	ch(va_list ap, char **str)
 {
 	char	ch;
+	int		ret;
 
 	ch = (char)va_arg(ap, int);
-	str = add(str, ch);
-	return (str);
+	if (ch == 0)
+	{
+		write (1, *str, ft_strlen(*str));
+		write (1, "\0", 1);
+	}
+	ret = ft_strlen(*str);
+	ret = (ch == 0 ? ft_strlen(*str) + 1 : ft_strlen(*str));
+	*str = ft_strnew(0);
+	return (ret);
 }
 
-char	*ar(va_list ap, char *str)
+void	ar(va_list ap, char **str)
 {
 	char *ar;
 
-	ar = va_arg(ap, char*);
-	str = ft_strjoin(str, ar);
-	return (str);
+	if (!(ar = va_arg(ap, char*)))
+		*str = ft_strjoin(*str, "(null)");
+	else
+		*str = ft_strjoin(*str, ar);
 }

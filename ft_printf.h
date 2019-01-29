@@ -23,8 +23,8 @@
 int		ft_printf(const char *format, ...);
 size_t	count(int n);
 char	*add(char *a, char b);
-char	*inta(va_list ap, char *str);
-void	percent(const char *format, char **str, va_list ap);
-char	*ch(va_list ap, char *str);
-char	*ar(va_list ap, char *str);
+void	inta(va_list ap, char **str);
+size_t	percent(const char *format, char **str, va_list ap);
+size_t	ch(va_list ap, char **str);
+void	ar(va_list ap, char **str);
 #endif

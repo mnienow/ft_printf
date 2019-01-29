@@ -58,12 +58,13 @@ int		ft_printf(const char *format, ...)
 		{
 			/*str = (*format++ == 'd' ? inta(ap, str) : str);
 			str = (*format == 'c' ? ch(ap, str) : str);*/
-			percent(format++, &str, ap);
+			ret = ret + (int)percent(format++, &str, ap);
 		}
 	}
 	va_end(ap);
+	//printf("ret%d", ret);
+	//printf("rec%c", str[ret - 1]);
 	write (1, str, ft_strlen(str));
-	ret = ft_strlen(str);
 	free(str);
 	return (ret);
 }

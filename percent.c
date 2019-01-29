@@ -12,12 +12,17 @@
 
 #include "ft_printf.h"
 
-void	percent(const char *format, char **str, va_list ap)
+size_t	percent(const char *format, char **str, va_list ap)
 {
+	size_t	ret;
+
+	ret = 0;
 	if (*format	== 'd')
-		*str = inta(ap, *str);
+		inta(ap, str);
 	if (*format == 'c')
-		*str = ch(ap, *str);
+		ret = ret + ch(ap, str);
 	if (*format == 's')
-		*str = ar(ap, *str);
+		ar(ap, str);
+	
+	return (ret);
 }
