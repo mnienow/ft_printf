@@ -32,13 +32,13 @@ size_t	ch(va_list ap, char **str)
 	int		ret;
 
 	ch = (char)va_arg(ap, int);
+	ret = ft_strlen(*str);
 	if (ch == 0)
 	{
-		write (1, *str, ft_strlen(*str));
+		write (1, *str, ret);
+		ret = ret + 1;
 		write (1, "\0", 1);
 	}
-	ret = ft_strlen(*str);
-	ret = (ch == 0 ? ft_strlen(*str) + 1 : ft_strlen(*str));
 	*str = ft_strnew(0);
 	return (ret);
 }

@@ -12,11 +12,11 @@
 
 #include "ft_printf.h"
 
-char	*text(const	char **format, char **str)
+char	*text(const char **format, char **str)
 {
 	char	*tmp;
 	char	*tmp2;
-
+	
 	tmp = ft_strnew(0);
 	tmp = add(tmp, **format);
 	tmp2 = *str;
@@ -43,28 +43,26 @@ int		ft_printf(const char *format, ...)
 	int		ret;
 
 	str = ft_strnew(0);
+	ret = 0;
 	va_start(ap, format);
 	while (*format)
 	{
-		if (*format != '%')
-		{
+		if (*format != '%' && *format != '\0')
 			text(&format, &str);
-		}
-		/*if (*format == 32 || (*format >= 9 && *format <= 13))
-		{
-			str = space(format, str);
-		}*/
 		if (*format++ == '%')
 		{
 			/*str = (*format++ == 'd' ? inta(ap, str) : str);
 			str = (*format == 'c' ? ch(ap, str) : str);*/
+			while (*format == ' ')
+				format++;
+			if (*format == '%')
+				text(&format, &str);	
 			ret = ret + (int)percent(format++, &str, ap);
+																								//mb func(format, str, ap, ret);
 		}
 	}
 	va_end(ap);
-	//printf("ret%d", ret);
-	//printf("rec%c", str[ret - 1]);
 	write (1, str, ft_strlen(str));
 	free(str);
-	return (ret);
+	return (ret + ft_strlen(str));
 }
