@@ -21,6 +21,10 @@ int	main(void)
 	//printf("\n");
 	//printf("WTF1 WT\0\2 WTF3");
 	//printf("%zu", ft_strlen("WTF1 2WTF2\n"));
+<<<<<<< HEAD
 	//write (1, "WTF1 WT\02 WTF3", 13);
+=======
+	123;456;
+>>>>>>> d158afecda68ee954ed9b20e33e519184d014a23
 	return (0);
 }
