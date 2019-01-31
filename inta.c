@@ -16,20 +16,17 @@ void	inta(va_list ap, char **str)
 {
 	int		integer;
 	char	*tmp;
-	char	*tmp2;
 
 	integer = va_arg(ap,int);
-	tmp = *str;
-	tmp2 = ft_itoa(integer);
-	*str = ft_strjoin(*str, tmp2);
+	tmp = ft_itoa(integer);
+	*str = ft_strjoin(*str, tmp);
 	free(tmp);
-	free(tmp2);
 }
 
 size_t	ch(va_list ap, char **str)
 {
 	char	ch;
-	int		ret;
+	size_t	ret;
 
 	ch = (char)va_arg(ap, int);
 	ret = ft_strlen(*str);
@@ -51,4 +48,5 @@ void	ar(va_list ap, char **str)
 		*str = ft_strjoin(*str, "(null)");
 	else
 		*str = ft_strjoin(*str, ar);
+
 }

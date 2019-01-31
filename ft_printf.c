@@ -12,52 +12,59 @@
 
 #include "ft_printf.h"
 
-char	*text(const char **format, char **str)
+size_t	text(const char *format, char **str, size_t i)
 {
+	char	*ad;
 	char	*tmp;
-	char	*tmp2;
-	
-	tmp = ft_strnew(0);
-	tmp = add(tmp, **format);
-	tmp2 = *str;
-	*str = ft_strjoin(*str, tmp);
-	free(tmp);
-	free(tmp2);
-	return (*str);
-}
-/*
-char	*space(const char *format, char *str)
-{
-	char	*tmp;
+	size_t	size;
 
-	tmp = str;
-	str = ft_strjoin(str, add(ft_strdup(""), *format));
+	size = ft_strlen(format);
+	ad = ft_strnew(0);
+	while (format[i] != '%' && i < size)
+	{
+		tmp = ad;
+		ad = add(ad, format[i++]);
+		free(tmp);
+	}
+	tmp = *str;
+	*str = ft_strjoin(*str, ad);
 	free(tmp);
-	return (str);
-}*/
+	free(ad);
+	return (i);
+}
 
 int		ft_printf(const char *format, ...)
 {
 	va_list	ap;
 	char	*str;
-	int		ret;
+	size_t	ret;
+	size_t	i;
+	char	*tmp;
 
 	str = ft_strnew(0);
 	ret = 0;
+	i = 0;
 	va_start(ap, format);
-	while (*format)
+	while (format[i])
 	{
-		if (*format != '%' && *format != '\0')
-			text(&format, &str);
-		if (*format++ == '%')
+		if (format[i] != '%' && format[i])
+		{	
+			tmp = str;
+			i = text(format, &str, i);
+			free(tmp);
+		}
+		if (format[i++] == '%')
 		{
-			/*str = (*format++ == 'd' ? inta(ap, str) : str);
-			str = (*format == 'c' ? ch(ap, str) : str);*/
-			while (*format == ' ')
-				format++;
-			if (*format == '%')
-				text(&format, &str);	
-			ret = ret + (int)percent(format++, &str, ap);
+			//if (*format == '-')
+
+			//if (*format >= '0' &&)
+			while (format[i] == ' ')
+				i++;
+			if (format[i] == '%')
+				i = text(format, &str, i);
+			tmp = str;
+			ret = ret + percent(&format[i++], &str, ap);
+			free(tmp);
 																								//mb func(format, str, ap, ret);
 		}
 	}

@@ -28,6 +28,6 @@ size_t	percent(const char *format, char **str, va_list ap);
 size_t	ch(va_list ap, char **str);
 void	ar(va_list ap, char **str);
 void    pointer(va_list ap, char **str);
-char	*text(const char **format, char **str);
+size_t 	text(const char *format, char **str, size_t i);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: mnienow <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/25 14:23:03 by mnienow           #+#    #+#              #
-#    Updated: 2019/01/25 15:28:42 by mnienow          ###   ########.fr        #
+#    Updated: 2019/01/31 17:57:10 by mnienow          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ $(NAME):
 
 clean:
 	make -C ./libft clean
-	/bin/rm -f $(OUTPUT)
+	/bin/rm -f $(OUTPUT) rm -f ft_printf.h.gch
 
 fclean: clean
 	make -C ./libft fclean

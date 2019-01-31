@@ -44,6 +44,5 @@ char	*add(char *a, char b)
 	}
 	ret[i++] = b;
 	ret[i] = '\0';
-	free(a);
 	return (ret);
 }
