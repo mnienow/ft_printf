@@ -6,7 +6,7 @@
 /*   By: mnienow <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 13:27:42 by mnienow           #+#    #+#             */
-/*   Updated: 2019/01/27 18:48:11 by mnienow          ###   ########.fr       */
+/*   Updated: 2019/02/01 15:45:24 by sstannis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ size_t	ch(va_list ap, char **str);
 void	ar(va_list ap, char **str);
 void    pointer(va_list ap, char **str);
 size_t 	text(const char *format, char **str, size_t i);
+void	ft_hexadecimal(va_list ap, char **str);
 
 #endif

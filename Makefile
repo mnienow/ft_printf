@@ -6,13 +6,13 @@
 #    By: mnienow <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/25 14:23:03 by mnienow           #+#    #+#              #
-#    Updated: 2019/01/31 17:57:10 by mnienow          ###   ########.fr        #
+#    Updated: 2019/02/01 15:55:22 by sstannis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-SRCS = ft_printf.c add.c percent.c inta.c 
+SRCS = ft_printf.c add.c inta.c percent.c hexadecimal.c
 
 FLAGS = -Wall -Wextra -Werror
 

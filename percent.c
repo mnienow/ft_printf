@@ -25,7 +25,7 @@ size_t	percent(const char *format, char **str, va_list ap)
 		ret = ret + ch(ap, str);
 	if (*format == 's')
 		ar(ap, str);
-	//if (*format == 'p')
-		//pointer(ap, str);
+	if (*format == 'x')
+		ft_hexadecimal(ap, str);
 	return (ret);
 }

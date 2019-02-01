@@ -26,9 +26,7 @@ size_t	text(const char *format, char **str, size_t i)
 		ad = add(ad, format[i++]);
 		free(tmp);
 	}
-	tmp = *str;
 	*str = ft_strjoin(*str, ad);
-	free(tmp);
 	free(ad);
 	return (i);
 }
@@ -69,7 +67,8 @@ int		ft_printf(const char *format, ...)
 		}
 	}
 	va_end(ap);
+	ret = ret  + ft_strlen(str);
 	write (1, str, ft_strlen(str));
 	free(str);
-	return (ret + ft_strlen(str));
+	return (ret);
 }
