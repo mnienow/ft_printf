@@ -30,5 +30,6 @@ void	ar(va_list ap, char **str);
 void    pointer(va_list ap, char **str);
 size_t 	text(const char *format, char **str, size_t i);
 void	ft_hexadecimal(va_list ap, char **str);
+void	pointer(va_list ap, char **str);
 
 #endif

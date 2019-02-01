@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdio.h"
-#include <stdlib.h>
+#include "ft_printf.h"
 
 static unsigned long long	ftcount(long long int n)
 {
@@ -28,7 +27,7 @@ static unsigned long long	ftcount(long long int n)
 	return (i);
 }
 
-char	*ft_itoal(long long int nb)
+char	*ft_itoals(long long int nb)
 {
 	char	*str;
 	int		len;
@@ -66,8 +65,8 @@ void	pointer(va_list ap, char **str)
 	long long int	hex;
 	char		*string;
 
-	hex = (long long int)va_arg(*ap, void*);
-	string = ft_itoal(hex);
+	hex = (long long int)va_arg(ap, void*);
+	string = ft_itoals(hex);
 	*str = ft_strjoin(*str, string);
 	free(string);
 }

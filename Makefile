@@ -12,7 +12,7 @@
 
 NAME = libftprintf.a
 
-SRCS = ft_printf.c add.c inta.c percent.c hexadecimal.c
+SRCS = ft_printf.c add.c inta.c percent.c hexadecimal.c pointer.c
 
 FLAGS = -Wall -Wextra -Werror
 
