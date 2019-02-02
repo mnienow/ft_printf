@@ -21,7 +21,7 @@ OUTPUT = *.o
 all: $(NAME)
 
 $(NAME):
-	gcc $(FLAGS) ./libft/ft_itoa.c ./libft/ft_memalloc.c ./libft/ft_strdup.c ./libft/ft_strjoin.c ./libft/ft_strlen.c ./libft/ft_strnew.c ./libft/ft_strdel.c -c 
+	gcc $(FLAGS) ./libft/ft_itoa.c ./libft/ft_memalloc.c ./libft/ft_strdup.c ./libft/ft_strjoin.c ./libft/ft_strlen.c ./libft/ft_strnew.c ./libft/ft_strdel.c ./libft/ft_atoi.c -c 
 	gcc $(FLAGS) $(SRCS) -c -I ft_printf.h
 	ar rc $(NAME) $(OUTPUT)
 

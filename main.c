@@ -20,8 +20,8 @@ int	main(void)
 
 	//b = &a;
 	//ft_printf("WTF%d WT%c2 %s\n WTF%c4\n", 1, '\0', "3", '\0');
-	printf("%d\n", ft_printf("WTF%d WT%c2 %% %s\n WTF%c4\n", 1, '\0', "3", '\0'));
-	printf("%d\n",    printf("WTF%d WT%c2 %% %s\n WTF%c4\n", 1, '\0', "3", '\0'));
+	printf("%d\n", ft_printf("WTF%d WT%c2 %% %s\n WTF%c4\n", 1, '\0', NULL, '\0'));
+	printf("%d\n",    printf("WTF%d WT%c2 %% %s\n WTF%c4\n", 1, '\0', NULL, '\0'));
 	//ft_printf("WTF1 WT\0\2 WTF3");
 	//printf("\n");
 	//printf("WTF1 WT\0\2 WTF3");

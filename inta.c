@@ -30,6 +30,7 @@ size_t	ch(va_list ap, char **str)
 {
 	char	ch;
 	size_t	ret;
+	char	*tmp;
 
 	ch = (char)va_arg(ap, int);
 	ret = ft_strlen(*str);
@@ -38,9 +39,15 @@ size_t	ch(va_list ap, char **str)
 		write (1, *str, ret);
 		ret = ret + 1;
 		write (1, "\0", 1);
+		free(*str);
+		*str = ft_strnew(0);
 	}
-	free(*str);
-	*str = ft_strnew(0);
+	else
+	{
+		tmp = *str;
+		add(str, ch);
+		free(tmp);
+	}
 	return (ret);
 }
 
