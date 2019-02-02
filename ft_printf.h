@@ -6,7 +6,7 @@
 /*   By: mnienow <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 13:27:42 by mnienow           #+#    #+#             */
-/*   Updated: 2019/02/01 15:45:24 by sstannis         ###   ########.fr       */
+/*   Updated: 2019/02/02 18:53:52 by sstannis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@
 # include <stdarg.h>
 # include "ft_printf.h"
 # include "libft/includes/libft.h"
+
+typedef struct	s_flag
+{
+	char	h;
+	char	l;
+	char	hh;
+	char	ll;
+}		t_flag
 
 int		ft_printf(const char *format, ...);
 size_t	count(int n);
