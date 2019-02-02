@@ -1,3 +1,10 @@
+make re
+make clean
 gcc -o exe -std=c11 -Wall main.c ft_printf.c add.c inta.c percent.c pointer.c hexadecimal.c -L. -lftprintf
 gcc -o exe -std=c11 -Wall -ggdb3 main.c ft_printf.c add.c inta.c percent.c pointer.c hexadecimal.c -L. -lftprintf
-
+valgrind --leak-check=full \
+		--show-leak-kinds=all \
+		--track-origins=yes \
+		--verbose \
+		--log-file=valgrind-out.txt \
+		./exe

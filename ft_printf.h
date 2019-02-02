@@ -22,7 +22,7 @@
 
 int		ft_printf(const char *format, ...);
 size_t	count(int n);
-char	*add(char *a, char b);
+void	add(char **a, char b);
 void	inta(va_list ap, char **str);
 size_t	percent(const char *format, char **str, va_list ap);
 size_t	ch(va_list ap, char **str);
@@ -30,6 +30,5 @@ void	ar(va_list ap, char **str);
 void    pointer(va_list ap, char **str);
 size_t 	text(const char *format, char **str, size_t i);
 void	ft_hexadecimal(va_list ap, char **str);
-void	pointer(va_list ap, char **str);
 
 #endif

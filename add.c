@@ -30,7 +30,7 @@ size_t	count(int n)
 	return (i);
 }
 
-char	*add(char *a, char b)
+/*char	*add(char *a, char b)
 {
 	int		i;
 	char	*ret;
@@ -45,4 +45,19 @@ char	*add(char *a, char b)
 	ret[i++] = b;
 	ret[i] = '\0';
 	return (ret);
+}*/
+
+void	add(char **a, char b)
+{
+  char  *c;
+  char  *tmp;
+  
+  c = malloc(2);
+  c[0] = b;
+  c[1] = '\0';
+  tmp = *a;
+  *a = ft_strjoin(*a, c);
+  free(tmp);
+  free(c);
 }
+

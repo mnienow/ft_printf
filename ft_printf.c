@@ -15,18 +15,18 @@
 size_t	text(const char *format, char **str, size_t i)
 {
 	char	*ad;
-	char	*tmp;
 	size_t	size;
+	char	*tmp;
 
 	size = ft_strlen(format);
 	ad = ft_strnew(0);
+	if (format[i] == '%')
+		add(&ad, format[i]);
 	while (format[i] != '%' && i < size)
-	{
-		tmp = ad;
-		ad = add(ad, format[i++]);
-		free(tmp);
-	}
+		add(&ad, format[i++]);
+	tmp = *str;
 	*str = ft_strjoin(*str, ad);
+	free(tmp);
 	free(ad);
 	return (i);
 }
@@ -37,7 +37,6 @@ int		ft_printf(const char *format, ...)
 	char	*str;
 	size_t	ret;
 	size_t	i;
-	char	*tmp;
 
 	str = ft_strnew(0);
 	ret = 0;
@@ -47,22 +46,17 @@ int		ft_printf(const char *format, ...)
 	{
 		if (format[i] != '%' && format[i])
 		{	
-			tmp = str;
 			i = text(format, &str, i);
-			free(tmp);
 		}
 		if (format[i++] == '%')
 		{
-			//if (*format == '-')
-
-			//if (*format >= '0' &&)
 			while (format[i] == ' ')
 				i++;
 			if (format[i] == '%')
+			{
 				i = text(format, &str, i);
-			tmp = str;
+			}
 			ret = ret + percent(&format[i++], &str, ap);
-			free(tmp);
 																								//mb func(format, str, ap, ret);
 		}
 	}
