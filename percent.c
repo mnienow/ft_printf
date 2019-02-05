@@ -12,10 +12,13 @@
 
 #include "ft_printf.h"
 
-size_t	percent(const char *format, char **str, va_list ap)
+size_t	percent(const char *format, char **str, va_list ap, size_t *i)
 {
 	size_t	ret;
+	char	*ad;
 
+
+	ad = ft_strnew(0);
 	ret = 0;
 	if (*format == 'd')
 		inta(ap, str);
@@ -27,5 +30,7 @@ size_t	percent(const char *format, char **str, va_list ap)
 		ft_hexadecimal(ap, str);
 	if (*format == 'p')
 		pointer(ap, str);
+	if (i < 0)
+		i++;
 	return (ret);
 }

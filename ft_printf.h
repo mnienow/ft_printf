@@ -20,23 +20,30 @@
 # include "ft_printf.h"
 # include "libft/includes/libft.h"
 
-typedef struct	s_flag
+typedef enum    s_flags
 {
-	char	h;
-	char	l;
-	char	hh;
-	char	ll;
-}		t_flag;
+    h = 1,
+    l,
+    hh,
+    ll
+}    t_flags;
+
+typedef struct    s_mod
+{
+    enum s_flags flag;
+    int    hz;
+}        t_mod;
 
 int		ft_printf(const char *format, ...);
 size_t	count(int n);
 void	add(char **a, char b);
 void	inta(va_list ap, char **str);
-size_t	percent(const char *format, char **str, va_list ap);
+size_t	percent(const char *format, char **str, va_list ap, size_t *i);
 size_t	ch(va_list ap, char **str);
 void	ar(va_list ap, char **str);
 void    pointer(va_list ap, char **str);
 size_t 	text(const char *format, char **str, size_t i);
 void	ft_hexadecimal(va_list ap, char **str);
+char	*spaces(int i);
 
 #endif
