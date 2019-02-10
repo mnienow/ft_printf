@@ -30,23 +30,6 @@ size_t	count(int n)
 	return (i);
 }
 
-/*char	*add(char *a, char b)
-{
-	int		i;
-	char	*ret;
-
-	i = 0;
-	ret = (char*)malloc(ft_strlen(a) + 2);
-	while (a[i])
-	{
-		ret[i] = a[i];
-		i++;
-	}
-	ret[i++] = b;
-	ret[i] = '\0';
-	return (ret);
-}*/
-
 void	add(char **a, char b)
 {
   char  *c;
@@ -60,4 +43,3 @@ void	add(char **a, char b)
   free(tmp);
   free(c);
 }
-

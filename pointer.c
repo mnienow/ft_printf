@@ -63,11 +63,14 @@ char	*ft_itoals(long long int nb)
 void	pointer(va_list ap, char **str)
 {
 	long long int	hex;
-	char		*string;
+	char			*string;
+	char			*tmp;
 
 	hex = (long long int)va_arg(ap, void*);
 	string = ft_itoals(hex);
+	tmp = *str;
 	*str = ft_strjoin(*str, string);
+	free(tmp);
 	free(string);
 }
 

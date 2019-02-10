@@ -32,7 +32,7 @@ size_t	ch(va_list ap, char **str)
 	size_t	ret;
 	char	*tmp;
 
-	ch = (char)va_arg(ap, int);
+	ch = (char)va_arg(ap, unsigned int);
 	ret = ft_strlen(*str);
 	if (ch == 0)
 	{
@@ -53,20 +53,20 @@ size_t	ch(va_list ap, char **str)
 
 void	ar(va_list ap, char **str)
 {
-	char *ar;
+	char *arr;
 	char *tmp;
 
-	if (!(ar = va_arg(ap, char*)))
+	arr = va_arg(ap, char *);	
+	if (arr == NULL)
 	{
 		tmp = *str;
 		*str = ft_strjoin(*str, "(null)");
 		free(tmp);
 	}
-	else
+	else 
 	{
 		tmp = *str;
-		*str = ft_strjoin(*str, ar);
+		*str = ft_strjoin(*str, arr);
 		free(tmp);
 	}
-
 }
