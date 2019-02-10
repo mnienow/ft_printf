@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-char	*hex_width(char *str, t_mod *zeus)
+static char	*oct_width(char *str, t_mod *zeus)
 {
 	char	*str_spaces;
 	char	*tmp;
@@ -33,7 +33,7 @@ char	*hex_width(char *str, t_mod *zeus)
 	return (str);
 }
 
-char    *hex_precision(char *str, t_mod *zeus, int    i)
+static char    *oct_precision(char *str, t_mod *zeus, int    i)
 {
     char    *str_zero;
     char    *tmp;
@@ -56,12 +56,12 @@ char    *hex_precision(char *str, t_mod *zeus, int    i)
     return (str);
 }
 
-char    *hex_sharp(char *str)
+static char    *oct_sharp(char *str)
 {
     char    *str_sharp;
     char    *tmp;
 
-    str_sharp = "0x";
+    str_sharp = "0";
     tmp = str;
     str = ft_strjoin(str_sharp, str);
     free(tmp);
@@ -69,22 +69,22 @@ char    *hex_sharp(char *str)
 }
 
 //void	ft_hex(va_list ap, char **str, t_mod *zeus)
-void	ft_hex(char **str, t_mod *zeus, va_list ap)
+void	ft_oct(char **str, t_mod *zeus, va_list ap)
 {
 	long long int		hex;
 	char	*string;
 	
 	// printf("+%d+",zeus->zero);
 	hex = va_arg(ap, int);
-	string = ft_itoal(hex, 16, zeus);
+	string = ft_itoal(hex, 8, zeus);
 	if (zeus->precision)
-		string = hex_precision(string, zeus, 1);
+		string = oct_precision(string, zeus, 1);
 	if (zeus->sharp)
-		string = hex_sharp(string);
+		string = oct_sharp(string);
 	if (zeus->zero && !(zeus->precision) && zeus->min_width)
-		string = hex_precision(string, zeus, 0);
+		string = oct_precision(string, zeus, 0);
 	if (zeus->min_width > (int)ft_strlen(string))
-		string = hex_width(string, zeus);
+		string = oct_width(string, zeus);
 	*str = ft_strjoin(*str, string);
 	free(string);
 }

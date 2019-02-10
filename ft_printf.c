@@ -35,7 +35,9 @@ int		ft_printf(const char *format, ...)
 	size_t	ret;
 	char	*str;
 	size_t	size;
+	int		i;
 
+	i = 0;
 	ret = 0;
 	va_start(ap, format);
 	str = parser1(ap, format, &ret);

@@ -30,7 +30,7 @@ size_t	ch(va_list ap, char **str)
 {
 	char	ch;
 	size_t	ret;
-	char	*tmp;
+	// char	*tmp;
 
 	ch = (char)va_arg(ap, unsigned int);
 	ret = ft_strlen(*str);
@@ -43,11 +43,7 @@ size_t	ch(va_list ap, char **str)
 		*str = ft_strnew(0);
 	}
 	else
-	{
-		tmp = *str;
 		add(str, ch);
-		free(tmp);
-	}
 	return (ret);
 }
 

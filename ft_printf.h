@@ -21,7 +21,7 @@
 # include "libft/includes/libft.h"
 # define ABS(number) ((number) > 0 ? (number):-(number))
 
-typedef enum	s_flags
+typedef	enum	s_flags
 {
     hy,
 	h,
@@ -34,6 +34,7 @@ typedef enum	s_flags
 typedef struct	s_mod
 {
 	enum	s_flags flag;
+	int		alpha;
 	int		minus;
 	int		plus;
 	int		sharp;
@@ -55,10 +56,11 @@ size_t 	text(const char *format, char **str, size_t i);
 char	*spaces(int i);
 char    *parser1(va_list ap, const char *format, size_t *ret);
 size_t	number(const char *format, char **str, size_t i, t_mod *zeus);
-char	*ft_itoal(long long int nb, int base);
+char	*ft_itoal(long long int nb, int base, t_mod *zeus);
 void	ft_hex(char **str, t_mod *zeus, va_list ap);
 char	*hex_precision(char *str, t_mod *zeus, int	i);
 char	*hex_width(char *str, t_mod *zeus);
 char	*hex_sharp(char *str);
+void	ft_oct(char **str, t_mod *zeus, va_list ap);
 
 #endif

@@ -27,7 +27,7 @@ static int	ftcount(int n, int base)
 	return (i);
 }
 
-char	*ft_itoal(long long int nb, int base)
+char	*ft_itoal(long long int nb, int base, t_mod *zeus)
 {
 	char	*str;
 	int		len;
@@ -39,18 +39,13 @@ char	*ft_itoal(long long int nb, int base)
 	while (len > 0)
 	{
 		num = nb % base;
-		if (num == 10)
-			str[len - 1] = 'a';
-		else if (num == 11)
-			str[len - 1] = 'b';
-		else if (num == 12)
-			str[len - 1] = 'c';
-		else if (num == 13)
-			str[len - 1] = 'd';
-		else if (num == 14)
-			str[len - 1] = 'e';
-		else if (num == 15)
-			str[len - 1] = 'f';
+		if (num >= 10 && num <= 15)
+		{
+			if (zeus->alpha)
+				str[len - 1] = num + 55;
+			else
+				str[len - 1] = num + 87;
+		}
 		else str[len - 1] = num + 48;
 		nb = nb / base;
 		len--;
