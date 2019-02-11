@@ -18,6 +18,8 @@ size_t	ft_ch(va_list ap, char **str)
 	size_t	ret;
 
 	ch = (char)va_arg(ap, unsigned int);
+    // *str = (ch == 0 ? : add(str, ch));
+    // ret = (ch == 0 ? (ret + 1) : ret);
 	ret = ft_strlen(*str);
 	if (ch == 0)
 	{
