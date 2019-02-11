@@ -47,8 +47,6 @@ char    *hex_precision(char *str, t_mod *zeus, int    i)
     str_zero[count] = '\0';
     while (--count >= 0)
         str_zero[count] = '0';
-    // if (zeus->sharp)
-    //     str_zero[1] = 'x';
     tmp = str;
     str = ft_strjoin(str_zero, str);
     free(tmp);
@@ -56,35 +54,38 @@ char    *hex_precision(char *str, t_mod *zeus, int    i)
     return (str);
 }
 
-char    *hex_sharp(char *str)
+char    *hex_sharp(char *str, t_mod *zeus)
 {
     char    *str_sharp;
     char    *tmp;
 
-    str_sharp = "0x";
+    str_sharp = (zeus->alpha == 0 ? "0x" : "0X");
     tmp = str;
     str = ft_strjoin(str_sharp, str);
     free(tmp);
     return (str);
 }
 
-//void	ft_hex(va_list ap, char **str, t_mod *zeus)
 void	ft_hex(char **str, t_mod *zeus, va_list ap)
 {
-	long long int		hex;
-	char	*string;
+	long long int	hex;
+	char			*string;
+	char			*tmp;
 	
-	// printf("+%d+",zeus->zero);
 	hex = va_arg(ap, int);
+	if (hex < 0)
+		hex = 4294967295 + 1 + hex;
 	string = ft_itoal(hex, 16, zeus);
 	if (zeus->precision)
 		string = hex_precision(string, zeus, 1);
 	if (zeus->sharp)
-		string = hex_sharp(string);
+		string = hex_sharp(string, zeus);
 	if (zeus->zero && !(zeus->precision) && zeus->min_width)
 		string = hex_precision(string, zeus, 0);
 	if (zeus->min_width > (int)ft_strlen(string))
 		string = hex_width(string, zeus);
+	tmp = *str;
 	*str = ft_strjoin(*str, string);
+	free(tmp);
 	free(string);
 }

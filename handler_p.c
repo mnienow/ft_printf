@@ -11,10 +11,9 @@
 /* ************************************************************************** */
 
 
-#include "header.h"
-#include "libft/includes/libft.h"
+#include "ft_printf.h"
 
-static char	*hex_width(char *str, t_mod *zeus)
+static char	*pnt_width(char *str, t_mod *zeus)
 {
 	char	*str_spaces;
 	char	*tmp;
@@ -35,7 +34,7 @@ static char	*hex_width(char *str, t_mod *zeus)
 	return (str);
 }
 
-static char	*hex_precision(char *str, t_mod *zeus, int	i)
+static char	*pnt_precision(char *str, t_mod *zeus, int	i)
 {
 	char	*str_zero;
 	char	*tmp;
@@ -58,12 +57,11 @@ static char	*hex_precision(char *str, t_mod *zeus, int	i)
 	return (str);
 }
 
-static char	*hex_sharp(char *str, t_mod *zeus)
+static char	*pnt_sharp(char *str)
 {
 	char	*str_sharp;
 	char	*tmp;
 
-    printf("%s\n", str);
 	str_sharp = "0x";
 	tmp = str;
 	str = ft_strjoin(str_sharp, str);
@@ -71,24 +69,24 @@ static char	*hex_sharp(char *str, t_mod *zeus)
 	return (str);
 }
 
-//void	ft_hex(va_list ap, char **str, t_mod *zeus)
-void	ft_pnt(char **str, t_mod *zeus, void *point)
+void	ft_pnt(char **str, t_mod *zeus, va_list ap)
 {
-	unsigned long int		hex;
-	char	*string;
+	unsigned long int	hex;
+	char				*string;
+	char				*tmp;
 
-	hex = (unsigned long int)point;
-	//hex = va_arg(ap, int);
-	printf("(%lu)\n", hex);
+	hex = va_arg(ap, unsigned long long);
 	string = ft_itoal(hex, 16, zeus);
 	if (zeus->precision)
-		string = hex_precision(string, zeus, 1);
+		string = pnt_precision(string, zeus, 1);
 	if (1)
-		string = hex_sharp(string, zeus);
+		string = pnt_sharp(string);
 	if (zeus->zero && !(zeus->precision) && zeus->min_width)
-		string = hex_precision(string, zeus, 0);
-	if (zeus->min_width > ft_strlen(string))
-		string = hex_width(string, zeus);
+		string = pnt_precision(string, zeus, 0);
+	if (zeus->min_width > (int)ft_strlen(string))
+		string = pnt_width(string, zeus);
+	tmp = *str;
 	*str = ft_strjoin(*str, string);
+	free(tmp);
 	free(string);
 }

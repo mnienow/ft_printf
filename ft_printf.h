@@ -20,7 +20,6 @@
 # include "ft_printf.h"
 # include "libft/includes/libft.h"
 # define ABS(number) ((number) > 0 ? (number):-(number))
-
 typedef	enum	s_flags
 {
     hy,
@@ -47,20 +46,19 @@ typedef struct	s_mod
 int		ft_printf(const char *format, ...);
 size_t	count(int n);
 void	add(char **a, char b);
-void	inta(va_list ap, char **str);
+
 size_t	parser2(char format, char **str, va_list ap, t_mod *zeus);
-size_t	ch(va_list ap, char **str);
-void	ar(va_list ap, char **str);
-void    pointer(va_list ap, char **str);
 size_t 	text(const char *format, char **str, size_t i);
+size_t	number(const char *format, char **str, size_t i, t_mod *zeus);
 char	*spaces(int i);
 char    *parser1(va_list ap, const char *format, size_t *ret);
-size_t	number(const char *format, char **str, size_t i, t_mod *zeus);
 char	*ft_itoal(long long int nb, int base, t_mod *zeus);
+size_t	ft_ch(va_list ap, char **str);
+void	ft_int(char **str, t_mod *zeus, va_list ap);
+void	ft_ar(char **str, t_mod *zeus, va_list ap);
 void	ft_hex(char **str, t_mod *zeus, va_list ap);
-char	*hex_precision(char *str, t_mod *zeus, int	i);
-char	*hex_width(char *str, t_mod *zeus);
-char	*hex_sharp(char *str);
 void	ft_oct(char **str, t_mod *zeus, va_list ap);
+void	ft_udc(char **str, t_mod *zeus, va_list ap);
+void	ft_pnt(char **str, t_mod *zeus, va_list ap);
 
 #endif

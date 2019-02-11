@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static int	ftcount(int n, int base)
+static int	ftcount(long long int n, int base)
 {
 	int i;
 	

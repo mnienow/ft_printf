@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handler_o.c                                        :+:      :+:    :+:   */
+/*   handler_i.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sstannis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mnienow <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/05 16:38:04 by sstannis          #+#    #+#             */
-/*   Updated: 2019/02/05 16:38:06 by sstannis         ###   ########.fr       */
+/*   Created: 2019/01/25 20:21:42 by mnienow           #+#    #+#             */
+/*   Updated: 2019/01/27 18:47:22 by mnienow          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char	*udc_width(char *str, t_mod *zeus)
+static char	*int_width(char *str, t_mod *zeus)
 {
 	char	*str_spaces;
 	char	*tmp;
@@ -33,7 +33,7 @@ static char	*udc_width(char *str, t_mod *zeus)
 	return (str);
 }
 
-static char	*udc_precision(char *str, t_mod *zeus, int	i)
+static char	*int_precision(char *str, t_mod *zeus, int	i)
 {
 	char	*str_zero;
 	char	*tmp;
@@ -53,37 +53,22 @@ static char	*udc_precision(char *str, t_mod *zeus, int	i)
 	free(str_zero);
 	return (str);
 }
-
-static char	*udc_sharp(char *str)
+void	ft_int(char **str, t_mod *zeus, va_list ap)
 {
-	char	*str_sharp;
+	int		integer;
+	char	*string;
 	char	*tmp;
 
-	str_sharp = "0x";
-	tmp = str;
-	str = ft_strjoin(str_sharp, str);
-	free(tmp);
-	return (str);
-}
-
-void	ft_udc(char **str, t_mod *zeus, va_list ap)
-{
-	unsigned int	hex;
-	char			*string;
-	char			*tmp;
-	
-	hex = va_arg(ap, int);
-	string = ft_itoal(hex, 10, zeus);
+	integer = va_arg(ap,int);
+	string = ft_itoa(integer);
 	if (zeus->precision)
-		string = udc_precision(string, zeus, 1);
-	if (zeus->sharp)
-		string = udc_sharp(string);
+		string = int_precision(string, zeus, 1);
 	if (zeus->zero && !(zeus->precision) && zeus->min_width)
-		string = udc_precision(string, zeus, 0);
+		string = int_precision(string, zeus, 0);
 	if (zeus->min_width > (int)ft_strlen(string))
-		string = udc_width(string, zeus);
+		string = int_width(string, zeus);
 	tmp = *str;
 	*str = ft_strjoin(*str, string);
-	free(tmp);
 	free(string);
+	free(tmp);
 }

@@ -47,8 +47,6 @@ static char    *oct_precision(char *str, t_mod *zeus, int    i)
     str_zero[count] = '\0';
     while (--count >= 0)
         str_zero[count] = '0';
-    // if (zeus->sharp)
-    //     str_zero[1] = 'x';
     tmp = str;
     str = ft_strjoin(str_zero, str);
     free(tmp);
@@ -68,13 +66,12 @@ static char    *oct_sharp(char *str)
     return (str);
 }
 
-//void	ft_hex(va_list ap, char **str, t_mod *zeus)
 void	ft_oct(char **str, t_mod *zeus, va_list ap)
 {
-	long long int		hex;
-	char	*string;
-	
-	// printf("+%d+",zeus->zero);
+	long long int	hex;
+	char			*string;
+	char			*tmp;
+
 	hex = va_arg(ap, int);
 	string = ft_itoal(hex, 8, zeus);
 	if (zeus->precision)
@@ -85,6 +82,8 @@ void	ft_oct(char **str, t_mod *zeus, va_list ap)
 		string = oct_precision(string, zeus, 0);
 	if (zeus->min_width > (int)ft_strlen(string))
 		string = oct_width(string, zeus);
+	tmp = *str;
 	*str = ft_strjoin(*str, string);
+	free(tmp);
 	free(string);
 }

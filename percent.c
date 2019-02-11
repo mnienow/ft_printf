@@ -82,20 +82,22 @@ size_t	parser2(char format, char **str, va_list ap, t_mod *zeus)
 
 	ret = 0;
 	if (format == 'd')
-		inta(ap, str);
+		ft_int(str, zeus, ap);
     if (format == 'c')
-		ret = ret + ch(ap, str);
+		ret = ret + ft_ch(ap, str);
 	if (format == 's')
-		ar(ap, str);
+		ft_ar(str, zeus, ap);
 	if (format == 'x' || format == 'X')
 	{
 		zeus->alpha = (format == 'x' ? 0 : 1);
 		ft_hex(str, zeus, ap);
 	}
 	if (format == 'p')
-		pointer(ap, str);
+		ft_pnt(str, zeus, ap);
 	if (format == 'o')
 		ft_oct(str, zeus, ap);
+	if (format == 'u')
+		ft_udc(str, zeus, ap);
 	return (ret);
 }
 
