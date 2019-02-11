@@ -22,7 +22,7 @@ all: $(NAME)
 
 $(NAME):
 	gcc $(FLAGS) ./libft/ft_itoa.c ./libft/ft_memalloc.c ./libft/ft_strdup.c ./libft/ft_strjoin.c ./libft/ft_strlen.c ./libft/ft_strnew.c ./libft/ft_strdel.c ./libft/ft_atoi.c ./libft/ft_strcpy.c -c 
-	gcc $(FLAGS) $(SRCS) -c -I ft_printf.h
+	gcc $(FLAGS) $(SRCS) -c -I ./
 	ar rc $(NAME) $(OUTPUT)
 
 clean:

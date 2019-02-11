@@ -23,6 +23,7 @@ void    new_zeus(t_mod    *zeus)
     zeus->zero = 0;
     zeus->min_width = 0;
     zeus->precision = 0;
+	zeus->len = zeus->len + 0;
 }
 
 char	*spaces(int i)
@@ -76,15 +77,12 @@ size_t	number(const char *format, char **str, size_t i, t_mod *zeus)
 	return (i);
 }
 
-size_t	parser2(char format, char **str, va_list ap, t_mod *zeus)
+void	parser2(char format, char **str, va_list ap, t_mod *zeus)
 {
-	size_t	ret;
-
-	ret = 0;
 	if (format == 'd')
 		ft_int(str, zeus, ap);
     if (format == 'c')
-		ret = ret + ft_ch(ap, str);
+		ft_ch(str, zeus, ap);
 	if (format == 's')
 		ft_ar(str, zeus, ap);
 	if (format == 'x' || format == 'X')
@@ -98,7 +96,6 @@ size_t	parser2(char format, char **str, va_list ap, t_mod *zeus)
 		ft_oct(str, zeus, ap);
 	if (format == 'u')
 		ft_udc(str, zeus, ap);
-	return (ret);
 }
 
 char    *parser1(va_list ap, const char *format, size_t *ret)
@@ -129,8 +126,9 @@ char    *parser1(va_list ap, const char *format, size_t *ret)
                 if (format[i] == '%')
                     add(&str, format[i]);
             }
-            *ret = *ret + parser2(format[i++], &str, ap, &zeus);
+        	parser2(format[i++], &str, ap, &zeus);
         }
     }
+	*ret = zeus.len;
     return (str);
 }

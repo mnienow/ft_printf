@@ -15,6 +15,10 @@
 
 int	main(void)
 {
+	// ft_printf("WTF%d WT%c 2 %s\n WTF4%c\n", 1, '\0', "NULL", 'a');
+	printf("(%d)\n", ft_printf("WTF%d WT%c 2 %s\n WTF4%c\n", 1, '\0', "NULL", 'a'));
+	printf("\n");
+	printf("(%d)\n",    printf("WTF%d WT%c 2 %s\n WTF4%c\n", 1, '\0', "NULL", 'a'));
 	// printf("%d\n", ft_printf("WTF%d WT%c 2 %5% %s\n WTF4%c\n", 1, '\0', NULL, 'a'));
 	// printf("\n");
 	// printf("%d\n",    printf("WTF%d WT%c 2 %5% %s\n WTF4%c\n", 1, '\0', NULL, 'a'));
@@ -30,12 +34,9 @@ int	main(void)
 	// printf("%d",    printf("%x\n %x\n", 42, -42));
 	// printf("\n");
 	// printf("%d", ft_printf("%x\n %x\n", 42, -42))
-	int a;
-	int *b;
-	b = &a;
-	printf("%d",    printf("%s\n", "oO WTf"));
-	printf("\n");
-	printf("%d", ft_printf("%s\n", "oO WTf"));
+	// printf("%d",    printf("%s\n", "oO WTf"));
+	// printf("\n");
+	// printf("%d", ft_printf("%s\n", "oO WTf"));
 	return (0);
 }
 //" 2 12345% (null)\n WTF4a\n"

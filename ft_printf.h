@@ -41,19 +41,20 @@ typedef struct	s_mod
 	int		zero;
 	int		min_width;
 	int		precision;
+	size_t	len;
 }		t_mod;
 
 int		ft_printf(const char *format, ...);
 size_t	count(int n);
 void	add(char **a, char b);
 
-size_t	parser2(char format, char **str, va_list ap, t_mod *zeus);
+void	parser2(char format, char **str, va_list ap, t_mod *zeus);
 size_t 	text(const char *format, char **str, size_t i);
 size_t	number(const char *format, char **str, size_t i, t_mod *zeus);
 char	*spaces(int i);
 char    *parser1(va_list ap, const char *format, size_t *ret);
 char	*ft_itoal(long long int nb, int base, t_mod *zeus);
-size_t	ft_ch(va_list ap, char **str);
+void	ft_ch(char **str, t_mod *zeus, va_list ap);
 void	ft_int(char **str, t_mod *zeus, va_list ap);
 void	ft_ar(char **str, t_mod *zeus, va_list ap);
 void	ft_hex(char **str, t_mod *zeus, va_list ap);
