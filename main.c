@@ -39,4 +39,3 @@ int	main(void)
 	// printf("%d", ft_printf("%s\n", "oO WTf"));
 	return (0);
 }
-//" 2 12345% (null)\n WTF4a\n"

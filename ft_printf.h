@@ -46,10 +46,10 @@ typedef struct	s_mod
 
 int		ft_printf(const char *format, ...);
 size_t	count(int n);
-void	add(char **a, char b);
+void	add(char **a, char b, size_t sz);
 
 void	parser2(char format, char **str, va_list ap, t_mod *zeus);
-size_t 	text(const char *format, char **str, size_t i);
+size_t 	text(const char *format, char **str, size_t i, t_mod *zeus);
 size_t	number(const char *format, char **str, size_t i, t_mod *zeus);
 char	*spaces(int i);
 char    *parser1(va_list ap, const char *format, size_t *ret);
@@ -61,5 +61,6 @@ void	ft_hex(char **str, t_mod *zeus, va_list ap);
 void	ft_oct(char **str, t_mod *zeus, va_list ap);
 void	ft_udc(char **str, t_mod *zeus, va_list ap);
 void	ft_pnt(char **str, t_mod *zeus, va_list ap);
+char	*strnnjoin(char const *s1, char const *s2, size_t sz1, size_t sz2);
 
 #endif

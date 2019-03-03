@@ -59,6 +59,7 @@ void	ft_ar(char **str, t_mod *zeus, va_list ap)
 	char *tmp;
 
 	arr = va_arg(ap, char *);
+	arr = (arr == NULL ? ft_strdup("(null)") : arr);
 	if (zeus->precision)
 		arr = ar_precision(arr, zeus, 1);
 	if (zeus->zero && !(zeus->precision) && zeus->min_width)
@@ -66,6 +67,7 @@ void	ft_ar(char **str, t_mod *zeus, va_list ap)
 	if (zeus->min_width > (int)ft_strlen(arr))
 		arr = ar_width(arr, zeus);
 	tmp = *str;
-	*str = (arr == NULL ? ft_strjoin(*str, "(null)") : ft_strjoin(*str, arr));
+	*str = strnnjoin(*str, arr, zeus->len, 0);
+	zeus->len += ft_strlen(arr);
 	free(tmp);
 }

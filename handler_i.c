@@ -68,7 +68,8 @@ void	ft_int(char **str, t_mod *zeus, va_list ap)
 	if (zeus->min_width > (int)ft_strlen(string))
 		string = int_width(string, zeus);
 	tmp = *str;
-	*str = ft_strjoin(*str, string);
+	*str = strnnjoin(*str, string, zeus->len, 0);
+	zeus->len += ft_strlen(string);
 	free(string);
 	free(tmp);
 }
