@@ -12,24 +12,24 @@
 
 #include "ft_printf.h"
 
-void    new_zeus(t_mod    *zeus)
+void	new_zeus(t_mod *zeus)
 {
-    zeus->flag = 0;
+	zeus->flag = 0;
 	zeus->alpha = 0;
-    zeus->minus = 0;
-    zeus->plus = 0;
-    zeus->sharp = 0;
-    zeus->space = 0;
-    zeus->zero = 0;
-    zeus->min_width = 0;
-    zeus->precision = 0;
+	zeus->minus = 0;
+	zeus->plus = 0;
+	zeus->sharp = 0;
+	zeus->space = 0;
+	zeus->zero = 0;
+	zeus->min_width = 0;
+	zeus->precision = 0;
 	zeus->len = zeus->len + 0;
 }
 
 char	*spaces(int i)
 {
 	char	*space;
-	int 	n;
+	int		n;
 
 	n = i;
 	i = ABS(i);
@@ -51,13 +51,14 @@ size_t	number(const char *format, char **str, size_t i, t_mod *zeus)
 	char	*ad;
 	char	*tmp;
 	int		j;
-	
+
 	j = 0;
 	ad = ft_strnew(0);
-	while (format[i] == 43 || format[i] == 45 || (format[i]>= 48 && format[i]<= 57))
+	while (format[i] == 43 || format[i] == 45 ||
+	(format[i] >= 48 && format[i] <= 57))
 	{
 		zeus->plus = (format[i] == 43 ? 1 : zeus->plus);
-		zeus->minus = (format[i] == 45 ? 1: zeus->minus);
+		zeus->minus = (format[i] == 45 ? 1 : zeus->minus);
 		add(&ad, format[i++], 0);
 	}
 	if ((j = ft_atoi(ad)) != 0)
@@ -67,12 +68,13 @@ size_t	number(const char *format, char **str, size_t i, t_mod *zeus)
 			tmp = *str;
 			free(ad);
 			ad = spaces(j);
-			*str = strnnjoin(*str, ad, zeus->len + ft_strlen(&str[0][zeus->len]), 0);
+			*str = strnnjoin(*str, ad, zeus->len +
+			ft_strlen(&str[0][zeus->len]), 0);
 			free(tmp);
+			zeus->len += j;
 		}
 		else
 			zeus->min_width = ABS(j);
-		zeus->len += j;
 	}
 	free(ad);
 	return (i);
@@ -81,8 +83,8 @@ size_t	number(const char *format, char **str, size_t i, t_mod *zeus)
 void	parser2(char format, char **str, va_list ap, t_mod *zeus)
 {
 	if (format == 'd')
-		ft_int(str, zeus, ap); 
-    if (format == 'c')
+		ft_int(str, zeus, ap);
+	if (format == 'c')
 		ft_ch(str, zeus, ap);
 	if (format == 's')
 		ft_ar(str, zeus, ap);
@@ -97,40 +99,40 @@ void	parser2(char format, char **str, va_list ap, t_mod *zeus)
 		ft_oct(str, zeus, ap);
 	if (format == 'u')
 		ft_udc(str, zeus, ap);
-
 }
 
-char    *parser1(va_list ap, const char *format, size_t *ret)
+char	*parser1(va_list ap, const char *format, size_t *ret)
 {
-    char    *str;
-    size_t  i;
-    t_mod   zeus;
+	char	*str;
+	size_t	i;
+	t_mod	zeus;
 
-    str = ft_strnew(0);
-    i = 0;
-    while (format[i])
-    {
-        if (format[i] != '%' && format[i] && i < ft_strlen(format)) /* sovershenno ebnutaya fignya */
-            i = text(format, &str, i, &zeus);
-        if (format[i++] == '%')
-        {
-            new_zeus(&zeus);
-            while (format[i] == 32)
-                zeus.space = format[i++] - 31;
-            while (format[i] == 35)
-                zeus.sharp = format[i++] - 34;
-            while (format[i] == 48)
-                zeus.zero = format[i++] + 1;
-            if (format[i] == 43 || format[i] == 45 || (format[i] >= 49 && format[i] <= 57))
+	str = ft_strnew(0);
+	i = 0;
+	while (format[i])
+	{
+		if (format[i] != '%' && format[i] && i < ft_strlen(format))
+			i = text(format, &str, i, &zeus);
+		if (format[i++] == '%')
+		{
+			new_zeus(&zeus);
+			while (format[i] == 32)
+				zeus.space = format[i++] - 31;
+			while (format[i] == 35)
+				zeus.sharp = format[i++] - 34;
+			while (format[i] == 48)
+				zeus.zero = format[i++] + 1;
+			if (format[i] == 43 || format[i] == 45 ||
+			(format[i] >= 49 && format[i] <= 57))
 				i = number(format, &str, i, &zeus);
-            else
-            {
-                if (format[i] == '%')
-                    add(&str, format[i], zeus.len);
-            }
-            parser2(format[i++], &str, ap, &zeus);
-        }
-    }
+			else
+			{
+				if (format[i] == '%')
+					add(&str, format[i], zeus.len);
+			}
+			parser2(format[i++], &str, ap, &zeus);
+		}
+	}
 	*ret = zeus.len;
-    return (str);
+	return (str);
 }

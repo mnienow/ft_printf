@@ -33,37 +33,37 @@ char	*hex_width(char *str, t_mod *zeus)
 	return (str);
 }
 
-char    *hex_precision(char *str, t_mod *zeus, int    i)
+char	*hex_precision(char *str, t_mod *zeus, int i)
 {
-    char    *str_zero;
-    char    *tmp;
-    int        count;
+	char	*str_zero;
+	char	*tmp;
+	int		count;
 
-    if (i)
-        count = zeus->precision - ft_strlen(str);
-    else
-        count =  zeus->min_width - ft_strlen(str);
-    str_zero = (char *)malloc(sizeof(char)* (count + 1));
-    str_zero[count] = '\0';
-    while (--count >= 0)
-        str_zero[count] = '0';
-    tmp = str;
-    str = ft_strjoin(str_zero, str);
-    free(tmp);
-    free(str_zero);
-    return (str);
+	if (i)
+		count = zeus->precision - ft_strlen(str);
+	else
+		count = zeus->min_width - ft_strlen(str);
+	str_zero = (char *)malloc(sizeof(char) * (count + 1));
+	str_zero[count] = '\0';
+	while (--count >= 0)
+		str_zero[count] = '0';
+	tmp = str;
+	str = ft_strjoin(str_zero, str);
+	free(tmp);
+	free(str_zero);
+	return (str);
 }
 
-char    *hex_sharp(char *str, t_mod *zeus)
+char	*hex_sharp(char *str, t_mod *zeus)
 {
-    char    *str_sharp;
-    char    *tmp;
+	char	*str_sharp;
+	char	*tmp;
 
-    str_sharp = (zeus->alpha == 0 ? "0x" : "0X");
-    tmp = str;
-    str = ft_strjoin(str_sharp, str);
-    free(tmp);
-    return (str);
+	str_sharp = (zeus->alpha == 0 ? "0x" : "0X");
+	tmp = str;
+	str = ft_strjoin(str_sharp, str);
+	free(tmp);
+	return (str);
 }
 
 void	ft_hex(char **str, t_mod *zeus, va_list ap)
@@ -71,7 +71,7 @@ void	ft_hex(char **str, t_mod *zeus, va_list ap)
 	long long int	hex;
 	char			*string;
 	char			*tmp;
-	
+
 	hex = va_arg(ap, int);
 	if (hex < 0)
 		hex = 4294967295 + 1 + hex;

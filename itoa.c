@@ -14,8 +14,8 @@
 
 static int	ftcount(long long int n, int base)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	if (n <= 0)
 		i++;
@@ -27,11 +27,11 @@ static int	ftcount(long long int n, int base)
 	return (i);
 }
 
-char	*ft_itoal(long long int nb, int base, t_mod *zeus)
+char		*ft_itoal(long long int nb, int base, t_mod *zeus)
 {
-	char	*str;
-	int		len;
-	long long int 	num;
+	char			*str;
+	int				len;
+	long long int	num;
 
 	len = ftcount(nb, base);
 	str = (char *)malloc(sizeof(char) * (len + 1));
@@ -46,7 +46,8 @@ char	*ft_itoal(long long int nb, int base, t_mod *zeus)
 			else
 				str[len - 1] = num + 87;
 		}
-		else str[len - 1] = num + 48;
+		else
+			str[len - 1] = num + 48;
 		nb = nb / base;
 		len--;
 	}

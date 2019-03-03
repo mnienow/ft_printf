@@ -33,7 +33,7 @@ static char	*udc_width(char *str, t_mod *zeus)
 	return (str);
 }
 
-static char	*udc_precision(char *str, t_mod *zeus, int	i)
+static char	*udc_precision(char *str, t_mod *zeus, int i)
 {
 	char	*str_zero;
 	char	*tmp;
@@ -42,7 +42,7 @@ static char	*udc_precision(char *str, t_mod *zeus, int	i)
 	if (i)
 		count = zeus->precision - ft_strlen(str);
 	else
-		count =  zeus->min_width - ft_strlen(str);
+		count = zeus->min_width - ft_strlen(str);
 	str_zero = (char *)malloc(sizeof(char) * (count + 1));
 	str_zero[count] = '\0';
 	while (--count >= 0)
@@ -66,12 +66,12 @@ static char	*udc_sharp(char *str)
 	return (str);
 }
 
-void	ft_udc(char **str, t_mod *zeus, va_list ap)
+void		ft_udc(char **str, t_mod *zeus, va_list ap)
 {
 	unsigned int	hex;
 	char			*string;
 	char			*tmp;
-	
+
 	hex = va_arg(ap, int);
 	string = ft_itoal(hex, 10, zeus);
 	if (zeus->precision)

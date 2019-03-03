@@ -33,7 +33,7 @@ static char	*int_width(char *str, t_mod *zeus)
 	return (str);
 }
 
-static char	*int_precision(char *str, t_mod *zeus, int	i)
+static char	*int_precision(char *str, t_mod *zeus, int i)
 {
 	char	*str_zero;
 	char	*tmp;
@@ -42,7 +42,7 @@ static char	*int_precision(char *str, t_mod *zeus, int	i)
 	if (i)
 		count = zeus->precision - ft_strlen(str);
 	else
-		count =  zeus->min_width - ft_strlen(str);
+		count = zeus->min_width - ft_strlen(str);
 	str_zero = (char *)malloc(sizeof(char) * (count + 1));
 	str_zero[count] = '\0';
 	while (--count >= 0)
@@ -53,13 +53,14 @@ static char	*int_precision(char *str, t_mod *zeus, int	i)
 	free(str_zero);
 	return (str);
 }
-void	ft_int(char **str, t_mod *zeus, va_list ap)
+
+void		ft_int(char **str, t_mod *zeus, va_list ap)
 {
 	int		integer;
 	char	*string;
 	char	*tmp;
 
-	integer = va_arg(ap,int);
+	integer = va_arg(ap, int);
 	string = ft_itoa(integer);
 	if (zeus->precision)
 		string = int_precision(string, zeus, 1);

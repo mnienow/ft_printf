@@ -59,14 +59,14 @@ char	*strnnjoin(char const *s1, char const *s2, size_t sz1, size_t sz2)
 
 void	add(char **a, char b, size_t sz)
 {
-  char  *c;
-  char  *tmp;
+	char	*c;
+	char	*tmp;
 
-  c = malloc(2);
-  c[0] = b;
-  c[1] = '\0';
-  tmp = *a;
-  *a = strnnjoin(*a, c, sz, 1);
-  free(tmp);
-  free(c);
+	c = malloc(2);
+	c[0] = b;
+	c[1] = '\0';
+	tmp = *a;
+	*a = strnnjoin(*a, c, sz, 1);
+	free(tmp);
+	free(c);
 }

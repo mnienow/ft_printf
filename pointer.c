@@ -15,7 +15,7 @@
 static unsigned long long	ftcount(long long int n)
 {
 	long long int i;
-	
+
 	i = 0;
 	if (n <= 0)
 		i++;
@@ -27,12 +27,12 @@ static unsigned long long	ftcount(long long int n)
 	return (i);
 }
 
-char	*ft_itoals(long long int nb)
+char						*ft_itoals(long long int nb)
 {
-	char	*str;
-	int		len;
-	long long int num;
-	
+	char			*str;
+	int				len;
+	long long int	num;
+
 	len = ftcount(nb) + 2;
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	str[len] = '\0';
@@ -40,7 +40,7 @@ char	*ft_itoals(long long int nb)
 	str[1] = 'x';
 	while (len > 2)
 	{
-		num =  nb % 16;
+		num = nb % 16;
 		if (num == 10)
 			str[len - 1] = 'a';
 		else if (num == 11)
@@ -53,14 +53,15 @@ char	*ft_itoals(long long int nb)
 			str[len - 1] = 'e';
 		else if (num == 15)
 			str[len - 1] = 'f';
-		else str[len - 1] = num + 48;
+		else
+			str[len - 1] = num + 48;
 		nb = nb / 16;
 		len--;
 	}
 	return (str);
 }
 
-void	pointer(va_list ap, char **str)
+void						pointer(va_list ap, char **str)
 {
 	long long int	hex;
 	char			*string;
@@ -73,4 +74,3 @@ void	pointer(va_list ap, char **str)
 	free(tmp);
 	free(string);
 }
-

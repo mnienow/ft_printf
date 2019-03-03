@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static char	*oct_width(char *str, t_mod *zeus)
+static char		*oct_width(char *str, t_mod *zeus)
 {
 	char	*str_spaces;
 	char	*tmp;
@@ -33,40 +33,40 @@ static char	*oct_width(char *str, t_mod *zeus)
 	return (str);
 }
 
-static char    *oct_precision(char *str, t_mod *zeus, int    i)
+static char		*oct_precision(char *str, t_mod *zeus, int i)
 {
-    char    *str_zero;
-    char    *tmp;
-    int        count;
+	char	*str_zero;
+	char	*tmp;
+	int		count;
 
-    if (i)
-        count = zeus->precision - ft_strlen(str);
-    else
-        count =  zeus->min_width - ft_strlen(str);
-    str_zero = (char *)malloc(sizeof(char)* (count + 1));
-    str_zero[count] = '\0';
-    while (--count >= 0)
-        str_zero[count] = '0';
-    tmp = str;
-    str = ft_strjoin(str_zero, str);
-    free(tmp);
-    free(str_zero);
-    return (str);
+	if (i)
+		count = zeus->precision - ft_strlen(str);
+	else
+		count = zeus->min_width - ft_strlen(str);
+	str_zero = (char *)malloc(sizeof(char) * (count + 1));
+	str_zero[count] = '\0';
+	while (--count >= 0)
+		str_zero[count] = '0';
+	tmp = str;
+	str = ft_strjoin(str_zero, str);
+	free(tmp);
+	free(str_zero);
+	return (str);
 }
 
-static char    *oct_sharp(char *str)
+static char		*oct_sharp(char *str)
 {
-    char    *str_sharp;
-    char    *tmp;
+	char	*str_sharp;
+	char	*tmp;
 
-    str_sharp = "0";
-    tmp = str;
-    str = ft_strjoin(str_sharp, str);
-    free(tmp);
-    return (str);
+	str_sharp = "0";
+	tmp = str;
+	str = ft_strjoin(str_sharp, str);
+	free(tmp);
+	return (str);
 }
 
-void	ft_oct(char **str, t_mod *zeus, va_list ap)
+void			ft_oct(char **str, t_mod *zeus, va_list ap)
 {
 	long long int	hex;
 	char			*string;
@@ -83,7 +83,7 @@ void	ft_oct(char **str, t_mod *zeus, va_list ap)
 	if (zeus->min_width > (int)ft_strlen(string))
 		string = oct_width(string, zeus);
 	tmp = *str;
-	*str = strnnjoin(*str, string,zeus->len, 0);
+	*str = strnnjoin(*str, string, zeus->len, 0);
 	zeus->len += ft_strlen(string);
 	free(tmp);
 	free(string);
