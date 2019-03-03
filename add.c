@@ -12,6 +12,17 @@
 
 #include "ft_printf.h"
 
+void	plus(const char *format, size_t *i, t_mod *zeus)
+{
+		while (format[i[0]] == 43 || format[i[0]] == 45)
+		{
+			zeus->sign = -(format[i[0]] - 44);
+			i[0] += 1;
+		}
+		while (format[i[0]] == 32)
+			zeus->space = format[i[0]++] - 31;
+}
+
 size_t	count(int n)
 {
 	size_t	i;

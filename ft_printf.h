@@ -35,8 +35,7 @@ typedef struct		s_mod
 {
 	enum s_flags	flag;
 	int				alpha;
-	int				minus;
-	int				plus;
+	int				sign;
 	int				sharp;
 	int				space;
 	int				zero;
@@ -50,9 +49,10 @@ size_t				ount(int n);
 void				add(char **a, char b, size_t sz);
 void				parser2(char format, char **str, va_list ap, t_mod *zeus);
 size_t				text(const char *format, char **str, size_t i, t_mod *zeus);
-size_t				number(const char *format, char **str,
-size_t i, t_mod *zeus);
-char				*spaces(int i);
+void				number(const char *format, char **str,
+size_t *i, t_mod *zeus);
+void				plus(const char *format, size_t *i, t_mod *zeus);
+char				*spaces(int i, t_mod *zeus);
 char				*parser1(va_list ap, const char *format, size_t *ret);
 char				*ft_itoal(long long int nb, int base, t_mod *zeus);
 void				ft_ch(char **str, t_mod *zeus, va_list ap);

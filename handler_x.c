@@ -15,7 +15,6 @@
 char	*hex_width(char *str, t_mod *zeus)
 {
 	char	*str_spaces;
-	char	*tmp;
 	int		width;
 
 	width = zeus->min_width - ft_strlen(str);
@@ -23,12 +22,10 @@ char	*hex_width(char *str, t_mod *zeus)
 	str_spaces[width] = '\0';
 	while (--width >= 0)
 		str_spaces[width] = ' ';
-	tmp = str;
-	if (zeus->minus)
+	if (zeus->sign < 0)
 		str = ft_strjoin(str, str_spaces);
 	else
 		str = ft_strjoin(str_spaces, str);
-	free(tmp);
 	free(str_spaces);
 	return (str);
 }

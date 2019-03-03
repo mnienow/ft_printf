@@ -24,7 +24,7 @@ static char	*ch_width(char *str, t_mod *zeus)
 	while (--width >= 0)
 		str_spaces[width] = ' ';
 	tmp = str;
-	if (zeus->minus)
+	if (zeus->sign < 0)
 		str = strnnjoin(str, str_spaces, 0, 0);
 	else
 		str = strnnjoin(str_spaces, str, 0, 0);
@@ -43,8 +43,9 @@ void		ft_ch(char **str, t_mod *zeus, va_list ap)
 	add(&ar, ch, 0);
 	if (zeus->min_width > 1)
 		ar = ch_width(ar, zeus);
-	*str = (ch == 0 ? strnnjoin(*str, ar, zeus->len, ft_strlen(&ar[zeus->minus])
+	*str = (ch == 0 ? strnnjoin(*str, ar, zeus->len, ft_strlen(&ar[ABS(zeus->sign)])
 	+ 1) : strnnjoin(*str, ar, zeus->len, 0));
-	zeus->len = (ch == 0 ? zeus->len + ft_strlen(&ar[zeus->minus])
+	zeus->len = (ch == 0 ? zeus->len + ft_strlen(&ar[ABS(zeus->sign)])
 	+ 1 : zeus->len + ft_strlen(ar));
+	free(ar);
 }

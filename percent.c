@@ -16,8 +16,7 @@ void	new_zeus(t_mod *zeus)
 {
 	zeus->flag = 0;
 	zeus->alpha = 0;
-	zeus->minus = 0;
-	zeus->plus = 0;
+	zeus->sign = 0;
 	zeus->sharp = 0;
 	zeus->space = 0;
 	zeus->zero = 0;
@@ -26,27 +25,24 @@ void	new_zeus(t_mod *zeus)
 	zeus->len = zeus->len + 0;
 }
 
-char	*spaces(int i)
+char	*spaces(int i, t_mod *zeus)
 {
 	char	*space;
-	int		n;
 
-	n = i;
-	i = ABS(i);
 	space = (char *)malloc(i + 1);
 	space[i] = 0;
-	if (n > 0)
+	if (zeus->sign >= 0)
 		space[--i] = '%';
 	while (--i)
 		space[i] = 32;
-	if (n < 0)
+	if (zeus->sign < 0)
 		space[0] = '%';
 	else
 		space[0] = 32;
 	return (space);
 }
 
-size_t	number(const char *format, char **str, size_t i, t_mod *zeus)
+void	number(const char *format, char **str, size_t *i, t_mod *zeus)
 {
 	char	*ad;
 	char	*tmp;
@@ -54,30 +50,24 @@ size_t	number(const char *format, char **str, size_t i, t_mod *zeus)
 
 	j = 0;
 	ad = ft_strnew(0);
-	while (format[i] == 43 || format[i] == 45 ||
-	(format[i] >= 48 && format[i] <= 57))
-	{
-		zeus->plus = (format[i] == 43 ? 1 : zeus->plus);
-		zeus->minus = (format[i] == 45 ? 1 : zeus->minus);
-		add(&ad, format[i++], 0);
-	}
+	while (format[i[0]] >= 48 && format[i[0]] <= 57)
+		add(&ad, format[i[0]++], 0);
 	if ((j = ft_atoi(ad)) != 0)
 	{
-		if (format[i] == '%')
+		if (format[*i] == '%')
 		{
 			tmp = *str;
 			free(ad);
-			ad = spaces(j);
+			ad = spaces(j, zeus);
 			*str = strnnjoin(*str, ad, zeus->len +
 			ft_strlen(&str[0][zeus->len]), 0);
 			free(tmp);
 			zeus->len += j;
 		}
 		else
-			zeus->min_width = ABS(j);
+			zeus->min_width = j;
 	}
 	free(ad);
-	return (i);
 }
 
 void	parser2(char format, char **str, va_list ap, t_mod *zeus)
@@ -107,6 +97,7 @@ char	*parser1(va_list ap, const char *format, size_t *ret)
 	size_t	i;
 	t_mod	zeus;
 
+	zeus.len = 0;
 	str = ft_strnew(0);
 	i = 0;
 	while (format[i])
@@ -118,13 +109,15 @@ char	*parser1(va_list ap, const char *format, size_t *ret)
 			new_zeus(&zeus);
 			while (format[i] == 32)
 				zeus.space = format[i++] - 31;
+			if (format[i] == 43 || format[i] == 45)
+				plus(format, &i, &zeus);
 			while (format[i] == 35)
 				zeus.sharp = format[i++] - 34;
 			while (format[i] == 48)
-				zeus.zero = format[i++] + 1;
-			if (format[i] == 43 || format[i] == 45 ||
-			(format[i] >= 49 && format[i] <= 57))
-				i = number(format, &str, i, &zeus);
+				zeus.zero = format[i++] - 47;
+
+			if (format[i] >= 49 && format[i] <= 57)
+				number(format, &str, &i, &zeus);
 			else
 			{
 				if (format[i] == '%')
