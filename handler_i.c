@@ -63,19 +63,18 @@ void		ft_int(char **str, t_mod *zeus, va_list ap)
 
 	integer = va_arg(ap, int);
 	string = ft_itoa(integer);
-	if (zeus->precision)
-		string = int_precision(string, zeus, 1);
+	string = (zeus->precision == 0 ? string : int_precision(string, zeus, 1));
 	if (zeus->zero && !(zeus->precision) && zeus->min_width && zeus->sign >= 0)
 		string = int_precision(string, zeus, 0);
 	if (zeus->sign > 0 && integer >= 0)
 	{
 		if (zeus->min_width)
 			string[0] = '+';
-		else		
-			string = ft_strjoin((tmp = ft_strdup("+")), string);
+		else
+			string = ft_strjoin("+", string);
 	}
 	if (zeus->sign == 0 && zeus->space && integer >= 0)
-		string = ft_strjoin((tmp = ft_strdup(" ")), string);
+		string = ft_strjoin(" ", string);
 	if (zeus->min_width > (int)ft_strlen(string))
 		string = int_width(string, zeus);
 	tmp = *str;

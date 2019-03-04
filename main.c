@@ -21,6 +21,9 @@ int	main(void)
 	printf("(%d)\n", ft_printf("%+d", 42));
 	printf("\n");
 	printf("(%d)\n",    printf("%+d", 42));
-
+	printf("\n");
+	printf("(%d)\n", ft_printf("%f", 42.6577845678));
+	printf("\n");
+	printf("(%d)\n",    printf("%f", 42.6577845678));
 	return (0);
 }

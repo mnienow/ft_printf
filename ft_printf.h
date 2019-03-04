@@ -51,7 +51,7 @@ void				parser2(char format, char **str, va_list ap, t_mod *zeus);
 size_t				text(const char *format, char **str, size_t i, t_mod *zeus);
 void				number(const char *format, char **str,
 size_t *i, t_mod *zeus);
-void				plus(const char *format, size_t *i, t_mod *zeus);
+size_t				sign(const char *format, size_t i, t_mod *zeus);
 char				*spaces(int i, t_mod *zeus);
 char				*parser1(va_list ap, const char *format, size_t *ret);
 char				*ft_itoal(long long int nb, int base, t_mod *zeus);
@@ -64,5 +64,6 @@ void				ft_udc(char **str, t_mod *zeus, va_list ap);
 void				ft_pnt(char **str, t_mod *zeus, va_list ap);
 char				*strnnjoin(char const *s1, char
 const *s2, size_t sz1, size_t sz2);
+void	        	ft_dbl(char **str, t_mod *zeus, va_list ap);
 
 #endif
