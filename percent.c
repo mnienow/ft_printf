@@ -109,13 +109,12 @@ char	*parser1(va_list ap, const char *format, size_t *ret)
 			new_zeus(&zeus);
 			while (format[i] == 32)
 				zeus.space = format[i++] - 31;
-			if (format[i] == 43 || format[i] == 45)
-				plus(format, &i, &zeus);
-			while (format[i] == 35)
-				zeus.sharp = format[i++] - 34;
 			while (format[i] == 48)
 				zeus.zero = format[i++] - 47;
-
+			while (format[i] == 35)
+				zeus.sharp = format[i++] - 34;
+			if (format[i] == 43 || format[i] == 45)
+				plus(format, &i, &zeus);
 			if (format[i] >= 49 && format[i] <= 57)
 				number(format, &str, &i, &zeus);
 			else

@@ -18,9 +18,9 @@ int	main(void)
 	// printf("(%d)\n", ft_printf("WTF%d WT%c 2 %s\n WTF4%4c\n WTF5%c\n", 1, '\0', NULL, 'a', 'b'));
 	// printf("\n");
 	// printf("(%d)\n",    printf("WTF%d WT%c 2 %s\n WTF4%4c\n WTF5%c\n", 1, '\0', NULL, 'a', 'b'));
-	printf("(%d)\n", ft_printf("% d", -42));
+	printf("(%d)\n", ft_printf("%+d", 42));
 	printf("\n");
-	printf("(%d)\n",    printf("% d", -42));
+	printf("(%d)\n",    printf("%+d", 42));
 
 	return (0);
 }

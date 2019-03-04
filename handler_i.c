@@ -38,15 +38,16 @@ static char	*int_precision(char *str, t_mod *zeus, int i)
 	char	*str_zero;
 	char	*tmp;
 	int		count;
+	size_t	sz;
 
-	if (i)
-		count = zeus->precision - ft_strlen(str);
-	else
-		count = zeus->min_width - ft_strlen(str);
+	sz = ft_strlen(str);
+	count = (i != 0 ? zeus->precision - sz : zeus->min_width - sz);
 	str_zero = (char *)malloc(sizeof(char) * (count + 1));
 	str_zero[count] = '\0';
 	while (--count >= 0)
 		str_zero[count] = '0';
+	str_zero[0] = (str[0] == '-' ? '-' : str_zero[0]);
+	str[0] = (str[0] == '-' ? '0' : str[0]);
 	tmp = str;
 	str = ft_strjoin(str_zero, str);
 	free(tmp);
@@ -62,14 +63,19 @@ void		ft_int(char **str, t_mod *zeus, va_list ap)
 
 	integer = va_arg(ap, int);
 	string = ft_itoa(integer);
-	if (zeus->sign > 0 && integer > 0)
-		string = ft_strjoin((tmp = ft_strdup("+")), string);
-	if (zeus->sign == 0 && zeus->space && integer >= 0)
-		string = ft_strjoin((tmp = ft_strdup(" ")), string);
 	if (zeus->precision)
 		string = int_precision(string, zeus, 1);
-	if (zeus->zero && !(zeus->precision) && zeus->min_width)
+	if (zeus->zero && !(zeus->precision) && zeus->min_width && zeus->sign >= 0)
 		string = int_precision(string, zeus, 0);
+	if (zeus->sign > 0 && integer >= 0)
+	{
+		if (zeus->min_width)
+			string[0] = '+';
+		else		
+			string = ft_strjoin((tmp = ft_strdup("+")), string);
+	}
+	if (zeus->sign == 0 && zeus->space && integer >= 0)
+		string = ft_strjoin((tmp = ft_strdup(" ")), string);
 	if (zeus->min_width > (int)ft_strlen(string))
 		string = int_width(string, zeus);
 	tmp = *str;
