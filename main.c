@@ -22,8 +22,11 @@ int	main(void)
 	// printf("\n");
 	// printf("(%d)\n",    printf("%+d", 42));
 	// printf("\n");
-	printf("(%d)\n", ft_printf("%hhd", 4242424242));
+	int a;
+	int *b;
+	b = &a;
+	printf("(%d)\n", ft_printf("%lx", 4354564566354867867));
 	printf("\n");
-	printf("(%d)\n",    printf("%ld", 4242424242));
+	printf("(%d)\n",    printf("%lx", 4354564566354867867));
 	return (0);
 }

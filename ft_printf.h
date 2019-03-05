@@ -49,10 +49,11 @@ typedef struct		s_mod
 int					ft_printf(const char *format, ...);
 size_t				ount(int n);
 void				add(char **a, char b, size_t sz);
-void				text(const char *format, char **str, size_t *i, t_mod *zeus);
+void				text(const char *format, char **str,
+size_t *i, t_mod *zeus);
 size_t				sign(const char *format, size_t i, t_mod *zeus);
 char				*parser(va_list ap, const char *format, size_t *ret);
-char				*ft_itoal(long long int nb, int base, t_mod *zeus);
+char				*ft_itoal(uintmax_t nb, int base, t_mod *zeus);
 void				ft_ch(char **str, t_mod *zeus, va_list ap);
 void				ft_int(char **str, t_mod *zeus, va_list ap);
 void				ft_ar(char **str, t_mod *zeus, va_list ap);

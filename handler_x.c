@@ -67,11 +67,21 @@ char	*hex_sharp(char *str, t_mod *zeus)
 
 void	ft_hex(char **str, t_mod *zeus, va_list ap)
 {
-	long long int	hex;
+	intmax_t		hex;
 	char			*string;
 	char			*tmp;
 
-	hex = va_arg(ap, int);
+	hex = va_arg(ap, uintmax_t);
+	if (zeus->flag == 1)
+		hex = (unsigned short)hex;
+	if (zeus->flag == 2)
+		hex = (unsigned long)hex;
+	if (zeus->flag == 3)
+		hex = (unsigned char)hex;
+	if (zeus->flag == 4)
+		hex = (unsigned long long)hex;
+	if (zeus->flag == 5)
+		hex = (unsigned long)hex;
 	if (hex < 0)
 		hex = 4294967295 + 1 + hex;
 	string = ft_itoal(hex, 16, zeus);

@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static int	ftcount(long long int n, int base)
+static int	ftcount(uintmax_t n, int base)
 {
 	int	i;
 
@@ -27,11 +27,11 @@ static int	ftcount(long long int n, int base)
 	return (i);
 }
 
-char		*ft_itoal(long long int nb, int base, t_mod *zeus)
+char		*ft_itoal(uintmax_t nb, int base, t_mod *zeus)
 {
-	char			*str;
-	int				len;
-	long long int	num;
+	char		*str;
+	int			len;
+	uintmax_t	num;
 
 	len = ftcount(nb, base);
 	str = (char *)malloc(sizeof(char) * (len + 1));

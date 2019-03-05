@@ -68,11 +68,19 @@ static char	*udc_sharp(char *str)
 
 void		ft_udc(char **str, t_mod *zeus, va_list ap)
 {
-	unsigned int	hex;
+	intmax_t	hex;
 	char			*string;
 	char			*tmp;
 
-	hex = va_arg(ap, int);
+	hex = va_arg(ap, intmax_t);
+	if (zeus->flag == 1)
+		hex = (unsigned short)hex;
+	if (zeus->flag == 2)
+		hex = (unsigned long)hex;
+	if (zeus->flag == 3)
+		hex = (unsigned char)hex;
+	if (zeus->flag == 4)
+		hex = (unsigned long long)hex;
 	string = ft_itoal(hex, 10, zeus);
 	if (zeus->precision)
 		string = udc_precision(string, zeus, 1);

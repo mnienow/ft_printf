@@ -11,14 +11,24 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
 void	flags2(const char *format, size_t *i, t_mod *zeus)
 {
 	if (format[i[0]] == 'h')
-		zeus->flag = (format[i[0] + 1] == 'h' ? hh : h);
+	{
+		zeus->flag = (format[i[0]++ + 1] == 'h' ? hh : h);
+		i[0] = (format[i[0]] == 'h' ? i[0] + 1 : i[0]);
+	}
 	if (format[i[0]] == 'l')
-		zeus->flag = (format[i[0] + 1] == 'l' ? ll : l);
+	{
+		zeus->flag = (format[i[0]++ + 1] == 'l' ? ll : l);
+		i[0] = (format[i[0]] == 'l' ? i[0] + 1 : i[0]);
+	}
 	if (format[i[0]] == 'L')
+	{
 		zeus->flag = L;
+		i[0]++;
+	}
 }
 
 void	text(const char *format, char **str, size_t *i, t_mod *zeus)

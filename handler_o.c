@@ -68,11 +68,19 @@ static char		*oct_sharp(char *str)
 
 void			ft_oct(char **str, t_mod *zeus, va_list ap)
 {
-	long long int	hex;
+	intmax_t	hex;
 	char			*string;
 	char			*tmp;
 
 	hex = va_arg(ap, int);
+	if (zeus->flag == 1)
+		hex = (unsigned short)hex;
+	if (zeus->flag == 2)
+		hex = (unsigned long)hex;
+	if (zeus->flag == 3)
+		hex = (unsigned char)hex;
+	if (zeus->flag == 4)
+		hex = (unsigned long long)hex;
 	string = ft_itoal(hex, 8, zeus);
 	if (zeus->precision)
 		string = oct_precision(string, zeus, 1);
