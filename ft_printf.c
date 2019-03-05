@@ -11,8 +11,17 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+void	flags2(const char *format, size_t *i, t_mod *zeus)
+{
+	if (format[i[0]] == 'h')
+		zeus->flag = (format[i[0] + 1] == 'h' ? hh : h);
+	if (format[i[0]] == 'l')
+		zeus->flag = (format[i[0] + 1] == 'l' ? ll : l);
+	if (format[i[0]] == 'L')
+		zeus->flag = L;
+}
 
-size_t	text(const char *format, char **str, size_t i, t_mod *zeus)
+void	text(const char *format, char **str, size_t *i, t_mod *zeus)
 {
 	char	*ad;
 	char	*tmp;
@@ -20,17 +29,13 @@ size_t	text(const char *format, char **str, size_t i, t_mod *zeus)
 
 	j = 0;
 	ad = ft_strnew(0);
-	while (format[i] != '%' && format[i])
-	{
-		add(&ad, format[i++], 0);
-		j++;
-	}
+	while (format[i[0]] != '%' && format[i[0]] && j++ >= 0)
+		add(&ad, format[i[0]++], 0);
 	tmp = *str;
 	*str = strnnjoin(*str, ad, zeus->len, 0);
 	zeus->len += j;
 	free(tmp);
 	free(ad);
-	return (i);
 }
 
 int		ft_printf(const char *format, ...)
@@ -44,7 +49,7 @@ int		ft_printf(const char *format, ...)
 	i = 0;
 	ret = 0;
 	va_start(ap, format);
-	str = parser1(ap, format, &ret);
+	str = parser(ap, format, &ret);
 	va_end(ap);
 	size = ft_strlen(&str[ret]);
 	ret = ret + size;

@@ -22,7 +22,7 @@ char	*hex_width(char *str, t_mod *zeus)
 	str_spaces[width] = '\0';
 	while (--width >= 0)
 		str_spaces[width] = ' ';
-	if (zeus->sign < 0)
+	if (zeus->minus)
 		str = ft_strjoin(str, str_spaces);
 	else
 		str = ft_strjoin(str_spaces, str);
@@ -44,6 +44,8 @@ char	*hex_precision(char *str, t_mod *zeus, int i)
 	str_zero[count] = '\0';
 	while (--count >= 0)
 		str_zero[count] = '0';
+	str_zero[1] = (str[1] == 'x' || str[1] == 'X' ? str[1] : str_zero[1]);
+	str[1] = (str[1] == 'x' || str[1] == 'X' ? '0' : str[1]);
 	tmp = str;
 	str = ft_strjoin(str_zero, str);
 	free(tmp);
@@ -77,7 +79,7 @@ void	ft_hex(char **str, t_mod *zeus, va_list ap)
 		string = hex_precision(string, zeus, 1);
 	if (zeus->sharp)
 		string = hex_sharp(string, zeus);
-	if (zeus->zero && !(zeus->precision) && zeus->min_width)
+	if (zeus->zero && !(zeus->precision) && zeus->min_width && !(zeus->minus))
 		string = hex_precision(string, zeus, 0);
 	if (zeus->min_width > (int)ft_strlen(string))
 		string = hex_width(string, zeus);

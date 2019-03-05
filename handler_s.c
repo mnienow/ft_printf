@@ -22,7 +22,7 @@ static char	*ar_width(char *str, t_mod *zeus)
 	str_spaces[width] = '\0';
 	while (--width >= 0)
 		str_spaces[width] = ' ';
-	if (zeus->sign < 0)
+	if (zeus->minus)
 		str = ft_strjoin(str, str_spaces);
 	else
 		str = ft_strjoin(str_spaces, str);
@@ -30,38 +30,31 @@ static char	*ar_width(char *str, t_mod *zeus)
 	return (str);
 }
 
-static char	*ar_precision(char *str, t_mod *zeus, int i)
+static char	*ar_precision(char *str, t_mod *zeus)
 {
-	char	*str_zero;
-	char	*tmp;
-	int		count;
+	char	*arr;
+	int		i;
 
-	if (i)
-		count = zeus->precision - ft_strlen(str);
-	else
-		count = zeus->min_width - ft_strlen(str);
-	str_zero = (char *)malloc(sizeof(char) * (count + 1));
-	str_zero[count] = '\0';
-	while (--count >= 0)
-		str_zero[count] = '0';
-	tmp = str;
-	str = ft_strjoin(str_zero, str);
-	free(tmp);
-	free(str_zero);
-	return (str);
+	i = 0;
+	arr = (char *)malloc(zeus->precision + 1);
+	while (i < zeus->precision)
+	{
+		arr[i] = str[i];
+		i++;
+	}
+	arr[i] = 0;
+	return (arr);
 }
 
 void		ft_ar(char **str, t_mod *zeus, va_list ap)
 {
-	char 	*arr;
+	char	*arr;
 	char	*tmp;
 
 	arr = va_arg(ap, char *);
 	arr = (arr == NULL ? ft_strdup("(null)") : arr);
 	if (zeus->precision)
-		arr = ar_precision(arr, zeus, 1);
-	if (zeus->zero && !(zeus->precision) && zeus->min_width)
-		arr = ar_precision(arr, zeus, 0);
+		arr = ar_precision(arr, zeus);
 	if (zeus->min_width > (int)ft_strlen(arr))
 		arr = ar_width(arr, zeus);
 	tmp = *str;

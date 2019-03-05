@@ -24,10 +24,8 @@ static char	*int_width(char *str, t_mod *zeus)
 	while (--width >= 0)
 		str_spaces[width] = ' ';
 	tmp = str;
-	if (zeus->sign < 0)
-		str = ft_strjoin(str, str_spaces);
-	else
-		str = ft_strjoin(str_spaces, str);
+	str = (zeus->minus != 0 ? ft_strjoin(str, str_spaces)
+	: ft_strjoin(str_spaces, str));
 	free(tmp);
 	free(str_spaces);
 	return (str);
@@ -64,16 +62,16 @@ void		ft_int(char **str, t_mod *zeus, va_list ap)
 	integer = va_arg(ap, int);
 	string = ft_itoa(integer);
 	string = (zeus->precision == 0 ? string : int_precision(string, zeus, 1));
-	if (zeus->zero && !(zeus->precision) && zeus->min_width && zeus->sign >= 0)
+	if (zeus->zero && !(zeus->precision) && zeus->min_width && !(zeus->minus))
 		string = int_precision(string, zeus, 0);
-	if (zeus->sign > 0 && integer >= 0)
+	if (zeus->plus && integer >= 0)
 	{
-		if (zeus->min_width)
-			string[0] = '+';
-		else
+		if (!zeus->zero)
 			string = ft_strjoin("+", string);
+		else
+			string[0] = '+';
 	}
-	if (zeus->sign == 0 && zeus->space && integer >= 0)
+	if (!zeus->plus && zeus->space && integer >= 0)
 		string = ft_strjoin(" ", string);
 	if (zeus->min_width > (int)ft_strlen(string))
 		string = int_width(string, zeus);

@@ -24,7 +24,7 @@ static char	*pnt_width(char *str, t_mod *zeus)
 	while (--width >= 0)
 		str_spaces[width] = ' ';
 	tmp = str;
-	if (zeus->sign < 0)
+	if (zeus->minus)
 		str = ft_strjoin(str, str_spaces);
 	else
 		str = ft_strjoin(str_spaces, str);

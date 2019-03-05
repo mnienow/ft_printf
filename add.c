@@ -12,6 +12,30 @@
 
 #include "ft_printf.h"
 
+void	percent(char **str, size_t *i, t_mod *zeus)
+{
+	char	*str_spaces;
+	char	*tmp;
+	int		width;
+
+	zeus->min_width = (zeus->min_width == 0 ? 1 : zeus->min_width);
+	width = zeus->min_width;
+	str_spaces = (char *)malloc(width + 1);
+	str_spaces[width] = '\0';
+	while (--width >= 0)
+		str_spaces[width] = ' ';
+	if (zeus->minus)
+		str_spaces[0] = '%';
+	else
+		str_spaces[zeus->min_width - 1] = '%';
+	tmp = *str;
+	*str = strnnjoin(*str, str_spaces, zeus->len, 0);
+	zeus->len += zeus->min_width--;
+	free(tmp);
+	free(str_spaces);
+	i[0]++;
+}
+
 size_t	count(int n)
 {
 	size_t	i;

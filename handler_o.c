@@ -24,7 +24,7 @@ static char		*oct_width(char *str, t_mod *zeus)
 	while (--width >= 0)
 		str_spaces[width] = ' ';
 	tmp = str;
-	if (zeus->sign < 0)
+	if (zeus->minus)
 		str = ft_strjoin(str, str_spaces);
 	else
 		str = ft_strjoin(str_spaces, str);
@@ -78,7 +78,8 @@ void			ft_oct(char **str, t_mod *zeus, va_list ap)
 		string = oct_precision(string, zeus, 1);
 	if (zeus->sharp)
 		string = oct_sharp(string);
-	if (zeus->zero && !(zeus->precision)  && !(zeus->sign) && zeus->min_width)
+	if (zeus->zero && !(zeus->precision) && !(zeus->minus)
+	&& !(zeus->plus) && zeus->min_width)
 		string = oct_precision(string, zeus, 0);
 	if (zeus->min_width > (int)ft_strlen(string))
 		string = oct_width(string, zeus);
