@@ -23,6 +23,7 @@ void	new_zeus(t_mod *zeus)
 	zeus->zero = 0;
 	zeus->min_width = 0;
 	zeus->precision = 0;
+	zeus->dot = 0;
 	zeus->len = zeus->len + 0;
 }
 
@@ -53,8 +54,7 @@ void	flags1(const char *format, size_t *i, t_mod *zeus)
 		zeus->sharp = (format[i[0]] == 35 ? format[i[0]++] - 34 : zeus->sharp);
 		zeus->minus = (format[i[0]] == 45 ? format[i[0]++] - 44 : zeus->minus);
 		zeus->plus = (format[i[0]] == 43 ? format[i[0]++] - 42 : zeus->plus);
-		if (format[i[0]] == 46)
-			i[0]++;
+		zeus->dot = (format[i[0]] == 46 ? format[i[0]++] - 45 : zeus->dot);
 		if (format[i[0]] >= 49 && format[i[0]] <= 57)
 			number(format, i, zeus);
 	}

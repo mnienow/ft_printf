@@ -69,10 +69,12 @@ static char	*udc_sharp(char *str)
 void		ft_udc(char **str, t_mod *zeus, va_list ap)
 {
 	intmax_t	hex;
-	char			*string;
-	char			*tmp;
+	char		*string;
+	char		*tmp;
 
 	hex = va_arg(ap, intmax_t);
+	if (zeus->flag == 0)
+		hex = (unsigned int)hex;
 	if (zeus->flag == 1)
 		hex = (unsigned short)hex;
 	if (zeus->flag == 2)

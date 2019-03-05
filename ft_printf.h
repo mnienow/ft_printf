@@ -13,15 +13,13 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
-# include "ft_printf.h"
 # include "libft/includes/libft.h"
 # define ABS(number) ((number) > 0 ? (number):-(number))
 
-typedef	enum		s_flags
+typedef enum		e_flags
 {
 	hy,
 	h,
@@ -33,9 +31,8 @@ typedef	enum		s_flags
 
 typedef struct		s_mod
 {
-	enum s_flags	flag;
+	enum e_flags	flag;
 	int				alpha;
-	int				sign;
 	int				plus;
 	int				minus;
 	int				sharp;
@@ -43,6 +40,7 @@ typedef struct		s_mod
 	int				zero;
 	int				min_width;
 	int				precision;
+	int				dot;
 	size_t			len;
 }					t_mod;
 
@@ -53,7 +51,7 @@ void				text(const char *format, char **str,
 size_t *i, t_mod *zeus);
 size_t				sign(const char *format, size_t i, t_mod *zeus);
 char				*parser(va_list ap, const char *format, size_t *ret);
-char				*ft_itoal(uintmax_t nb, int base, t_mod *zeus);
+char				*ft_itoal(intmax_t nb, int base, t_mod *zeus);
 void				ft_ch(char **str, t_mod *zeus, va_list ap);
 void				ft_int(char **str, t_mod *zeus, va_list ap);
 void				ft_ar(char **str, t_mod *zeus, va_list ap);

@@ -30,20 +30,22 @@ char	*hex_width(char *str, t_mod *zeus)
 	return (str);
 }
 
-char	*hex_precision(char *str, t_mod *zeus, int i)
+char	*hex_precision(char *str, t_mod *zeus, int i, intmax_t hex)
 {
 	char	*str_zero;
 	char	*tmp;
 	int		count;
+	size_t	sz;
 
-	if (i)
-		count = zeus->precision - ft_strlen(str);
-	else
-		count = zeus->min_width - ft_strlen(str);
+	sz = ft_strlen(str);
+	count = (i != 0 ? zeus->precision - sz : zeus->min_width - sz);
+	if (count < 0)
+		return (str);
 	str_zero = (char *)malloc(sizeof(char) * (count + 1));
 	str_zero[count] = '\0';
-	while (--count >= 0)
-		str_zero[count] = '0';
+	if (hex != 0)
+		while (--count >= 0)
+			str_zero[count] = '0';
 	str_zero[1] = (str[1] == 'x' || str[1] == 'X' ? str[1] : str_zero[1]);
 	str[1] = (str[1] == 'x' || str[1] == 'X' ? '0' : str[1]);
 	tmp = str;
@@ -72,6 +74,8 @@ void	ft_hex(char **str, t_mod *zeus, va_list ap)
 	char			*tmp;
 
 	hex = va_arg(ap, uintmax_t);
+	if (zeus->flag == 0)
+		hex = (int)hex;
 	if (zeus->flag == 1)
 		hex = (unsigned short)hex;
 	if (zeus->flag == 2)
@@ -84,13 +88,16 @@ void	ft_hex(char **str, t_mod *zeus, va_list ap)
 		hex = (unsigned long)hex;
 	if (hex < 0)
 		hex = 4294967295 + 1 + hex;
-	string = ft_itoal(hex, 16, zeus);
+	if (hex == 0 && zeus->dot)
+		string = ft_strdup("");
+	else
+		string = ft_itoal(hex, 16, zeus);
 	if (zeus->precision)
-		string = hex_precision(string, zeus, 1);
-	if (zeus->sharp)
+		string = hex_precision(string, zeus, 1, hex);
+	if (zeus->sharp && hex != 0)
 		string = hex_sharp(string, zeus);
 	if (zeus->zero && !(zeus->precision) && zeus->min_width && !(zeus->minus))
-		string = hex_precision(string, zeus, 0);
+		string = hex_precision(string, zeus, 0, hex);
 	if (zeus->min_width > (int)ft_strlen(string))
 		string = hex_width(string, zeus);
 	tmp = *str;

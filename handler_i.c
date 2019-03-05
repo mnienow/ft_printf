@@ -31,7 +31,7 @@ static char	*int_width(char *str, t_mod *zeus)
 	return (str);
 }
 
-static char	*int_precision(char *str, t_mod *zeus, int i)
+static char	*int_precision(char *str, t_mod *zeus, int i, intmax_t integer)
 {
 	char	*str_zero;
 	char	*tmp;
@@ -40,11 +40,17 @@ static char	*int_precision(char *str, t_mod *zeus, int i)
 
 	sz = ft_strlen(str);
 	count = (i != 0 ? zeus->precision - sz : zeus->min_width - sz);
+	if (count < 0)
+		return (str);
 	str_zero = (char *)malloc(sizeof(char) * (count + 1));
 	str_zero[count] = '\0';
-	while (--count >= 0)
-		str_zero[count] = '0';
-	str_zero[0] = (str[0] == '-' ? '-' : str_zero[0]);
+	 if ((integer != 0) || (integer == 0 && zeus->precision))
+		while (--count >= 0)
+			str_zero[count] = '0';
+	if (zeus->precision)
+		str_zero = (str[0] == '-' ? ft_strjoin("-", str_zero) : str_zero);
+	else if (zeus->min_width && str[0] == '-')
+		str_zero[0] = '-';
 	str[0] = (str[0] == '-' ? '0' : str[0]);
 	tmp = str;
 	str = ft_strjoin(str_zero, str);
@@ -55,15 +61,25 @@ static char	*int_precision(char *str, t_mod *zeus, int i)
 
 void		ft_int(char **str, t_mod *zeus, va_list ap)
 {
-	int		integer;
-	char	*string;
-	char	*tmp;
+	intmax_t		integer;
+	char			*string;
+	char			*tmp;
 
-	integer = va_arg(ap, int);
-	string = ft_itoa(integer);
-	string = (zeus->precision == 0 ? string : int_precision(string, zeus, 1));
+	integer = va_arg(ap, intmax_t);
+	if (zeus->flag == 0)
+		integer = (int)integer;
+	if (zeus->flag == 1)
+		integer = (short)integer;
+	if (zeus->flag == 2)
+		integer = (long)integer;
+	if (zeus->flag == 3)
+		integer = (signed char)integer;
+	if (zeus->flag == 4)
+		integer = (long long)integer;
+	string = ft_itoal(integer, 10, zeus);
+	string = (zeus->precision == 0 ? string : int_precision(string, zeus, 1, integer));
 	if (zeus->zero && !(zeus->precision) && zeus->min_width && !(zeus->minus))
-		string = int_precision(string, zeus, 0);
+		string = int_precision(string, zeus, 0, integer);
 	if (zeus->plus && integer >= 0)
 	{
 		if (!zeus->zero)

@@ -11,22 +11,29 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdlib.h>
+#include <stdio.h>
 
 int	main(void)
 {
-	// printf("(%d)\n", ft_printf("WTF%d WT%c 2 %s\n WTF4%4c\n WTF5%c\n", 1, '\0', NULL, 'a', 'b'));
-	// printf("\n");
-	// printf("(%d)\n",    printf("WTF%d WT%c 2 %s\n WTF4%4c\n WTF5%c\n", 1, '\0', NULL, 'a', 'b'));
-	// printf("(%d)\n", ft_printf("%+d", 42));
-	// printf("\n");
-	// printf("(%d)\n",    printf("%+d", 42));
-	// printf("\n");
 	int a;
 	int *b;
+
 	b = &a;
-	printf("(%d)\n", ft_printf("%lx", 4354564566354867867));
-	printf("\n");
-	printf("(%d)\n",    printf("%lx", 4354564566354867867));
+	printf("------------------------------\n");
+	printf("Original\n");
+	printf("(%d)\n", printf("@moulitest: %#.x %#.0x", 0, 0));
+	printf("Our\n");
+	printf("(%d)\n", ft_printf("@moulitest: %#.x %#.0x", 0, 0));
+	printf("------------------------------\n");
+	printf("Original\n");
+	printf("(%d)\n", printf("%03.2d", 0));
+	printf("Our\n");
+	printf("(%d)\n", ft_printf("%03.2d", 0));
+	printf("------------------------------\n");
+	printf("Original\n");
+	printf("(%d)\n", printf("@moulitest: %5.d %5.0d", 0, 0));
+	printf("Our\n");
+	printf("(%d)\n", ft_printf("@moulitest: %5.d %5.0d", 0, 0));
+	printf("------------------------------");
 	return (0);
 }

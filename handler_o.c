@@ -33,7 +33,7 @@ static char		*oct_width(char *str, t_mod *zeus)
 	return (str);
 }
 
-static char		*oct_precision(char *str, t_mod *zeus, int i)
+static char		*oct_precision(char *str, t_mod *zeus, int i, intmax_t hex)
 {
 	char	*str_zero;
 	char	*tmp;
@@ -45,8 +45,11 @@ static char		*oct_precision(char *str, t_mod *zeus, int i)
 		count = zeus->min_width - ft_strlen(str);
 	str_zero = (char *)malloc(sizeof(char) * (count + 1));
 	str_zero[count] = '\0';
-	while (--count >= 0)
-		str_zero[count] = '0';
+	if (hex != 0)
+	{
+		while (--count >= 0)
+			str_zero[count] = '0';
+	}
 	tmp = str;
 	str = ft_strjoin(str_zero, str);
 	free(tmp);
@@ -69,8 +72,8 @@ static char		*oct_sharp(char *str)
 void			ft_oct(char **str, t_mod *zeus, va_list ap)
 {
 	intmax_t	hex;
-	char			*string;
-	char			*tmp;
+	char		*string;
+	char		*tmp;
 
 	hex = va_arg(ap, int);
 	if (zeus->flag == 1)
@@ -81,14 +84,17 @@ void			ft_oct(char **str, t_mod *zeus, va_list ap)
 		hex = (unsigned char)hex;
 	if (zeus->flag == 4)
 		hex = (unsigned long long)hex;
-	string = ft_itoal(hex, 8, zeus);
+	// if (hex != 0 || zeus->sharp || (zeus->min_width == 0 && zeus->precision == 0))
+		string = ft_itoal(hex, 8, zeus);
+	// else
+	// 	string = ft_strdup("");
 	if (zeus->precision)
-		string = oct_precision(string, zeus, 1);
-	if (zeus->sharp)
+		string = oct_precision(string, zeus, 1, hex);
+	if (zeus->sharp && hex != 0)
 		string = oct_sharp(string);
 	if (zeus->zero && !(zeus->precision) && !(zeus->minus)
 	&& !(zeus->plus) && zeus->min_width)
-		string = oct_precision(string, zeus, 0);
+		string = oct_precision(string, zeus, 0, hex);
 	if (zeus->min_width > (int)ft_strlen(string))
 		string = oct_width(string, zeus);
 	tmp = *str;
