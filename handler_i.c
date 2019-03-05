@@ -44,7 +44,7 @@ static char	*int_precision(char *str, t_mod *zeus, int i, intmax_t integer)
 		return (str);
 	str_zero = (char *)malloc(sizeof(char) * (count + 1));
 	str_zero[count] = '\0';
-	 if ((integer != 0) || (integer == 0 && zeus->precision))
+	if ((integer != 0) || (integer == 0 && zeus->precision))
 		while (--count >= 0)
 			str_zero[count] = '0';
 	if (zeus->precision)
@@ -77,7 +77,8 @@ void		ft_int(char **str, t_mod *zeus, va_list ap)
 	if (zeus->flag == 4)
 		integer = (long long)integer;
 	string = ft_itoal(integer, 10, zeus);
-	string = (zeus->precision == 0 ? string : int_precision(string, zeus, 1, integer));
+	string = (zeus->precision == 0 ? string :
+	int_precision(string, zeus, 1, integer));
 	if (zeus->zero && !(zeus->precision) && zeus->min_width && !(zeus->minus))
 		string = int_precision(string, zeus, 0, integer);
 	if (zeus->plus && integer >= 0)

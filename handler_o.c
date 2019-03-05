@@ -84,10 +84,7 @@ void			ft_oct(char **str, t_mod *zeus, va_list ap)
 		hex = (unsigned char)hex;
 	if (zeus->flag == 4)
 		hex = (unsigned long long)hex;
-	// if (hex != 0 || zeus->sharp || (zeus->min_width == 0 && zeus->precision == 0))
-		string = ft_itoal(hex, 8, zeus);
-	// else
-	// 	string = ft_strdup("");
+	string = ft_itoal(hex, 8, zeus);
 	if (zeus->precision)
 		string = oct_precision(string, zeus, 1, hex);
 	if (zeus->sharp && hex != 0)
