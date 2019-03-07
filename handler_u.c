@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static void	flag(t_mod *zeus, intmax_t *ui)
+static void	flag(t_mod *zeus, unsigned long long int *ui)
 {
 	if (!zeus->flag)
 		*ui = (unsigned int)*ui;
@@ -83,13 +83,13 @@ static char	*udc_sharp(char *str)
 
 void		ft_udc(char **str, t_mod *zeus, va_list ap)
 {
-	intmax_t	ui;
-	char		*strn;
-	size_t		sz;
+	unsigned long long int	ui;
+	char					*strn;
+	size_t					sz;
 
-	ui = va_arg(ap, intmax_t);
+	ui = (unsigned long long int)va_arg(ap, unsigned long long int);
 	flag(zeus, &ui);
-	strn = ft_itoal(ui, 10, zeus);
+	strn = ft_uitoal(ui, 10, zeus);
 	if (zeus->precision)
 		strn = udc_precision(strn, zeus, 1);
 	if (zeus->sharp)

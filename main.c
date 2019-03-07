@@ -12,6 +12,7 @@
 
 #include "ft_printf.h"
 #include <stdio.h>
+#include <limits.h>
 
 int	main(void)
 {
@@ -21,9 +22,9 @@ int	main(void)
 	b = &a;
 	printf("------------------------------\n");
 	printf("Original\n");
-	printf("(%d)\n", printf("%c %s", 0, "42"));
+	printf("(%d)\n", printf("%--.4u et %#O%#012O%1lc\n", -12, 0, 0, 95));
 	printf("Our\n");
-	printf("(%d)\n", ft_printf("%c %s", 0, "42"));
+	printf("(%d)\n", ft_printf("%--.4u et %#O%#012O%1lc\n", -12, 0, 0, 95));
 	printf("------------------------------\n");
 	return (0);
 }

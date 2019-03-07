@@ -38,8 +38,8 @@ static char	*int_width(char *str, t_mod *zeus)
 	while (--width >= 0)
 		str_spaces[width] = ' ';
 	tmp = str;
-	str = (zeus->minus != 0 ? ft_strjoin(str, str_spaces)
-	: ft_strjoin(str_spaces, str));
+	str = (!zeus->minus ? ft_strjoin(str_spaces, str)
+	: ft_strjoin(str, str_spaces));
 	free(tmp);
 	free(str_spaces);
 	return (str);
@@ -48,7 +48,6 @@ static char	*int_width(char *str, t_mod *zeus)
 static char	*int_precision(char *str, t_mod *zeus, int i, intmax_t integer)
 {
 	char	*str_zero;
-	char	*tmp;
 	int		count;
 	size_t	sz;
 
@@ -56,9 +55,9 @@ static char	*int_precision(char *str, t_mod *zeus, int i, intmax_t integer)
 	count = (i != 0 ? zeus->precision - sz : zeus->min_width - sz);
 	if (count < 0)
 		return (str);
-	str_zero = (char *)malloc(sizeof(char) * (count + 1));
+	str_zero = (char *)malloc(count + 1);
 	str_zero[count] = '\0';
-	if ((integer != 0) || (integer == 0 && zeus->precision))
+	if ((integer != 0) || (integer == 0 && (zeus->precision || zeus->plus)))
 		while (--count >= 0)
 			str_zero[count] = '0';
 	if (zeus->precision)
@@ -67,10 +66,7 @@ static char	*int_precision(char *str, t_mod *zeus, int i, intmax_t integer)
 	else if (zeus->min_width && str[0] == '-')
 		str_zero[0] = '-';
 	str[0] = (str[0] == '-' ? '0' : str[0]);
-	tmp = str;
-	str = ft_strjoin(str_zero, str);
-	free(tmp);
-	free(str_zero);
+	str = strnnjoin(str_zero, str, 0, 0);
 	return (str);
 }
 

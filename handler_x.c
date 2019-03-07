@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static void	flag(t_mod *zeus, intmax_t *hex)
+static void	flag(t_mod *zeus, unsigned long long int *hex)
 {
 	if (!zeus->flag)
 		*hex = (unsigned int)*hex;
@@ -44,7 +44,7 @@ char		*hex_width(char *str, t_mod *zeus)
 	return (str);
 }
 
-char		*hex_precision(char *str, t_mod *zeus, int i, intmax_t hex)
+char		*hex_prec(char *str, t_mod *zeus, int i, unsigned long long int hex)
 {
 	char	*str_zero;
 	char	*tmp;
@@ -84,24 +84,22 @@ char		*hex_sharp(char *str, t_mod *zeus)
 
 void		ft_hex(char **str, t_mod *zeus, va_list ap)
 {
-	intmax_t		hex;
-	char			*strn;
-	size_t			sz;
+	unsigned long long int		hex;
+	char						*strn;
+	size_t						sz;
 
-	hex = va_arg(ap, intmax_t);
+	hex = (unsigned long long int)va_arg(ap, unsigned long long int);
 	flag(zeus, &hex);
-	if (hex < 0)
-		hex = 4294967295 + 1 + hex;
 	if (hex == 0 && zeus->dot)
 		strn = ft_strdup("");
 	else
-		strn = ft_itoal(hex, 16, zeus);
+		strn = ft_uitoal(hex, 16, zeus);
 	if (zeus->precision)
-		strn = hex_precision(strn, zeus, 1, hex);
+		strn = hex_prec(strn, zeus, 1, hex);
 	if (zeus->sharp && hex != 0)
 		strn = hex_sharp(strn, zeus);
 	if (zeus->zero && !(zeus->precision) && zeus->min_width && !(zeus->minus))
-		strn = hex_precision(strn, zeus, 0, hex);
+		strn = hex_prec(strn, zeus, 0, hex);
 	if (zeus->min_width > ft_strlen(strn))
 		strn = hex_width(strn, zeus);
 	sz = ft_strlen(strn);

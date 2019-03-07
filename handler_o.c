@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static void		flag(t_mod *zeus, intmax_t *oct)
+static void		flag(t_mod *zeus, unsigned long long int *oct)
 {
 	if (!zeus->flag)
 		*oct = (unsigned int)*oct;
@@ -85,13 +85,13 @@ static char		*oct_sharp(char *str)
 
 void			ft_oct(char **str, t_mod *zeus, va_list ap)
 {
-	intmax_t	oct;
-	char		*strn;
-	size_t		sz;
+	unsigned long long int	oct;
+	char					*strn;
+	size_t					sz;
 
-	oct = va_arg(ap, int);
+	oct = (unsigned long long int)va_arg(ap, unsigned long long int);
 	flag(zeus, &oct);
-	strn = ft_itoal(oct, 8, zeus);
+	strn = ft_uitoal(oct, 8, zeus);
 	if (zeus->precision)
 		strn = oct_precision(strn, zeus, 1, oct);
 	if (zeus->sharp && oct != 0)
