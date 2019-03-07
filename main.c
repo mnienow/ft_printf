@@ -22,9 +22,9 @@ int	main(void)
 	b = &a;
 	printf("------------------------------\n");
 	printf("Original\n");
-	printf("(%d)\n", printf("%--.4u et %#O%#012O%1lc\n", -12, 0, 0, 95));
+	printf("(%d)\n", printf("%.0s", "coco et ti"));
 	printf("Our\n");
-	printf("(%d)\n", ft_printf("%--.4u et %#O%#012O%1lc\n", -12, 0, 0, 95));
+	printf("(%d)\n", ft_printf("%.0s", "coco et ti"));
 	printf("------------------------------\n");
 	return (0);
 }

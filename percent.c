@@ -63,9 +63,9 @@ size_t	conversions(char fmt, char **str, va_list ap, t_mod *zeus)
 {
 	if (fmt == 'd' || fmt == 'i')
 		ft_int(str, zeus, ap);
-	if (fmt == 'c')
+	if (fmt == 'c' || fmt == 'C')
 		ft_ch(str, zeus, ap);
-	if (fmt == 's')
+	if (fmt == 's' || fmt == 'S')
 		ft_ar(str, zeus, ap);
 	if (fmt == 'x' || fmt == 'X')
 	{
@@ -74,14 +74,15 @@ size_t	conversions(char fmt, char **str, va_list ap, t_mod *zeus)
 	}
 	if (fmt == 'p')
 		ft_pnt(str, zeus, ap);
-	if (fmt == 'o')
+	if (fmt == 'o' || fmt == 'O')
 		ft_oct(str, zeus, ap);
 	if (fmt == 'u')
 		ft_udc(str, zeus, ap);
 	if (fmt == 'f')
 		ft_dbl(str, zeus, ap);
 	if (fmt == 'd' || fmt == 'i' || fmt == 'c' || fmt == 's' || fmt == 'x' ||
-	fmt == 'X' || fmt == 'p' || fmt == 'o' || fmt == 'u' || fmt == 'f')
+	fmt == 'X' || fmt == 'p' || fmt == 'o' || fmt == 'u' || fmt == 'f' ||
+	fmt == 'C' || fmt == 'O' || fmt == 'S')
 		return (1);
 	return (0);
 }

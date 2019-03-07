@@ -52,12 +52,13 @@ static char	*udc_precision(char *str, t_mod *zeus, int i)
 	char	*str_zero;
 	char	*tmp;
 	int		count;
+	size_t	sz;
 
-	if (i)
-		count = zeus->precision - ft_strlen(str);
-	else
-		count = zeus->min_width - ft_strlen(str);
-	str_zero = (char *)malloc(sizeof(char) * (count + 1));
+	sz = ft_strlen(str);
+	count = (i != 0 ? zeus->precision - sz : zeus->min_width - sz);
+	if (count < 0)
+		return (str);
+	str_zero = (char *)malloc(count + 1);
 	str_zero[count] = '\0';
 	while (--count >= 0)
 		str_zero[count] = '0';

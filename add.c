@@ -22,7 +22,7 @@ void	percent(char **str, size_t *i, t_mod *zeus)
 	str_spaces = (char *)malloc(width + 1);
 	str_spaces[width] = '\0';
 	while (--width >= 0)
-		str_spaces[width] = ' ';
+		str_spaces[width] = (zeus->zero == 0 ? ' ' : '0');
 	if (zeus->minus)
 		str_spaces[0] = '%';
 	else
