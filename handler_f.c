@@ -12,32 +12,32 @@
 
 #include "ft_printf.h"
 
-static int		stepen(int i)
+static int		exp(int i)
 {
-	int			ten;
+	int			expt;
 
-	ten = 10;
+	expt = 10;
 	while (i--)
-		ten = ten * 10;
-	return (ten);
+		expt = expt * 10;
+	return (expt);
 }
 
 void			ft_dbl(char **str, t_mod *zeus, va_list ap)
 {
-	double		number;
-	int			precision;
+	double		nbr;
+	int			prc;
 	char		*string;
 
-	precision = 6;
+	prc = 6;
 	if (zeus->precision > 0)
-		precision = zeus->precision;
-	number = va_arg(ap, double);
+		prc = zeus->precision;
+	nbr = (zeus->flag == 5 ? va_arg(ap, long double) : va_arg(ap, double));
 	zeus->alpha = 0;
-	string = ft_itoal((int)number, 10, zeus);
+	string = ft_itoal((int)nbr, 10, zeus);
 	*str = ft_strjoin(*str, string);
-	number = (number - (int)number) * stepen(precision - 1) + 0.5;
+	nbr = (nbr - (int)nbr) * exp(prc - 1) + 0.5;
 	*str = ft_strjoin(*str, ".");
-	string = ft_itoal((int)number, 10, zeus);
+	string = ft_itoal((int)nbr, 10, zeus);
 	*str = ft_strjoin(*str, string);
 	free(string);
 }

@@ -55,7 +55,7 @@ void		ft_ar(char **str, t_mod *zeus, va_list ap)
 	arr = (arr == NULL ? ft_strdup("(null)") : arr);
 	if (zeus->precision)
 		arr = ar_precision(arr, zeus);
-	if (zeus->min_width > (int)ft_strlen(arr))
+	if (zeus->min_width > ft_strlen(arr))
 		arr = ar_width(arr, zeus);
 	tmp = *str;
 	*str = strnnjoin(*str, arr, zeus->len, 0);

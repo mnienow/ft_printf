@@ -12,26 +12,26 @@
 
 #include "ft_printf.h"
 
-void	flags2(const char *format, size_t *i, t_mod *zeus)
+void	flags2(const char *fmt, size_t *i, t_mod *zeus)
 {
-	if (format[i[0]] == 'h')
+	if (fmt[i[0]] == 'h')
 	{
-		zeus->flag = (format[i[0]++ + 1] == 'h' ? hh : h);
-		i[0] = (format[i[0]] == 'h' ? i[0] + 1 : i[0]);
+		zeus->flag = (fmt[i[0]++ + 1] == 'h' ? hh : h);
+		i[0] = (fmt[i[0]] == 'h' ? i[0] + 1 : i[0]);
 	}
-	if (format[i[0]] == 'l')
+	if (fmt[i[0]] == 'l')
 	{
-		zeus->flag = (format[i[0]++ + 1] == 'l' ? ll : l);
-		i[0] = (format[i[0]] == 'l' ? i[0] + 1 : i[0]);
+		zeus->flag = (fmt[i[0]++ + 1] == 'l' ? ll : l);
+		i[0] = (fmt[i[0]] == 'l' ? i[0] + 1 : i[0]);
 	}
-	if (format[i[0]] == 'L')
+	if (fmt[i[0]] == 'L')
 	{
 		zeus->flag = L;
 		i[0]++;
 	}
 }
 
-void	text(const char *format, char **str, size_t *i, t_mod *zeus)
+void	text(const char *fmt, char **str, size_t *i, t_mod *zeus)
 {
 	char	*ad;
 	char	*tmp;
@@ -39,8 +39,8 @@ void	text(const char *format, char **str, size_t *i, t_mod *zeus)
 
 	j = 0;
 	ad = ft_strnew(0);
-	while (format[i[0]] != '%' && format[i[0]] && j++ >= 0)
-		add(&ad, format[i[0]++], 0);
+	while (fmt[i[0]] != '%' && fmt[i[0]] && j++ >= 0)
+		add(&ad, fmt[i[0]++], 0);
 	tmp = *str;
 	*str = strnnjoin(*str, ad, zeus->len, 0);
 	zeus->len += j;

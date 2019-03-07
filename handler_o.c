@@ -12,6 +12,20 @@
 
 #include "ft_printf.h"
 
+static void		flag(t_mod *zeus, intmax_t *oct)
+{
+	if (!zeus->flag)
+		*oct = (unsigned int)*oct;
+	if (zeus->flag == 1)
+		*oct = (unsigned short)*oct;
+	if (zeus->flag == 2)
+		*oct = (unsigned long)*oct;
+	if (zeus->flag == 3)
+		*oct = (unsigned char)*oct;
+	if (zeus->flag == 4)
+		*oct = (unsigned long long)*oct;
+}
+
 static char		*oct_width(char *str, t_mod *zeus)
 {
 	char	*str_spaces;
@@ -71,28 +85,21 @@ static char		*oct_sharp(char *str)
 
 void			ft_oct(char **str, t_mod *zeus, va_list ap)
 {
-	intmax_t	hex;
+	intmax_t	oct;
 	char		*string;
 	char		*tmp;
 
-	hex = va_arg(ap, int);
-	if (zeus->flag == 1)
-		hex = (unsigned short)hex;
-	if (zeus->flag == 2)
-		hex = (unsigned long)hex;
-	if (zeus->flag == 3)
-		hex = (unsigned char)hex;
-	if (zeus->flag == 4)
-		hex = (unsigned long long)hex;
-	string = ft_itoal(hex, 8, zeus);
+	oct = va_arg(ap, int);
+	flag(zeus, &oct);
+	string = ft_itoal(oct, 8, zeus);
 	if (zeus->precision)
-		string = oct_precision(string, zeus, 1, hex);
-	if (zeus->sharp && hex != 0)
+		string = oct_precision(string, zeus, 1, oct);
+	if (zeus->sharp && oct != 0)
 		string = oct_sharp(string);
 	if (zeus->zero && !(zeus->precision) && !(zeus->minus)
 	&& !(zeus->plus) && zeus->min_width)
-		string = oct_precision(string, zeus, 0, hex);
-	if (zeus->min_width > (int)ft_strlen(string))
+		string = oct_precision(string, zeus, 0, oct);
+	if (zeus->min_width > ft_strlen(string))
 		string = oct_width(string, zeus);
 	tmp = *str;
 	*str = strnnjoin(*str, string, zeus->len, 0);

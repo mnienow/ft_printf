@@ -12,7 +12,21 @@
 
 #include "ft_printf.h"
 
-char	*hex_width(char *str, t_mod *zeus)
+static void	flag(t_mod *zeus, intmax_t *hex)
+{
+	if (!zeus->flag)
+		*hex = (unsigned int)*hex;
+	if (zeus->flag == 1)
+		*hex = (unsigned short)*hex;
+	if (zeus->flag == 2)
+		*hex = (unsigned long)*hex;
+	if (zeus->flag == 3)
+		*hex = (unsigned char)*hex;
+	if (zeus->flag == 4)
+		*hex = (unsigned long long)*hex;
+}
+
+char		*hex_width(char *str, t_mod *zeus)
 {
 	char	*str_spaces;
 	int		width;
@@ -30,7 +44,7 @@ char	*hex_width(char *str, t_mod *zeus)
 	return (str);
 }
 
-char	*hex_precision(char *str, t_mod *zeus, int i, intmax_t hex)
+char		*hex_precision(char *str, t_mod *zeus, int i, intmax_t hex)
 {
 	char	*str_zero;
 	char	*tmp;
@@ -55,7 +69,7 @@ char	*hex_precision(char *str, t_mod *zeus, int i, intmax_t hex)
 	return (str);
 }
 
-char	*hex_sharp(char *str, t_mod *zeus)
+char		*hex_sharp(char *str, t_mod *zeus)
 {
 	char	*str_sharp;
 	char	*tmp;
@@ -67,25 +81,14 @@ char	*hex_sharp(char *str, t_mod *zeus)
 	return (str);
 }
 
-void	ft_hex(char **str, t_mod *zeus, va_list ap)
+void		ft_hex(char **str, t_mod *zeus, va_list ap)
 {
 	intmax_t		hex;
 	char			*string;
 	char			*tmp;
 
-	hex = va_arg(ap, uintmax_t);
-	if (zeus->flag == 0)
-		hex = (int)hex;
-	if (zeus->flag == 1)
-		hex = (unsigned short)hex;
-	if (zeus->flag == 2)
-		hex = (unsigned long)hex;
-	if (zeus->flag == 3)
-		hex = (unsigned char)hex;
-	if (zeus->flag == 4)
-		hex = (unsigned long long)hex;
-	if (zeus->flag == 5)
-		hex = (unsigned long)hex;
+	hex = va_arg(ap, intmax_t);
+	flag(zeus, &hex);
 	if (hex < 0)
 		hex = 4294967295 + 1 + hex;
 	if (hex == 0 && zeus->dot)
@@ -98,7 +101,7 @@ void	ft_hex(char **str, t_mod *zeus, va_list ap)
 		string = hex_sharp(string, zeus);
 	if (zeus->zero && !(zeus->precision) && zeus->min_width && !(zeus->minus))
 		string = hex_precision(string, zeus, 0, hex);
-	if (zeus->min_width > (int)ft_strlen(string))
+	if (zeus->min_width > ft_strlen(string))
 		string = hex_width(string, zeus);
 	tmp = *str;
 	*str = strnnjoin(*str, string, zeus->len, 0);

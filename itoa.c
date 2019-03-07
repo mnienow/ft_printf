@@ -34,17 +34,12 @@ char		*ft_itoal(intmax_t nb, int base, t_mod *zeus)
 	uintmax_t	num;
 	int			sign;
 
-	sign = 0;
 	if (nb == -9223372036854775807 - 1)
 		return (ft_strdup("-9223372036854775808"));
-	if ((nb == 0 && zeus->min_width != 0) ||
-	(nb == 0 && zeus->dot && !zeus->sharp))
+	if ((!nb && zeus->min_width != 0) || (!nb && zeus->dot && !zeus->sharp))
 		return (ft_strdup(""));
-	if (nb < 0)
-	{
-		sign = 1;
-		nb = -nb;
-	}
+	sign = (nb < 0 ? 1 : 0);
+	nb = ABS(nb);
 	len = (ftcount(nb, base) + sign);
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	str[len] = '\0';
@@ -52,13 +47,11 @@ char		*ft_itoal(intmax_t nb, int base, t_mod *zeus)
 	{
 		num = nb % base;
 		if (num >= 10 && num <= 15)
-			str[len - 1] = (zeus->alpha == 0 ? num + 87 : num + 55);
+			str[len-- - 1] = (zeus->alpha == 0 ? num + 87 : num + 55);
 		else
-			str[len - 1] = num + 48;
+			str[len-- - 1] = num + 48;
 		nb = nb / base;
-		len--;
 	}
-	if (sign == 1)
-		str[0] = '-';
+	str[0] = (sign == 1 ? '-' : str[0]);
 	return (str);
 }

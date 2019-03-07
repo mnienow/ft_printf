@@ -12,6 +12,20 @@
 
 #include "ft_printf.h"
 
+static void	flag(t_mod *zeus, intmax_t *inta)
+{
+	if (!zeus->flag)
+		*inta = (int)*inta;
+	if (zeus->flag == 1)
+		*inta = (short)*inta;
+	if (zeus->flag == 2)
+		*inta = (long)*inta;
+	if (zeus->flag == 3)
+		*inta = (signed char)*inta;
+	if (zeus->flag == 4)
+		*inta = (long long)*inta;
+}
+
 static char	*int_width(char *str, t_mod *zeus)
 {
 	char	*str_spaces;
@@ -61,40 +75,29 @@ static char	*int_precision(char *str, t_mod *zeus, int i, intmax_t integer)
 
 void		ft_int(char **str, t_mod *zeus, va_list ap)
 {
-	intmax_t		integer;
-	char			*string;
+	intmax_t		inta;
+	char			*strn;
 	char			*tmp;
 
-	integer = va_arg(ap, intmax_t);
-	if (zeus->flag == 0)
-		integer = (int)integer;
-	if (zeus->flag == 1)
-		integer = (short)integer;
-	if (zeus->flag == 2)
-		integer = (long)integer;
-	if (zeus->flag == 3)
-		integer = (signed char)integer;
-	if (zeus->flag == 4)
-		integer = (long long)integer;
-	string = ft_itoal(integer, 10, zeus);
-	string = (zeus->precision == 0 ? string :
-	int_precision(string, zeus, 1, integer));
+	inta = va_arg(ap, intmax_t);
+	flag(zeus, &inta);
+	strn = ft_itoal(inta, 10, zeus);
+	strn = (zeus->precision == 0 ? strn : int_precision(strn, zeus, 1, inta));
 	if (zeus->zero && !(zeus->precision) && zeus->min_width && !(zeus->minus))
-		string = int_precision(string, zeus, 0, integer);
-	if (zeus->plus && integer >= 0)
+		strn = int_precision(strn, zeus, 0, inta);
+	if (zeus->plus && inta >= 0)
 	{
 		if (!zeus->zero)
-			string = ft_strjoin("+", string);
+			strn = ft_strjoin("+", strn);
 		else
-			string[0] = '+';
+			strn[0] = '+';
 	}
-	if (!zeus->plus && zeus->space && integer >= 0)
-		string = ft_strjoin(" ", string);
-	if (zeus->min_width > (int)ft_strlen(string))
-		string = int_width(string, zeus);
+	if (!zeus->plus && zeus->space && inta >= 0)
+		strn = ft_strjoin(" ", strn);
+	strn = (zeus->min_width > ft_strlen(strn) ? int_width(strn, zeus) : strn);
 	tmp = *str;
-	*str = strnnjoin(*str, string, zeus->len, 0);
-	zeus->len += ft_strlen(string);
-	free(string);
+	*str = strnnjoin(*str, strn, zeus->len, 0);
+	zeus->len += ft_strlen(strn);
+	free(strn);
 	free(tmp);
 }

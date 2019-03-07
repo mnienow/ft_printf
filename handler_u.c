@@ -12,6 +12,20 @@
 
 #include "ft_printf.h"
 
+static void	flag(t_mod *zeus, intmax_t *ui)
+{
+	if (!zeus->flag)
+		*ui = (unsigned int)*ui;
+	if (zeus->flag == 1)
+		*ui = (unsigned short)*ui;
+	if (zeus->flag == 2)
+		*ui = (unsigned long)*ui;
+	if (zeus->flag == 3)
+		*ui = (unsigned char)*ui;
+	if (zeus->flag == 4)
+		*ui = (unsigned long long)*ui;
+}
+
 static char	*udc_width(char *str, t_mod *zeus)
 {
 	char	*str_spaces;
@@ -68,29 +82,20 @@ static char	*udc_sharp(char *str)
 
 void		ft_udc(char **str, t_mod *zeus, va_list ap)
 {
-	intmax_t	hex;
+	intmax_t	ui;
 	char		*string;
 	char		*tmp;
 
-	hex = va_arg(ap, intmax_t);
-	if (zeus->flag == 0)
-		hex = (unsigned int)hex;
-	if (zeus->flag == 1)
-		hex = (unsigned short)hex;
-	if (zeus->flag == 2)
-		hex = (unsigned long)hex;
-	if (zeus->flag == 3)
-		hex = (unsigned char)hex;
-	if (zeus->flag == 4)
-		hex = (unsigned long long)hex;
-	string = ft_itoal(hex, 10, zeus);
+	ui = va_arg(ap, intmax_t);
+	flag(zeus, &ui);
+	string = ft_itoal(ui, 10, zeus);
 	if (zeus->precision)
 		string = udc_precision(string, zeus, 1);
 	if (zeus->sharp)
 		string = udc_sharp(string);
 	if (zeus->zero && !(zeus->precision) && zeus->min_width)
 		string = udc_precision(string, zeus, 0);
-	if (zeus->min_width > (int)ft_strlen(string))
+	if (zeus->min_width > ft_strlen(string))
 		string = udc_width(string, zeus);
 	tmp = *str;
 	*str = strnnjoin(*str, string, zeus->len, 0);

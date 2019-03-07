@@ -80,7 +80,7 @@ void		ft_pnt(char **str, t_mod *zeus, va_list ap)
 		string = pnt_sharp(string);
 	if (zeus->zero && !(zeus->precision) && zeus->min_width)
 		string = pnt_precision(string, zeus, 0);
-	if (zeus->min_width > (int)ft_strlen(string))
+	if (zeus->min_width > ft_strlen(string))
 		string = pnt_width(string, zeus);
 	tmp = *str;
 	*str = strnnjoin(*str, string, zeus->len, 0);

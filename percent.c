@@ -21,21 +21,21 @@ void	new_zeus(t_mod *zeus)
 	zeus->sharp = 0;
 	zeus->space = 0;
 	zeus->zero = 0;
-	zeus->min_width = 0;
-	zeus->precision = 0;
 	zeus->dot = 0;
+	zeus->precision = 0;
+	zeus->min_width = 0;
 	zeus->len = zeus->len + 0;
 }
 
-void	number(const char *format, size_t *i, t_mod *zeus)
+void	number(const char *fmt, size_t *i, t_mod *zeus)
 {
 	char	*ad;
 	char	ch;
 
-	ch = format[i[0] - 1];
+	ch = fmt[i[0] - 1];
 	ad = ft_strnew(0);
-	while (format[i[0]] >= 48 && format[i[0]] <= 57)
-		add(&ad, format[i[0]++], 0);
+	while (fmt[i[0]] >= 48 && fmt[i[0]] <= 57)
+		add(&ad, fmt[i[0]++], 0);
 	if (ch == 46)
 		zeus->precision = ft_atoi(ad);
 	else
@@ -43,47 +43,46 @@ void	number(const char *format, size_t *i, t_mod *zeus)
 	free(ad);
 }
 
-void	flags1(const char *format, size_t *i, t_mod *zeus)
+void	flags1(const char *fmt, size_t *i, t_mod *zeus)
 {
-	while (format[i[0]] == 32 || (format[i[0]] >= 48 && format[i[0]] <= 57) ||
-	format[i[0]] == 35 || format[i[0]] == 43 ||
-	format[i[0]] == 45 || format[i[0]] == 46)
+	while ((fmt[i[0]] >= 48 && fmt[i[0]] <= 57) || fmt[i[0]] == 32 ||
+	fmt[i[0]] == 35 || fmt[i[0]] == 43 || fmt[i[0]] == 45 || fmt[i[0]] == 46)
 	{
-		zeus->space = (format[i[0]] == 32 ? format[i[0]++] - 31 : zeus->space);
-		zeus->zero = (format[i[0]] == 48 ? format[i[0]++] - 47 : zeus->zero);
-		zeus->sharp = (format[i[0]] == 35 ? format[i[0]++] - 34 : zeus->sharp);
-		zeus->minus = (format[i[0]] == 45 ? format[i[0]++] - 44 : zeus->minus);
-		zeus->plus = (format[i[0]] == 43 ? format[i[0]++] - 42 : zeus->plus);
-		zeus->dot = (format[i[0]] == 46 ? format[i[0]++] - 45 : zeus->dot);
-		if (format[i[0]] >= 49 && format[i[0]] <= 57)
-			number(format, i, zeus);
+		zeus->space = (fmt[i[0]] == 32 ? fmt[i[0]++] - 31 : zeus->space);
+		zeus->zero = (fmt[i[0]] == 48 ? fmt[i[0]++] - 47 : zeus->zero);
+		zeus->sharp = (fmt[i[0]] == 35 ? fmt[i[0]++] - 34 : zeus->sharp);
+		zeus->minus = (fmt[i[0]] == 45 ? fmt[i[0]++] - 44 : zeus->minus);
+		zeus->plus = (fmt[i[0]] == 43 ? fmt[i[0]++] - 42 : zeus->plus);
+		zeus->dot = (fmt[i[0]] == 46 ? fmt[i[0]++] - 45 : zeus->dot);
+		if (fmt[i[0]] >= 49 && fmt[i[0]] <= 57)
+			number(fmt, i, zeus);
 	}
 }
 
-void	conversions(char format, char **str, va_list ap, t_mod *zeus)
+void	conversions(char fmt, char **str, va_list ap, t_mod *zeus)
 {
-	if (format == 'd')
+	if (fmt == 'd')
 		ft_int(str, zeus, ap);
-	if (format == 'c')
+	if (fmt == 'c')
 		ft_ch(str, zeus, ap);
-	if (format == 's')
+	if (fmt == 's')
 		ft_ar(str, zeus, ap);
-	if (format == 'x' || format == 'X')
+	if (fmt == 'x' || fmt == 'X')
 	{
-		zeus->alpha = (format == 'x' ? 0 : 1);
+		zeus->alpha = (fmt == 'x' ? 0 : 1);
 		ft_hex(str, zeus, ap);
 	}
-	if (format == 'p')
+	if (fmt == 'p')
 		ft_pnt(str, zeus, ap);
-	if (format == 'o')
+	if (fmt == 'o')
 		ft_oct(str, zeus, ap);
-	if (format == 'u')
+	if (fmt == 'u')
 		ft_udc(str, zeus, ap);
-	if (format == 'f')
+	if (fmt == 'f')
 		ft_dbl(str, zeus, ap);
 }
 
-char	*parser(va_list ap, const char *format, size_t *ret)
+char	*parser(va_list ap, const char *fmt, size_t *ret)
 {
 	char	*str;
 	size_t	i;
@@ -92,18 +91,18 @@ char	*parser(va_list ap, const char *format, size_t *ret)
 	zeus.len = 0;
 	str = ft_strnew(0);
 	i = 0;
-	while (format[i])
+	while (fmt[i])
 	{
-		if (format[i] != '%' && format[i] && i < ft_strlen(format))
-			text(format, &str, &i, &zeus);
-		if (format[i++] == '%')
+		if (fmt[i] != '%' && fmt[i] && i < ft_strlen(fmt))
+			text(fmt, &str, &i, &zeus);
+		if (fmt[i++] == '%')
 		{
 			new_zeus(&zeus);
-			flags1(format, &i, &zeus);
-			if (format[i] == '%')
+			flags1(fmt, &i, &zeus);
+			if (fmt[i] == '%')
 				percent(&str, &i, &zeus);
-			flags2(format, &i, &zeus);
-			conversions(format[i++], &str, ap, &zeus);
+			flags2(fmt, &i, &zeus);
+			conversions(fmt[i++], &str, ap, &zeus);
 		}
 	}
 	*ret = zeus.len;

@@ -38,9 +38,9 @@ typedef struct		s_mod
 	int				sharp;
 	int				space;
 	int				zero;
-	int				min_width;
-	int				precision;
 	int				dot;
+	int				precision;
+	size_t			min_width;
 	size_t			len;
 }					t_mod;
 
