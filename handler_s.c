@@ -49,18 +49,15 @@ static char	*ar_precision(char *str, t_mod *zeus)
 void		ft_ar(char **str, t_mod *zeus, va_list ap)
 {
 	char	*arr;
-	char	*tmp;
+	size_t	sz;
 
 	arr = va_arg(ap, char *);
-	arr = (arr == NULL ? ft_strdup("(null)") : arr);
+	arr = (arr == NULL ? ft_strdup("(null)") : ft_strdup(arr));
 	if (zeus->precision)
 		arr = ar_precision(arr, zeus);
 	if (zeus->min_width > ft_strlen(arr))
 		arr = ar_width(arr, zeus);
-	tmp = *str;
+	sz = ft_strlen(arr);
 	*str = strnnjoin(*str, arr, zeus->len, 0);
-	zeus->len += ft_strlen(arr);
-	free(tmp);
-	if (zeus->precision || zeus->min_width)
-		free(arr);
+	zeus->len += sz;
 }

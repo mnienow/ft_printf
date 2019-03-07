@@ -21,19 +21,9 @@ int	main(void)
 	b = &a;
 	printf("------------------------------\n");
 	printf("Original\n");
-	printf("(%d)\n", printf("@moulitest: %#.x %#.0x", 0, 0));
+	printf("(%d)\n", printf("%c %s", 0, "42"));
 	printf("Our\n");
-	printf("(%d)\n", ft_printf("@moulitest: %#.x %#.0x", 0, 0));
+	printf("(%d)\n", ft_printf("%c %s", 0, "42"));
 	printf("------------------------------\n");
-	printf("Original\n");
-	printf("(%d)\n", printf("%03.2d", 0));
-	printf("Our\n");
-	printf("(%d)\n", ft_printf("%03.2d", 0));
-	printf("------------------------------\n");
-	printf("Original\n");
-	printf("(%d)\n", printf("@moulitest: %5.d %5.0d", 0, 0));
-	printf("Our\n");
-	printf("(%d)\n", ft_printf("@moulitest: %5.d %5.0d", 0, 0));
-	printf("------------------------------");
 	return (0);
 }

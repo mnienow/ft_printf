@@ -26,18 +26,22 @@ void			ft_dbl(char **str, t_mod *zeus, va_list ap)
 {
 	double		nbr;
 	int			prc;
-	char		*string;
+	char		*strn;
+	size_t		sz;
 
 	prc = 6;
 	if (zeus->precision > 0)
 		prc = zeus->precision;
 	nbr = (zeus->flag == 5 ? va_arg(ap, long double) : va_arg(ap, double));
 	zeus->alpha = 0;
-	string = ft_itoal((int)nbr, 10, zeus);
-	*str = ft_strjoin(*str, string);
+	strn = ft_itoal((int)nbr, 10, zeus);
+	sz = ft_strlen(strn);
+	*str = strnnjoin(*str, strn, zeus->len, 0);
+	zeus->len += sz;
 	nbr = (nbr - (int)nbr) * exp(prc - 1) + 0.5;
-	*str = ft_strjoin(*str, ".");
-	string = ft_itoal((int)nbr, 10, zeus);
-	*str = ft_strjoin(*str, string);
-	free(string);
+	*str = strnnjoin(*str, ft_strdup("."), zeus->len++, 0);
+	strn = ft_itoal((int)nbr, 10, zeus);
+	sz = ft_strlen(strn);
+	*str = strnnjoin(*str, strn, zeus->len, 0);
+	zeus->len += sz;
 }

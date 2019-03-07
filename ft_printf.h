@@ -13,6 +13,7 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
+# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
@@ -45,7 +46,6 @@ typedef struct		s_mod
 }					t_mod;
 
 int					ft_printf(const char *format, ...);
-size_t				ount(int n);
 void				add(char **a, char b, size_t sz);
 void				text(const char *format, char **str,
 size_t *i, t_mod *zeus);
@@ -59,8 +59,7 @@ void				ft_hex(char **str, t_mod *zeus, va_list ap);
 void				ft_oct(char **str, t_mod *zeus, va_list ap);
 void				ft_udc(char **str, t_mod *zeus, va_list ap);
 void				ft_pnt(char **str, t_mod *zeus, va_list ap);
-char				*strnnjoin(char const *s1, char
-const *s2, size_t sz1, size_t sz2);
+char				*strnnjoin(char *s1, char *s2, size_t sz1, size_t sz2);
 void				ft_dbl(char **str, t_mod *zeus, va_list ap);
 void				percent(char **str, size_t *i, t_mod *zeus);
 void				flags2(const char *format, size_t *i, t_mod *zeus);

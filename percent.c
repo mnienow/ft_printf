@@ -59,9 +59,9 @@ void	flags1(const char *fmt, size_t *i, t_mod *zeus)
 	}
 }
 
-void	conversions(char fmt, char **str, va_list ap, t_mod *zeus)
+size_t	conversions(char fmt, char **str, va_list ap, t_mod *zeus)
 {
-	if (fmt == 'd')
+	if (fmt == 'd' || fmt == 'i')
 		ft_int(str, zeus, ap);
 	if (fmt == 'c')
 		ft_ch(str, zeus, ap);
@@ -80,20 +80,26 @@ void	conversions(char fmt, char **str, va_list ap, t_mod *zeus)
 		ft_udc(str, zeus, ap);
 	if (fmt == 'f')
 		ft_dbl(str, zeus, ap);
+	if (fmt == 'd' || fmt == 'i' || fmt == 'c' || fmt == 's' || fmt == 'x' ||
+	fmt == 'X' || fmt == 'p' || fmt == 'o' || fmt == 'u' || fmt == 'f')
+		return (1);
+	return (0);
 }
 
 char	*parser(va_list ap, const char *fmt, size_t *ret)
 {
 	char	*str;
 	size_t	i;
+	size_t	sz;
 	t_mod	zeus;
 
 	zeus.len = 0;
 	str = ft_strnew(0);
 	i = 0;
-	while (fmt[i])
+	sz = ft_strlen(fmt);
+	while (i < sz)
 	{
-		if (fmt[i] != '%' && fmt[i] && i < ft_strlen(fmt))
+		if (fmt[i] != '%' && i < sz)
 			text(fmt, &str, &i, &zeus);
 		if (fmt[i++] == '%')
 		{
@@ -102,7 +108,7 @@ char	*parser(va_list ap, const char *fmt, size_t *ret)
 			if (fmt[i] == '%')
 				percent(&str, &i, &zeus);
 			flags2(fmt, &i, &zeus);
-			conversions(fmt[i++], &str, ap, &zeus);
+			i += conversions(fmt[i], &str, ap, &zeus);
 		}
 	}
 	*ret = zeus.len;

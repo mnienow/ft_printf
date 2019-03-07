@@ -73,33 +73,32 @@ static char	*udc_sharp(char *str)
 	char	*str_sharp;
 	char	*tmp;
 
-	str_sharp = "0x";
+	str_sharp = ft_strdup("0x");
 	tmp = str;
 	str = ft_strjoin(str_sharp, str);
 	free(tmp);
+	free(str_sharp);
 	return (str);
 }
 
 void		ft_udc(char **str, t_mod *zeus, va_list ap)
 {
 	intmax_t	ui;
-	char		*string;
-	char		*tmp;
+	char		*strn;
+	size_t		sz;
 
 	ui = va_arg(ap, intmax_t);
 	flag(zeus, &ui);
-	string = ft_itoal(ui, 10, zeus);
+	strn = ft_itoal(ui, 10, zeus);
 	if (zeus->precision)
-		string = udc_precision(string, zeus, 1);
+		strn = udc_precision(strn, zeus, 1);
 	if (zeus->sharp)
-		string = udc_sharp(string);
+		strn = udc_sharp(strn);
 	if (zeus->zero && !(zeus->precision) && zeus->min_width)
-		string = udc_precision(string, zeus, 0);
-	if (zeus->min_width > ft_strlen(string))
-		string = udc_width(string, zeus);
-	tmp = *str;
-	*str = strnnjoin(*str, string, zeus->len, 0);
-	zeus->len += ft_strlen(string);
-	free(tmp);
-	free(string);
+		strn = udc_precision(strn, zeus, 0);
+	if (zeus->min_width > ft_strlen(strn))
+		strn = udc_width(strn, zeus);
+	sz = ft_strlen(strn);
+	*str = strnnjoin(*str, strn, zeus->len, 0);
+	zeus->len += sz;
 }

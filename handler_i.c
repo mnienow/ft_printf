@@ -62,7 +62,8 @@ static char	*int_precision(char *str, t_mod *zeus, int i, intmax_t integer)
 		while (--count >= 0)
 			str_zero[count] = '0';
 	if (zeus->precision)
-		str_zero = (str[0] == '-' ? ft_strjoin("-", str_zero) : str_zero);
+		str_zero = (str[0] == '-' ? ft_strjoin(ft_strdup("-"),
+		str_zero) : str_zero);
 	else if (zeus->min_width && str[0] == '-')
 		str_zero[0] = '-';
 	str[0] = (str[0] == '-' ? '0' : str[0]);
@@ -77,7 +78,7 @@ void		ft_int(char **str, t_mod *zeus, va_list ap)
 {
 	intmax_t		inta;
 	char			*strn;
-	char			*tmp;
+	size_t			sz;
 
 	inta = va_arg(ap, intmax_t);
 	flag(zeus, &inta);
@@ -88,16 +89,14 @@ void		ft_int(char **str, t_mod *zeus, va_list ap)
 	if (zeus->plus && inta >= 0)
 	{
 		if (!zeus->zero)
-			strn = ft_strjoin("+", strn);
+			strn = strnnjoin(ft_strdup("+"), strn, 0, 0);
 		else
 			strn[0] = '+';
 	}
 	if (!zeus->plus && zeus->space && inta >= 0)
-		strn = ft_strjoin(" ", strn);
+		strn = strnnjoin(ft_strdup(" "), strn, 0, 0);
 	strn = (zeus->min_width > ft_strlen(strn) ? int_width(strn, zeus) : strn);
-	tmp = *str;
+	sz = ft_strlen(strn);
 	*str = strnnjoin(*str, strn, zeus->len, 0);
-	zeus->len += ft_strlen(strn);
-	free(strn);
-	free(tmp);
+	zeus->len += sz;
 }

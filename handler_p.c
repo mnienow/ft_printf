@@ -59,32 +59,36 @@ static char	*pnt_sharp(char *str)
 	char	*str_sharp;
 	char	*tmp;
 
-	str_sharp = "0x";
+	str_sharp = ft_strdup("0x");
 	tmp = str;
 	str = ft_strjoin(str_sharp, str);
 	free(tmp);
+	free(str_sharp);
 	return (str);
 }
 
 void		ft_pnt(char **str, t_mod *zeus, va_list ap)
 {
 	unsigned long int	hex;
-	char				*string;
-	char				*tmp;
+	char				*strn;
+	size_t				sz;
 
 	hex = va_arg(ap, unsigned long long);
-	string = ft_itoal(hex, 16, zeus);
+	strn = ft_itoal(hex, 16, zeus);
+	if (hex == 0)
+	{
+		free(strn);
+		strn = ft_strdup("0");
+	}
 	if (zeus->precision)
-		string = pnt_precision(string, zeus, 1);
+		strn = pnt_precision(strn, zeus, 1);
 	if (1)
-		string = pnt_sharp(string);
+		strn = pnt_sharp(strn);
 	if (zeus->zero && !(zeus->precision) && zeus->min_width)
-		string = pnt_precision(string, zeus, 0);
-	if (zeus->min_width > ft_strlen(string))
-		string = pnt_width(string, zeus);
-	tmp = *str;
-	*str = strnnjoin(*str, string, zeus->len, 0);
-	zeus->len += ft_strlen(string);
-	free(tmp);
-	free(string);
+		strn = pnt_precision(strn, zeus, 0);
+	if (zeus->min_width > ft_strlen(strn))
+		strn = pnt_width(strn, zeus);
+	sz = ft_strlen(strn);
+	*str = strnnjoin(*str, strn, zeus->len, 0);
+	zeus->len += sz;
 }

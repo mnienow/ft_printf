@@ -15,7 +15,6 @@
 void	percent(char **str, size_t *i, t_mod *zeus)
 {
 	char	*str_spaces;
-	char	*tmp;
 	int		width;
 
 	zeus->min_width = (zeus->min_width == 0 ? 1 : zeus->min_width);
@@ -28,11 +27,8 @@ void	percent(char **str, size_t *i, t_mod *zeus)
 		str_spaces[0] = '%';
 	else
 		str_spaces[zeus->min_width - 1] = '%';
-	tmp = *str;
 	*str = strnnjoin(*str, str_spaces, zeus->len, 0);
 	zeus->len += zeus->min_width--;
-	free(tmp);
-	free(str_spaces);
 	i[0]++;
 }
 
@@ -54,7 +50,7 @@ size_t	count(int n)
 	return (i);
 }
 
-char	*strnnjoin(char const *s1, char const *s2, size_t sz1, size_t sz2)
+char	*strnnjoin(char *s1, char *s2, size_t sz1, size_t sz2)
 {
 	size_t	i;
 	size_t	j;
@@ -78,19 +74,17 @@ char	*strnnjoin(char const *s1, char const *s2, size_t sz1, size_t sz2)
 		j++;
 	}
 	a[i] = '\0';
+	free(s1);
+	free(s2);
 	return (a);
 }
 
 void	add(char **a, char b, size_t sz)
 {
 	char	*c;
-	char	*tmp;
 
 	c = malloc(2);
 	c[0] = b;
 	c[1] = '\0';
-	tmp = *a;
 	*a = strnnjoin(*a, c, sz, 1);
-	free(tmp);
-	free(c);
 }

@@ -34,18 +34,14 @@ void	flags2(const char *fmt, size_t *i, t_mod *zeus)
 void	text(const char *fmt, char **str, size_t *i, t_mod *zeus)
 {
 	char	*ad;
-	char	*tmp;
 	int		j;
 
 	j = 0;
 	ad = ft_strnew(0);
 	while (fmt[i[0]] != '%' && fmt[i[0]] && j++ >= 0)
 		add(&ad, fmt[i[0]++], 0);
-	tmp = *str;
 	*str = strnnjoin(*str, ad, zeus->len, 0);
 	zeus->len += j;
-	free(tmp);
-	free(ad);
 }
 
 int		ft_printf(const char *format, ...)

@@ -74,38 +74,37 @@ char		*hex_sharp(char *str, t_mod *zeus)
 	char	*str_sharp;
 	char	*tmp;
 
-	str_sharp = (zeus->alpha == 0 ? "0x" : "0X");
+	str_sharp = (zeus->alpha == 0 ? ft_strdup("0x") : ft_strdup("0X"));
 	tmp = str;
 	str = ft_strjoin(str_sharp, str);
 	free(tmp);
+	free(str_sharp);
 	return (str);
 }
 
 void		ft_hex(char **str, t_mod *zeus, va_list ap)
 {
 	intmax_t		hex;
-	char			*string;
-	char			*tmp;
+	char			*strn;
+	size_t			sz;
 
 	hex = va_arg(ap, intmax_t);
 	flag(zeus, &hex);
 	if (hex < 0)
 		hex = 4294967295 + 1 + hex;
 	if (hex == 0 && zeus->dot)
-		string = ft_strdup("");
+		strn = ft_strdup("");
 	else
-		string = ft_itoal(hex, 16, zeus);
+		strn = ft_itoal(hex, 16, zeus);
 	if (zeus->precision)
-		string = hex_precision(string, zeus, 1, hex);
+		strn = hex_precision(strn, zeus, 1, hex);
 	if (zeus->sharp && hex != 0)
-		string = hex_sharp(string, zeus);
+		strn = hex_sharp(strn, zeus);
 	if (zeus->zero && !(zeus->precision) && zeus->min_width && !(zeus->minus))
-		string = hex_precision(string, zeus, 0, hex);
-	if (zeus->min_width > ft_strlen(string))
-		string = hex_width(string, zeus);
-	tmp = *str;
-	*str = strnnjoin(*str, string, zeus->len, 0);
-	zeus->len += ft_strlen(string);
-	free(tmp);
-	free(string);
+		strn = hex_precision(strn, zeus, 0, hex);
+	if (zeus->min_width > ft_strlen(strn))
+		strn = hex_width(strn, zeus);
+	sz = ft_strlen(strn);
+	*str = strnnjoin(*str, strn, zeus->len, 0);
+	zeus->len += sz;
 }

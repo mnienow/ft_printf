@@ -76,7 +76,7 @@ static char		*oct_sharp(char *str)
 	char	*str_sharp;
 	char	*tmp;
 
-	str_sharp = "0";
+	str_sharp = ft_strdup("0");
 	tmp = str;
 	str = ft_strjoin(str_sharp, str);
 	free(tmp);
@@ -86,24 +86,22 @@ static char		*oct_sharp(char *str)
 void			ft_oct(char **str, t_mod *zeus, va_list ap)
 {
 	intmax_t	oct;
-	char		*string;
-	char		*tmp;
+	char		*strn;
+	size_t		sz;
 
 	oct = va_arg(ap, int);
 	flag(zeus, &oct);
-	string = ft_itoal(oct, 8, zeus);
+	strn = ft_itoal(oct, 8, zeus);
 	if (zeus->precision)
-		string = oct_precision(string, zeus, 1, oct);
+		strn = oct_precision(strn, zeus, 1, oct);
 	if (zeus->sharp && oct != 0)
-		string = oct_sharp(string);
+		strn = oct_sharp(strn);
 	if (zeus->zero && !(zeus->precision) && !(zeus->minus)
 	&& !(zeus->plus) && zeus->min_width)
-		string = oct_precision(string, zeus, 0, oct);
-	if (zeus->min_width > ft_strlen(string))
-		string = oct_width(string, zeus);
-	tmp = *str;
-	*str = strnnjoin(*str, string, zeus->len, 0);
-	zeus->len += ft_strlen(string);
-	free(tmp);
-	free(string);
+		strn = oct_precision(strn, zeus, 0, oct);
+	if (zeus->min_width > ft_strlen(strn))
+		strn = oct_width(strn, zeus);
+	sz = ft_strlen(strn);
+	*str = strnnjoin(*str, strn, zeus->len, 0);
+	zeus->len += sz;
 }
