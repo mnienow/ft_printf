@@ -38,10 +38,8 @@ size_t	count(int n)
 
 	i = 0;
 	if (!n || n < 0)
-	{
 		i = 1;
-		n = -n;
-	}
+	n = ABS(n);
 	while (n)
 	{
 		n = n / 10;

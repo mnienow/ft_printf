@@ -22,7 +22,7 @@ void	new_zeus(t_mod *zeus)
 	zeus->space = 0;
 	zeus->zero = 0;
 	zeus->dot = 0;
-	zeus->precision = 0;
+	zeus->precision = 1;
 	zeus->min_width = 0;
 	zeus->len = zeus->len + 0;
 }
@@ -30,13 +30,11 @@ void	new_zeus(t_mod *zeus)
 void	number(const char *fmt, size_t *i, t_mod *zeus)
 {
 	char	*ad;
-	char	ch;
 
-	ch = fmt[i[0] - 1];
 	ad = ft_strnew(0);
 	while (fmt[i[0]] >= 48 && fmt[i[0]] <= 57)
 		add(&ad, fmt[i[0]++], 0);
-	if (ch == 46)
+	if (zeus->dot)
 		zeus->precision = ft_atoi(ad);
 	else
 		zeus->min_width = ft_atoi(ad);
@@ -54,35 +52,36 @@ void	flags1(const char *fmt, size_t *i, t_mod *zeus)
 		zeus->minus = (fmt[i[0]] == 45 ? fmt[i[0]++] - 44 : zeus->minus);
 		zeus->plus = (fmt[i[0]] == 43 ? fmt[i[0]++] - 42 : zeus->plus);
 		zeus->dot = (fmt[i[0]] == 46 ? fmt[i[0]++] - 45 : zeus->dot);
-		if (fmt[i[0]] >= 49 && fmt[i[0]] <= 57)
+		if ((fmt[i[0]] >= 49 && fmt[i[0]] <= 57) || (fmt[i[0]] == 48 && zeus->dot))
 			number(fmt, i, zeus);
 	}
 }
 
-size_t	conversions(char fmt, char **str, va_list ap, t_mod *zeus)
+size_t	conversions(const char *fmt, char **str, va_list ap, t_mod *zeus)
 {
-	if (fmt == 'd' || fmt == 'i')
+	char ch;
+
+	ch = fmt[1];
+	zeus->precision = (fmt[0] == 46 ? 0 : zeus->precision);
+	conversions2(&ch, zeus);
+	if (ch == 'd' || ch == 'i')
 		ft_int(str, zeus, ap);
-	if (fmt == 'c' || fmt == 'C')
+	if (ch == 'c')
 		ft_ch(str, zeus, ap);
-	if (fmt == 's' || fmt == 'S')
+	if (ch == 's')
 		ft_ar(str, zeus, ap);
-	if (fmt == 'x' || fmt == 'X')
-	{
-		zeus->alpha = (fmt == 'x' ? 0 : 1);
+	if (ch == 'x')
 		ft_hex(str, zeus, ap);
-	}
-	if (fmt == 'p')
+	if (ch == 'p')
 		ft_pnt(str, zeus, ap);
-	if (fmt == 'o' || fmt == 'O')
+	if (ch == 'o')
 		ft_oct(str, zeus, ap);
-	if (fmt == 'u')
+	if (ch == 'u')
 		ft_udc(str, zeus, ap);
-	if (fmt == 'f')
+	if (ch == 'f')
 		ft_dbl(str, zeus, ap);
-	if (fmt == 'd' || fmt == 'i' || fmt == 'c' || fmt == 's' || fmt == 'x' ||
-	fmt == 'X' || fmt == 'p' || fmt == 'o' || fmt == 'u' || fmt == 'f' ||
-	fmt == 'C' || fmt == 'O' || fmt == 'S')
+	if (ch == 'd' || ch == 'i' || ch == 'c' || ch == 's' || ch == 'x'
+	|| ch == 'p' || ch == 'o' || ch == 'u' || ch == 'f')
 		return (1);
 	return (0);
 }
@@ -109,7 +108,7 @@ char	*parser(va_list ap, const char *fmt, size_t *ret)
 			if (fmt[i] == '%')
 				percent(&str, &i, &zeus);
 			flags2(fmt, &i, &zeus);
-			i += conversions(fmt[i], &str, ap, &zeus);
+			i += conversions(&fmt[i - 1], &str, ap, &zeus);
 		}
 	}
 	*ret = zeus.len;

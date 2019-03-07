@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static int		exp(int i)
+static int		expo(int i)
 {
 	int			expt;
 
@@ -38,7 +38,7 @@ void			ft_dbl(char **str, t_mod *zeus, va_list ap)
 	sz = ft_strlen(strn);
 	*str = strnnjoin(*str, strn, zeus->len, 0);
 	zeus->len += sz;
-	nbr = (nbr - (int)nbr) * exp(prc - 1) + 0.5;
+	nbr = (nbr - (int)nbr) * expo(prc - 1) + 0.5;
 	*str = strnnjoin(*str, ft_strdup("."), zeus->len++, 0);
 	strn = ft_itoal((int)nbr, 10, zeus);
 	sz = ft_strlen(strn);

@@ -15,7 +15,7 @@
 
 # include <stdio.h>
 # include <limits.h>
-
+# include <inttypes.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
@@ -67,4 +67,5 @@ char				*strnnjoin(char *s1, char *s2, size_t sz1, size_t sz2);
 void				ft_dbl(char **str, t_mod *zeus, va_list ap);
 void				percent(char **str, size_t *i, t_mod *zeus);
 void				flags2(const char *format, size_t *i, t_mod *zeus);
+void				conversions2(char *fmt, t_mod *zeus);
 #endif
