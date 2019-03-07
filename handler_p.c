@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "ft_printf.h"
 
 static char	*pnt_width(char *str, t_mod *zeus)
@@ -34,22 +33,21 @@ static char	*pnt_width(char *str, t_mod *zeus)
 	return (str);
 }
 
-static char	*pnt_precision(char *str, t_mod *zeus, int	i)
+static char	*pnt_precision(char *str, t_mod *zeus, int i)
 {
 	char	*str_zero;
 	char	*tmp;
 	int		count;
+	size_t	sz;
 
-	if (i)
-		count = zeus->precision - ft_strlen(str);
-	else
-		count =  zeus->min_width - ft_strlen(str);
+	sz = ft_strlen(str);
+	count = (i != 0 ? zeus->precision - sz : zeus->min_width - sz);
+	if (count < 0)
+		return (str);
 	str_zero = (char *)malloc(sizeof(char) * (count + 1));
 	str_zero[count] = '\0';
 	while (--count >= 0)
 		str_zero[count] = '0';
-	// if (zeus->sharp)
-	// 	str_zero[1] = 'x';
 	tmp = str;
 	str = ft_strjoin(str_zero, str);
 	free(tmp);
@@ -62,31 +60,36 @@ static char	*pnt_sharp(char *str)
 	char	*str_sharp;
 	char	*tmp;
 
-	str_sharp = "0x";
+	str_sharp = ft_strdup("0x");
 	tmp = str;
 	str = ft_strjoin(str_sharp, str);
 	free(tmp);
+	free(str_sharp);
 	return (str);
 }
 
-void	ft_pnt(char **str, t_mod *zeus, va_list ap)
+void		ft_pnt(char **str, t_mod *zeus, va_list ap)
 {
 	unsigned long int	hex;
-	char				*string;
-	char				*tmp;
+	char				*strn;
+	size_t				sz;
 
 	hex = va_arg(ap, unsigned long long);
-	string = ft_itoal(hex, 16, zeus);
+	strn = ft_itoal(hex, 16, zeus);
+	if (hex == 0)
+	{
+		free(strn);
+		strn = ft_strdup("0");
+	}
 	if (zeus->precision)
-		string = pnt_precision(string, zeus, 1);
+		strn = pnt_precision(strn, zeus, 1);
 	if (1)
-		string = pnt_sharp(string);
+		strn = pnt_sharp(strn);
 	if (zeus->zero && !(zeus->precision) && zeus->min_width)
-		string = pnt_precision(string, zeus, 0);
-	if (zeus->min_width > (int)ft_strlen(string))
-		string = pnt_width(string, zeus);
-	tmp = *str;
-	*str = ft_strjoin(*str, string);
-	free(tmp);
-	free(string);
+		strn = pnt_precision(strn, zeus, 0);
+	if (zeus->min_width > ft_strlen(strn))
+		strn = pnt_width(strn, zeus);
+	sz = ft_strlen(strn);
+	*str = strnnjoin(*str, strn, zeus->len, 0);
+	zeus->len += sz;
 }

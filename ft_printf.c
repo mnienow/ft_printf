@@ -12,19 +12,36 @@
 
 #include "ft_printf.h"
 
-size_t	text(const char *format, char **str, size_t i)
+void	flags2(const char *fmt, size_t *i, t_mod *zeus)
+{
+	if (fmt[i[0]] == 'h')
+	{
+		zeus->flag = (fmt[i[0]++ + 1] == 'h' ? hh : h);
+		i[0] = (fmt[i[0]] == 'h' ? i[0] + 1 : i[0]);
+	}
+	if (fmt[i[0]] == 'l')
+	{
+		zeus->flag = (fmt[i[0]++ + 1] == 'l' ? ll : l);
+		i[0] = (fmt[i[0]] == 'l' ? i[0] + 1 : i[0]);
+	}
+	if (fmt[i[0]] == 'L')
+	{
+		zeus->flag = L;
+		i[0]++;
+	}
+}
+
+void	text(const char *fmt, char **str, size_t *i, t_mod *zeus)
 {
 	char	*ad;
-	char	*tmp;
+	int		j;
 
+	j = 0;
 	ad = ft_strnew(0);
-	while (format[i] != '%' && format[i])
-		add(&ad, format[i++]);
-	tmp = *str;
-	*str = ft_strjoin(*str, ad);
-	free(tmp);
-	free(ad);
-	return (i);
+	while (fmt[i[0]] != '%' && fmt[i[0]] && j++ >= 0)
+		add(&ad, fmt[i[0]++], 0);
+	*str = strnnjoin(*str, ad, zeus->len, 0);
+	zeus->len += j;
 }
 
 int		ft_printf(const char *format, ...)
@@ -33,13 +50,16 @@ int		ft_printf(const char *format, ...)
 	size_t	ret;
 	char	*str;
 	size_t	size;
+	int		i;
 
+	i = 0;
 	ret = 0;
 	va_start(ap, format);
-	str = parser1(ap, format, &ret);
+	str = parser(ap, format, &ret);
 	va_end(ap);
-	size = ft_strlen(str);
-	write (1, str, size);
+	size = ft_strlen(&str[ret]);
+	ret = ret + size;
+	write(1, str, ret);
 	free(str);
-	return (ret + size);
+	return (ret);
 }

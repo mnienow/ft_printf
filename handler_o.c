@@ -12,7 +12,21 @@
 
 #include "ft_printf.h"
 
-static char	*oct_width(char *str, t_mod *zeus)
+static void		flag(t_mod *zeus, unsigned long long int *oct)
+{
+	if (!zeus->flag)
+		*oct = (unsigned int)*oct;
+	if (zeus->flag == 1)
+		*oct = (unsigned short)*oct;
+	if (zeus->flag == 2)
+		*oct = (unsigned long)*oct;
+	if (zeus->flag == 3)
+		*oct = (unsigned char)*oct;
+	if (zeus->flag == 4)
+		*oct = (unsigned long long)*oct;
+}
+
+static char		*oct_width(char *str, t_mod *zeus)
 {
 	char	*str_spaces;
 	char	*tmp;
@@ -33,57 +47,62 @@ static char	*oct_width(char *str, t_mod *zeus)
 	return (str);
 }
 
-static char    *oct_precision(char *str, t_mod *zeus, int    i)
+static char		*oct_precision(char *str, t_mod *zeus, int i, intmax_t hex)
 {
-    char    *str_zero;
-    char    *tmp;
-    int        count;
+	char	*str_zero;
+	char	*tmp;
+	int		count;
+	size_t	sz;
 
-    if (i)
-        count = zeus->precision - ft_strlen(str);
-    else
-        count =  zeus->min_width - ft_strlen(str);
-    str_zero = (char *)malloc(sizeof(char)* (count + 1));
-    str_zero[count] = '\0';
-    while (--count >= 0)
-        str_zero[count] = '0';
-    tmp = str;
-    str = ft_strjoin(str_zero, str);
-    free(tmp);
-    free(str_zero);
-    return (str);
-}
-
-static char    *oct_sharp(char *str)
-{
-    char    *str_sharp;
-    char    *tmp;
-
-    str_sharp = "0";
-    tmp = str;
-    str = ft_strjoin(str_sharp, str);
-    free(tmp);
-    return (str);
-}
-
-void	ft_oct(char **str, t_mod *zeus, va_list ap)
-{
-	long long int	hex;
-	char			*string;
-	char			*tmp;
-
-	hex = va_arg(ap, int);
-	string = ft_itoal(hex, 8, zeus);
-	if (zeus->precision)
-		string = oct_precision(string, zeus, 1);
-	if (zeus->sharp)
-		string = oct_sharp(string);
-	if (zeus->zero && !(zeus->precision) && zeus->min_width)
-		string = oct_precision(string, zeus, 0);
-	if (zeus->min_width > (int)ft_strlen(string))
-		string = oct_width(string, zeus);
-	tmp = *str;
-	*str = ft_strjoin(*str, string);
+	sz = ft_strlen(str);
+	count = (i != 0 ? zeus->precision - sz : zeus->min_width - sz);
+	if (count < 0)
+		return (str);
+	str_zero = (char *)malloc(sizeof(char) * (count + 1));
+	str_zero[count] = '\0';
+	if (hex != 0)
+	{
+		while (--count >= 0)
+			str_zero[count] = '0';
+	}
+	tmp = str;
+	str = ft_strjoin(str_zero, str);
 	free(tmp);
-	free(string);
+	free(str_zero);
+	return (str);
+}
+
+static char		*oct_sharp(char *str)
+{
+	char	*str_sharp;
+	char	*tmp;
+
+	str_sharp = ft_strdup("0");
+	tmp = str;
+	str = ft_strjoin(str_sharp, str);
+	free(tmp);
+	return (str);
+}
+
+void			ft_oct(char **str, t_mod *zeus, va_list ap)
+{
+	unsigned long long int	oct;
+	char					*strn;
+	size_t					sz;
+
+	oct = (unsigned long long int)va_arg(ap, unsigned long long int);
+	flag(zeus, &oct);
+	strn = ft_uitoal(oct, 8, zeus);
+	if (zeus->precision)
+		strn = oct_precision(strn, zeus, 1, oct);
+	if (zeus->sharp && oct != 0)
+		strn = oct_sharp(strn);
+	if (zeus->zero && !(zeus->precision) && !(zeus->minus)
+	&& !(zeus->plus) && zeus->min_width)
+		strn = oct_precision(strn, zeus, 0, oct);
+	if (zeus->min_width > ft_strlen(strn))
+		strn = oct_width(strn, zeus);
+	sz = ft_strlen(strn);
+	*str = strnnjoin(*str, strn, zeus->len, 0);
+	zeus->len += sz;
 }

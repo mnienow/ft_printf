@@ -12,20 +12,35 @@
 
 #include "ft_printf.h"
 
-void	ft_ch(char **str, t_mod *zeus, va_list ap)
+static void	ch_width(char **str, t_mod *zeus)
+{
+	char	*str_spaces;
+	int		width;
+
+	width = zeus->min_width - 1;
+	str_spaces = (char *)malloc(width + 1);
+	str_spaces[width] = '\0';
+	while (--width >= 0)
+		str_spaces[width] = ' ';
+	if (zeus->minus)
+		*str = strnnjoin(*str, str_spaces, 1, 0);
+	else
+		*str = strnnjoin(str_spaces, *str, 0, 1);
+}
+
+void		ft_ch(char **str, t_mod *zeus, va_list ap)
 {
 	char	ch;
-	size_t 	ret;
+	char	*ar;
+	size_t	sz;
 
+	ar = ft_strnew(0);
 	ch = (char)va_arg(ap, unsigned int);
-	if (ch == 0)
-	{
-		write (1, *str, (ret = ft_strlen(*str)));
-		zeus->len = ret + 1;
-		write (1, "\0", 1);
-		free(*str);
-		*str = ft_strnew(0);
-	}
-	else
-		add(str, ch);
+	add(&ar, ch, 0);
+	if (zeus->min_width > 1)
+		ch_width(&ar, zeus);
+	*str = (ch == 0 ? strnnjoin(*str, ar, zeus->len, zeus->min_width)
+	: strnnjoin(*str, ar, zeus->len, 0));
+	sz = (zeus->min_width == 0 ? 1 : zeus->min_width);
+	zeus->len += sz;
 }

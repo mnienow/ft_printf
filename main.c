@@ -11,32 +11,20 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdlib.h>
+#include <stdio.h>
+#include <limits.h>
 
 int	main(void)
 {
-	// ft_printf("WTF%d WT%c 2 %s\n WTF4%c\n", 1, '\0', "NULL", 'a');
-	printf("(%d)\n", ft_printf("WTF%d WT%c 2 %s\n WTF4%c\n", 1, '\0', "NULL", 'a'));
-	printf("\n");
-	printf("(%d)\n",    printf("WTF%d WT%c 2 %s\n WTF4%c\n", 1, '\0', "NULL", 'a'));
-	// printf("%d\n", ft_printf("WTF%d WT%c 2 %5% %s\n WTF4%c\n", 1, '\0', NULL, 'a'));
-	// printf("\n");
-	// printf("%d\n",    printf("WTF%d WT%c 2 %5% %s\n WTF4%c\n", 1, '\0', NULL, 'a'));
-	// printf("%d\n", ft_printf("WTF%d WT%c 2 %5% %s\n WTF%c4\n %x", 1, '\0', NULL, '\0', 987654321));
-	// printf("\n");
-	// printf("%d\n",    printf("WTF%d WT%c 2 %5% %s\n WTF%c4\n %x", 1, '\0', NULL, '\0', 987654321));
-	// printf("\n");
-	// printf("\n");
- 	// ft_printf("%s\n", NULL);
-	// printf("\n");
-	// printf("%s\n", NULL);
+	int a;
+	int *b;
 
-	// printf("%d",    printf("%x\n %x\n", 42, -42));
-	// printf("\n");
-	// printf("%d", ft_printf("%x\n %x\n", 42, -42))
-	// printf("%d",    printf("%s\n", "oO WTf"));
-	// printf("\n");
-	// printf("%d", ft_printf("%s\n", "oO WTf"));
+	b = &a;
+	printf("------------------------------\n");
+	printf("Original\n");
+	printf("(%d)\n", printf("%.0s", "coco et ti"));
+	printf("Our\n");
+	printf("(%d)\n", ft_printf("%.0s", "coco et ti"));
+	printf("------------------------------\n");
 	return (0);
 }
-//" 2 12345% (null)\n WTF4a\n"

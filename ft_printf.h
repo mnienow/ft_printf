@@ -14,52 +14,57 @@
 # define FT_PRINTF_H
 
 # include <stdio.h>
+# include <limits.h>
+
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
-# include "ft_printf.h"
 # include "libft/includes/libft.h"
 # define ABS(number) ((number) > 0 ? (number):-(number))
-typedef	enum	s_flags
+
+typedef enum		e_flags
 {
-    hy,
+	hy,
 	h,
 	l,
 	hh,
 	ll,
 	L
-}	t_flags;
+}					t_flags;
 
-typedef struct	s_mod
+typedef struct		s_mod
 {
-	enum	s_flags flag;
-	int		alpha;
-	int		minus;
-	int		plus;
-	int		sharp;
-	int		space;
-	int		zero;
-	int		min_width;
-	int		precision;
-	size_t	len;
-}		t_mod;
+	enum e_flags	flag;
+	int				alpha;
+	int				plus;
+	int				minus;
+	int				sharp;
+	int				space;
+	int				zero;
+	int				dot;
+	int				precision;
+	size_t			min_width;
+	size_t			len;
+}					t_mod;
 
-int		ft_printf(const char *format, ...);
-size_t	count(int n);
-void	add(char **a, char b);
-
-void	parser2(char format, char **str, va_list ap, t_mod *zeus);
-size_t 	text(const char *format, char **str, size_t i);
-size_t	number(const char *format, char **str, size_t i, t_mod *zeus);
-char	*spaces(int i);
-char    *parser1(va_list ap, const char *format, size_t *ret);
-char	*ft_itoal(long long int nb, int base, t_mod *zeus);
-void	ft_ch(char **str, t_mod *zeus, va_list ap);
-void	ft_int(char **str, t_mod *zeus, va_list ap);
-void	ft_ar(char **str, t_mod *zeus, va_list ap);
-void	ft_hex(char **str, t_mod *zeus, va_list ap);
-void	ft_oct(char **str, t_mod *zeus, va_list ap);
-void	ft_udc(char **str, t_mod *zeus, va_list ap);
-void	ft_pnt(char **str, t_mod *zeus, va_list ap);
-
+int					ft_printf(const char *format, ...);
+void				add(char **a, char b, size_t sz);
+void				text(const char *format, char **str,
+size_t *i, t_mod *zeus);
+size_t				sign(const char *format, size_t i, t_mod *zeus);
+char				*parser(va_list ap, const char *format, size_t *ret);
+char				*ft_itoal(intmax_t nb, int base, t_mod *zeus);
+char				*ft_uitoal(unsigned long long int nb, int base,
+t_mod *zeus);
+void				ft_ch(char **str, t_mod *zeus, va_list ap);
+void				ft_int(char **str, t_mod *zeus, va_list ap);
+void				ft_ar(char **str, t_mod *zeus, va_list ap);
+void				ft_hex(char **str, t_mod *zeus, va_list ap);
+void				ft_oct(char **str, t_mod *zeus, va_list ap);
+void				ft_udc(char **str, t_mod *zeus, va_list ap);
+void				ft_pnt(char **str, t_mod *zeus, va_list ap);
+char				*strnnjoin(char *s1, char *s2, size_t sz1, size_t sz2);
+void				ft_dbl(char **str, t_mod *zeus, va_list ap);
+void				percent(char **str, size_t *i, t_mod *zeus);
+void				flags2(const char *format, size_t *i, t_mod *zeus);
 #endif
