@@ -36,7 +36,7 @@ char		*ft_itoal(intmax_t nb, int base, t_mod *zeus)
 
 	if (nb == -9223372036854775807 - 1)
 		return (ft_strdup("-9223372036854775808"));
-	if ((!nb && zeus->min_width != 0) || (!nb && zeus->dot && !zeus->sharp))
+	if (!nb && zeus->dot && !zeus->sharp)
 		return (ft_strdup(""));
 	sign = (nb < 0 ? 1 : 0);
 	nb = ABS(nb);

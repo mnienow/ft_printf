@@ -91,11 +91,11 @@ void		ft_udc(char **str, t_mod *zeus, va_list ap)
 	ui = (unsigned long long int)va_arg(ap, unsigned long long int);
 	flag(zeus, &ui);
 	strn = ft_uitoal(ui, 10, zeus);
-	if (zeus->precision)
+	if (zeus->precision != 1)
 		strn = udc_precision(strn, zeus, 1);
 	if (zeus->sharp)
 		strn = udc_sharp(strn);
-	if (zeus->zero && !(zeus->precision) && zeus->min_width)
+	if (zeus->zero && zeus->precision == 1 && zeus->min_width)
 		strn = udc_precision(strn, zeus, 0);
 	if (zeus->min_width > ft_strlen(strn))
 		strn = udc_width(strn, zeus);

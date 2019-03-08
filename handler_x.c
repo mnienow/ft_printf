@@ -94,11 +94,11 @@ void		ft_hex(char **str, t_mod *zeus, va_list ap)
 		strn = ft_strdup("");
 	else
 		strn = ft_uitoal(hex, 16, zeus);
-	if (zeus->precision)
+	if (zeus->precision != 1)
 		strn = hex_prec(strn, zeus, 1, hex);
 	if (zeus->sharp && hex != 0)
 		strn = hex_sharp(strn, zeus);
-	if (zeus->zero && !(zeus->precision) && zeus->min_width && !(zeus->minus))
+	if (zeus->zero && zeus->precision == 1 && zeus->min_width && !(zeus->minus))
 		strn = hex_prec(strn, zeus, 0, hex);
 	if (zeus->min_width > ft_strlen(strn))
 		strn = hex_width(strn, zeus);

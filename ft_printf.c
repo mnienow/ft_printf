@@ -18,7 +18,8 @@ void	conversions2(char *fmt, t_mod *zeus)
 	{
 		if (fmt[0] == 'X')
 			zeus->alpha = 1;
-		if (fmt[0] == 'D' || fmt[0] == 'I' || fmt[0] == 'O' || fmt[0] == 'U' || fmt[0] == 'C' || fmt[0] == 'S')
+		if (fmt[0] == 'D' || fmt[0] == 'I' || fmt[0] == 'O' ||
+		fmt[0] == 'U' || fmt[0] == 'C' || fmt[0] == 'S')
 			zeus->flag = l;
 		fmt[0] += 32;
 	}

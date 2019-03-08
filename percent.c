@@ -52,7 +52,8 @@ void	flags1(const char *fmt, size_t *i, t_mod *zeus)
 		zeus->minus = (fmt[i[0]] == 45 ? fmt[i[0]++] - 44 : zeus->minus);
 		zeus->plus = (fmt[i[0]] == 43 ? fmt[i[0]++] - 42 : zeus->plus);
 		zeus->dot = (fmt[i[0]] == 46 ? fmt[i[0]++] - 45 : zeus->dot);
-		if ((fmt[i[0]] >= 49 && fmt[i[0]] <= 57) || (fmt[i[0]] == 48 && zeus->dot))
+		if ((fmt[i[0]] >= 49 && fmt[i[0]] <= 57) ||
+		(fmt[i[0]] == 48 && zeus->dot))
 			number(fmt, i, zeus);
 	}
 }

@@ -81,11 +81,11 @@ void		ft_pnt(char **str, t_mod *zeus, va_list ap)
 		free(strn);
 		strn = ft_strdup("0");
 	}
-	if (zeus->precision)
+	if (zeus->precision != 1)
 		strn = pnt_precision(strn, zeus, 1);
 	if (1)
 		strn = pnt_sharp(strn);
-	if (zeus->zero && !(zeus->precision) && zeus->min_width)
+	if (zeus->zero && zeus->precision == 1 && zeus->min_width)
 		strn = pnt_precision(strn, zeus, 0);
 	if (zeus->min_width > ft_strlen(strn))
 		strn = pnt_width(strn, zeus);

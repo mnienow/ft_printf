@@ -30,7 +30,7 @@ void			ft_dbl(char **str, t_mod *zeus, va_list ap)
 	size_t		sz;
 
 	prc = 6;
-	if (zeus->precision > 0)
+	if (zeus->precision != 1)
 		prc = zeus->precision;
 	nbr = (zeus->flag == 5 ? va_arg(ap, long double) : va_arg(ap, double));
 	zeus->alpha = 0;
