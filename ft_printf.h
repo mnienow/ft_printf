@@ -53,7 +53,7 @@ void				text(const char *format, char **str,
 size_t *i, t_mod *zeus);
 size_t				sign(const char *format, size_t i, t_mod *zeus);
 char				*parser(va_list ap, const char *format, size_t *ret);
-char				*ft_itoal(intmax_t nb, int base, t_mod *zeus);
+char				*ft_itoal(__int128_t nb, int base, t_mod *zeus);
 char				*ft_uitoal(unsigned long long int nb, int base,
 t_mod *zeus);
 void				ft_ch(char **str, t_mod *zeus, va_list ap);

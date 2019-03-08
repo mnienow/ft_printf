@@ -20,18 +20,11 @@ int	main(void)
 	int *b;
 
 	b = &a;
-	printf("------------------------------\n");
 	printf("Original\n");
-	printf("\n%d\n", printf("%###.1x", 0));
+	printf("\n%d\n", printf("%.10f", 1444565444646.6465424242242));
 	printf("------------------------------\n");
 	printf("Our\n");
-	printf("\n%d\n", ft_printf("%###.1x", 0));
-	printf("------------------------------\n");
-	printf("Original\n");
-	printf("\n%d\n", printf("%#.X", 0));
-	printf("------------------------------\n");
-	printf("Our\n");
-	printf("\n%d\n", ft_printf("%#.X", 0));
+	printf("\n%d\n", ft_printf("%.10f", 1444565444646.6465424242242));
 	printf("------------------------------\n");
 	return (0);
 }

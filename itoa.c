@@ -27,15 +27,13 @@ static int	ftcount(uintmax_t n, int base)
 	return (i);
 }
 
-char		*ft_itoal(intmax_t nb, int base, t_mod *zeus)
+char		*ft_itoal(__int128_t nb, int base, t_mod *zeus)
 {
 	char		*str;
 	int			len;
 	uintmax_t	num;
 	int			sign;
 
-	if (nb == -9223372036854775807 - 1)
-		return (ft_strdup("-9223372036854775808"));
 	if (!nb && zeus->dot && !zeus->sharp)
 		return (ft_strdup(""));
 	sign = (nb < 0 ? 1 : 0);
