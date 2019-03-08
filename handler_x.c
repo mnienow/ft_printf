@@ -57,8 +57,8 @@ char		*hex_prec(char *str, t_mod *zeus, int i)
 		return (str);
 	str_zero = (char *)malloc(sizeof(char) * (count + 1));
 	str_zero[count] = '\0';
-		while (--count >= 0)
-			str_zero[count] = '0';
+	while (--count >= 0)
+		str_zero[count] = '0';
 	str_zero[1] = (str[1] == 'x' || str[1] == 'X' ? str[1] : str_zero[1]);
 	str[1] = (str[1] == 'x' || str[1] == 'X' ? '0' : str[1]);
 	tmp = str;
