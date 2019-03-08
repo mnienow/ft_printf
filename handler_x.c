@@ -89,7 +89,7 @@ void		ft_hex(char **str, t_mod *zeus, va_list ap)
 
 	hex = (unsigned long long int)va_arg(ap, unsigned long long int);
 	flag(zeus, &hex);
-	if (hex == 0 && zeus->dot)
+	if (hex == 0 && zeus->dot && zeus->precision != 1)
 		strn = ft_strdup("");
 	else
 		strn = ft_uitoal(hex, 16, zeus);
