@@ -69,19 +69,6 @@ static char	*udc_precision(char *str, t_mod *zeus, int i)
 	return (str);
 }
 
-static char	*udc_sharp(char *str)
-{
-	char	*str_sharp;
-	char	*tmp;
-
-	str_sharp = ft_strdup("0x");
-	tmp = str;
-	str = ft_strjoin(str_sharp, str);
-	free(tmp);
-	free(str_sharp);
-	return (str);
-}
-
 void		ft_udc(char **str, t_mod *zeus, va_list ap)
 {
 	unsigned long long int	ui;
@@ -93,8 +80,6 @@ void		ft_udc(char **str, t_mod *zeus, va_list ap)
 	strn = ft_uitoal(ui, 10, zeus);
 	if (zeus->precision != 1)
 		strn = udc_precision(strn, zeus, 1);
-	if (zeus->sharp)
-		strn = udc_sharp(strn);
 	if (zeus->zero && !zeus->dot && zeus->min_width)
 		strn = udc_precision(strn, zeus, 0);
 	if (zeus->min_width > ft_strlen(strn))
