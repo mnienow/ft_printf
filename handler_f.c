@@ -81,7 +81,6 @@ void				ft_dbl(char **str, t_mod *zeus, va_list ap)
 	nbr = (nbr - (long long)nbr) * expo(prc - 1) + 0.5;
 	strn = strnnjoin(strn, ft_strdup("."), 0, 0);
 	strn = strnnjoin(strn, ft_itoal((long long)nbr, 10, zeus), 0, 0);
-	sz = ft_strlen(strn);
 	if (zeus->zero)
 		strn = dbl_precision(strn, zeus, 0);
 	if (zeus->plus && strn[0] != '-')
