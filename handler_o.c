@@ -47,7 +47,7 @@ static char		*oct_width(char *str, t_mod *zeus)
 	return (str);
 }
 
-static char		*oct_precision(char *str, t_mod *zeus, int i, intmax_t hex)
+static char		*oct_precision(char *str, t_mod *zeus, int i)
 {
 	char	*str_zero;
 	char	*tmp;
@@ -56,15 +56,12 @@ static char		*oct_precision(char *str, t_mod *zeus, int i, intmax_t hex)
 
 	sz = ft_strlen(str);
 	count = (i != 0 ? zeus->precision - sz : zeus->min_width - sz);
-	if (count < 0)
+	if (count <= 0)
 		return (str);
 	str_zero = (char *)malloc(sizeof(char) * (count + 1));
 	str_zero[count] = '\0';
-	if (hex != 0)
-	{
-		while (--count >= 0)
-			str_zero[count] = '0';
-	}
+	while (--count >= 0)
+		str_zero[count] = '0';
 	tmp = str;
 	str = ft_strjoin(str_zero, str);
 	free(tmp);
@@ -94,12 +91,12 @@ void			ft_oct(char **str, t_mod *zeus, va_list ap)
 	flag(zeus, &oct);
 	strn = ft_uitoal(oct, 8, zeus);
 	if (zeus->precision != 1)
-		strn = oct_precision(strn, zeus, 1, oct);
-	if (zeus->sharp && oct != 0)
+		strn = oct_precision(strn, zeus, 1);
+	if (zeus->sharp && strn[0] != '0')
 		strn = oct_sharp(strn);
 	if (zeus->zero && zeus->precision == 1 && !(zeus->minus)
 	&& !(zeus->plus) && zeus->min_width)
-		strn = oct_precision(strn, zeus, 0, oct);
+		strn = oct_precision(strn, zeus, 0);
 	if (zeus->min_width > ft_strlen(strn))
 		strn = oct_width(strn, zeus);
 	sz = ft_strlen(strn);

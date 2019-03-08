@@ -77,7 +77,7 @@ char		*ft_uitoal(unsigned long long int nb, int base, t_mod *zeus)
 	int						len;
 	unsigned long long int	num;
 
-	if ((!nb && zeus->min_width != 0) || (!nb && zeus->dot && !zeus->sharp))
+	if (!nb && zeus->dot && !zeus->sharp)
 		return (ft_strdup(""));
 	nb = ABS(nb);
 	len = uftcount(nb, base);

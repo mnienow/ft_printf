@@ -51,11 +51,12 @@ static char	*int_precision(char *str, t_mod *zeus, int i)
 	int		count;
 	size_t	sz;
 
-	sz = (str[0] != '-' && zeus->plus && zeus->precision == 1 ?
-	ft_strlen(str) + 1 : ft_strlen(str));
+	sz = ft_strlen(str);
 	sz = (str[0] == '-' && zeus->precision > 1 ? sz - 1 : sz);
+	sz = (str[0] != '-' && (zeus->plus || zeus->space) && zeus->precision == 1 ?
+	sz + 1 : sz);
 	count = (i != 0 ? zeus->precision - sz : zeus->min_width - sz);
-	if (count < 0)
+	if (count <= 0)
 		return (str);
 	str_zero = (char *)malloc(count + 1);
 	str_zero[count] = '\0';

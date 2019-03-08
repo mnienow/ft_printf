@@ -22,16 +22,16 @@ int	main(void)
 	b = &a;
 	printf("------------------------------\n");
 	printf("Original\n");
-	printf("\n%d\n", printf("%.10d", -12345678));
+	printf("\n%d\n", printf("%#04hX !!",(unsigned short)0));
 	printf("------------------------------\n");
 	printf("Our\n");
-	printf("\n%d\n", ft_printf("%.10d", -12345678));
+	printf("\n%d\n", ft_printf("%#04hX !!",(unsigned short)0));
 	printf("------------------------------\n");
 	printf("Original\n");
-	printf("\n%d\n", printf("%0+5d", 42));
+	printf("\n%d\n", printf("%#.o %#.0o", 0, 0));
 	printf("------------------------------\n");
 	printf("Our\n");
-	printf("\n%d\n", ft_printf("%0+5d", 42));
+	printf("\n%d\n", ft_printf("%#.o %#.0o", 0, 0));
 	printf("------------------------------\n");
 	return (0);
 }

@@ -44,7 +44,7 @@ char		*hex_width(char *str, t_mod *zeus)
 	return (str);
 }
 
-char		*hex_prec(char *str, t_mod *zeus, int i, unsigned long long int hex)
+char		*hex_prec(char *str, t_mod *zeus, int i)
 {
 	char	*str_zero;
 	char	*tmp;
@@ -53,11 +53,10 @@ char		*hex_prec(char *str, t_mod *zeus, int i, unsigned long long int hex)
 
 	sz = ft_strlen(str);
 	count = (i != 0 ? zeus->precision - sz : zeus->min_width - sz);
-	if (count < 0)
+	if (count <= 0)
 		return (str);
 	str_zero = (char *)malloc(sizeof(char) * (count + 1));
 	str_zero[count] = '\0';
-	if (hex != 0)
 		while (--count >= 0)
 			str_zero[count] = '0';
 	str_zero[1] = (str[1] == 'x' || str[1] == 'X' ? str[1] : str_zero[1]);
@@ -95,11 +94,11 @@ void		ft_hex(char **str, t_mod *zeus, va_list ap)
 	else
 		strn = ft_uitoal(hex, 16, zeus);
 	if (zeus->precision != 1)
-		strn = hex_prec(strn, zeus, 1, hex);
+		strn = hex_prec(strn, zeus, 1);
 	if (zeus->sharp && hex != 0)
 		strn = hex_sharp(strn, zeus);
-	if (zeus->zero && zeus->precision == 1 && zeus->min_width && !(zeus->minus))
-		strn = hex_prec(strn, zeus, 0, hex);
+	if (zeus->zero && !zeus->dot && zeus->min_width && !(zeus->minus))
+		strn = hex_prec(strn, zeus, 0);
 	if (zeus->min_width > ft_strlen(strn))
 		strn = hex_width(strn, zeus);
 	sz = ft_strlen(strn);

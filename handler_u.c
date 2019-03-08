@@ -56,7 +56,7 @@ static char	*udc_precision(char *str, t_mod *zeus, int i)
 
 	sz = ft_strlen(str);
 	count = (i != 0 ? zeus->precision - sz : zeus->min_width - sz);
-	if (count < 0)
+	if (count <= 0)
 		return (str);
 	str_zero = (char *)malloc(count + 1);
 	str_zero[count] = '\0';
@@ -95,7 +95,7 @@ void		ft_udc(char **str, t_mod *zeus, va_list ap)
 		strn = udc_precision(strn, zeus, 1);
 	if (zeus->sharp)
 		strn = udc_sharp(strn);
-	if (zeus->zero && zeus->precision == 1 && zeus->min_width)
+	if (zeus->zero && !zeus->dot && zeus->min_width)
 		strn = udc_precision(strn, zeus, 0);
 	if (zeus->min_width > ft_strlen(strn))
 		strn = udc_width(strn, zeus);
