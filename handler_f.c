@@ -73,18 +73,17 @@ void				ft_dbl(char **str, t_mod *zeus, va_list ap)
 	size_t		sz;
 
 	prc = 6;
-	if (zeus->precision != 1)
+	if (zeus->precision != 1 || zeus->dot)
 		prc = zeus->precision;
 	nbr = (zeus->flag == 5 ? va_arg(ap, long double) : va_arg(ap, double));
 	zeus->alpha = 0;
-	strn = ft_itoal((long long int)nbr, 10, zeus);
+	strn = ft_itoal((long long)nbr, 10, zeus);
 	sz = ft_strlen(strn);
-	*str = strnnjoin(*str, strn, zeus->len, 0);
-	zeus->len += sz;
 	nbr = ABS(nbr);
-	nbr = (nbr - (long long int)nbr) * expo(prc - 1) + 0.5;
-	*str = strnnjoin(*str, ft_strdup("."), zeus->len++, 0);
-	strn = ft_itoal((long long int)nbr, 10, zeus);
+	nbr = (nbr - (long long)nbr) * expo(prc - 1) + 0.5;
+	strn = strnnjoin(strn, ft_strdup("."), 0, 0);
+	strn = strnnjoin(strn, ft_itoal((long long)nbr, 10, zeus), 0, 0);
+	sz = ft_strlen(strn);
 	if (zeus->zero)
 		strn = dbl_precision(strn, zeus, 0);
 	if (zeus->min_width > ft_strlen(strn))
