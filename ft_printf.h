@@ -45,6 +45,7 @@ typedef struct		s_mod
 	int				precision;
 	size_t			min_width;
 	size_t			len;
+	int				fprec;
 }					t_mod;
 
 int					ft_printf(const char *format, ...);

@@ -25,6 +25,7 @@ void	new_zeus(t_mod *zeus)
 	zeus->precision = 1;
 	zeus->min_width = 0;
 	zeus->len = zeus->len + 0;
+	zeus->fprec = 0;
 }
 
 void	number(const char *fmt, size_t *i, t_mod *zeus)
