@@ -78,7 +78,7 @@ void		ft_udc(char **str, t_mod *zeus, va_list ap)
 	ui = (unsigned long long int)va_arg(ap, unsigned long long int);
 	flag(zeus, &ui);
 	strn = ft_uitoal(ui, 10, zeus);
-	if (zeus->precision != 1)
+	if (zeus->dot)
 		strn = udc_precision(strn, zeus, 1);
 	if (zeus->zero && !zeus->dot && zeus->min_width)
 		strn = udc_precision(strn, zeus, 0);

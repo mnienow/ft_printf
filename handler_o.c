@@ -90,11 +90,11 @@ void			ft_oct(char **str, t_mod *zeus, va_list ap)
 	oct = (unsigned long long int)va_arg(ap, unsigned long long int);
 	flag(zeus, &oct);
 	strn = ft_uitoal(oct, 8, zeus);
-	if (zeus->precision != 1)
+	if (zeus->dot)
 		strn = oct_precision(strn, zeus, 1);
 	if (zeus->sharp && strn[0] != '0')
 		strn = oct_sharp(strn);
-	if (zeus->zero && zeus->precision == 1 && !(zeus->minus)
+	if (zeus->zero && !zeus->dot && !(zeus->minus)
 	&& !(zeus->plus) && zeus->min_width)
 		strn = oct_precision(strn, zeus, 0);
 	if (zeus->min_width > ft_strlen(strn))

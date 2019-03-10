@@ -53,7 +53,7 @@ static char	*int_precision(char *str, t_mod *zeus, int i)
 
 	sz = ft_strlen(str);
 	sz = (str[0] == '-' && zeus->precision > 1 ? sz - 1 : sz);
-	sz = (str[0] != '-' && (zeus->plus || zeus->space) && zeus->precision == 1 ?
+	sz = (str[0] != '-' && (zeus->plus || zeus->space) && !zeus->dot ?
 	sz + 1 : sz);
 	count = (i != 0 ? zeus->precision - sz : zeus->min_width - sz);
 	if (count <= 0)
@@ -78,8 +78,8 @@ void		ft_int(char **str, t_mod *zeus, va_list ap)
 	inta = va_arg(ap, intmax_t);
 	flag(zeus, &inta);
 	strn = ft_itoal(inta, 10, zeus);
-	strn = (zeus->precision == 1 ? strn : int_precision(strn, zeus, 1));
-	if (zeus->zero && zeus->precision == 1 && zeus->min_width && !(zeus->minus))
+	strn = (!zeus->dot ? strn : int_precision(strn, zeus, 1));
+	if (zeus->zero && !zeus->dot && zeus->min_width && !(zeus->minus))
 		strn = int_precision(strn, zeus, 0);
 	if (zeus->plus && inta >= 0)
 		strn = strnnjoin(ft_strdup("+"), strn, 0, 0);

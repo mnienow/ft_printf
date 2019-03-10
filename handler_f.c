@@ -17,8 +17,8 @@ static __int128_t	expo(int i, t_mod *zeus)
 	__int128_t	expt;
 
 	expt = 10;
-	i = (i >= 15) ? 15 : i;
-	if (i < zeus->precision)
+	i = (i > 14) ? 15 : i;
+	if (i == 15)
 		zeus->fprec = zeus->precision - i;
 	if (i <= 0)
 		return (1);
@@ -58,7 +58,8 @@ static char			*dbl_precision(char *str, t_mod *zeus, int i)
 
 	sz = ft_strlen(str);
 	sz = (str[0] != '-' && zeus->plus) || zeus->space ? sz + 1 : sz;
-	count = (i == 0) ? zeus->min_width - sz : zeus->fprec - 1;
+	count = i == 0 ? zeus->min_width - sz : zeus->precision - sz;
+	// printf("(%d)", count);
 	if (count <= 0)
 		return (str);
 	str_zero = (char *)malloc(count + 1);
@@ -81,15 +82,14 @@ void				ft_dbl(char **str, t_mod *zeus, va_list ap)
 	char		*strn;
 	size_t		sz;
 
-	prc = (zeus->precision != 1 || zeus->dot ? zeus->precision : 6);
+	prc = (zeus->precision > 1 ? zeus->precision : 6);
 	nbr = (zeus->flag == 5 ? va_arg(ap, long double) : va_arg(ap, double));
-	zeus->alpha = 0;
-	strn = ft_itoal((long long)nbr, 10, zeus);
-	sz = ft_strlen(strn);
-	nbr = ABS(nbr);
-	nbr = (nbr - (long long)nbr) * expo(prc - 1, zeus) + 0.5;
-	strn = zeus->precision == 0 ? strn : strnnjoin(strn, ft_strdup("."), 0, 0);
-	strn = strnnjoin(strn, ft_itoal((long long)nbr, 10, zeus), 0, 0);
+	strn = ft_itoal((long long)nbr, 10, zeus); /* ok */
+	nbr = (ABS(nbr) - ABS((long long)nbr)) * expo(prc - 1, zeus) + 0.5;
+	printf ("(%f)",nbr);
+	strn = !zeus->precision ? strn : strnnjoin(strn, ft_strdup("."), 0, 0);
+	strn = zeus->precision ? strnnjoin(strn, ft_itoal((long long)nbr, 10, zeus)
+	, 0, 0) : strn;
 	strn = zeus->precision ? dbl_precision(strn, zeus, 1) : strn;
 	strn = zeus->zero ? dbl_precision(strn, zeus, 0) : strn;
 	if (zeus->plus && strn[0] != '-')

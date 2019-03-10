@@ -1,0 +1,13 @@
+make re
+make clean
+gcc -o exe -std=c11 -Wall main.c ft_printf.c add.c percent.c handler*.c itoa.c -L. -lftprintf
+gcc -o exe -std=c11 -Wall -ggdb3 main.c ft_printf.c add.c percent.c handler*.c itoa.c -L. -lftprintf
+valgrind --leak-check=full \
+		--show-leak-kinds=all \
+		--track-origins=yes \
+		--verbose \
+		--read-var-info=yes \
+		--read-inline-info=yes \
+		--smc-check=all \
+		--log-file=valgrind-out.txt \
+		./exe

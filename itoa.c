@@ -34,8 +34,6 @@ char		*ft_itoal(__int128_t nb, int base, t_mod *zeus)
 	uintmax_t	num;
 	int			sign;
 
-	if (!nb && zeus->dot && !zeus->sharp)
-		return (ft_strdup(""));
 	sign = (nb < 0 ? 1 : 0);
 	nb = ABS(nb);
 	len = (ftcount(nb, base) + sign);
@@ -75,8 +73,6 @@ char		*ft_uitoal(unsigned long long int nb, int base, t_mod *zeus)
 	int						len;
 	unsigned long long int	num;
 
-	if (!nb && zeus->dot && !zeus->sharp)
-		return (ft_strdup(""));
 	nb = ABS(nb);
 	len = uftcount(nb, base);
 	str = (char *)malloc(sizeof(char) * (len + 1));
