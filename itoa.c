@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static int	ftcount(uintmax_t n, int base)
+static int	ftcount(__int128_t n, int base)
 {
 	int	i;
 
@@ -35,7 +35,7 @@ char		*ft_itoal(__int128_t nb, int base, t_mod *zeus)
 	int			sign;
 
 	sign = (nb < 0 ? 1 : 0);
-	nb = ABS(nb);
+	nb = ft_abs(nb);
 	len = (ftcount(nb, base) + sign);
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	str[len] = '\0';

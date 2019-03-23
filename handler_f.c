@@ -12,22 +12,6 @@
 
 #include "ft_printf.h"
 
-static __int128_t	expo(int i, t_mod *zeus)
-{
-	__int128_t	expt;
-
-	expt = 10;
-	i = (i > 14) ? 15 : i;
-	if (i == 15)
-		zeus->fprec = zeus->precision - i;
-	if (i <= 0)
-		return (1);
-	if (i > 0)
-		while (i--)
-			expt = expt * 10;
-	return (expt);
-}
-
 static char			*dbl_width(char *str, t_mod *zeus)
 {
 	char	*str_spaces;
@@ -49,48 +33,46 @@ static char			*dbl_width(char *str, t_mod *zeus)
 	return (str);
 }
 
-static char			*dbl_precision(char *str, t_mod *zeus, int i)
+static char			*dbl_precision(char *s, t_mod *zeus, int i)
 {
-	char	*str_zero;
-	char	*tmp;
+	char	*s0;
 	int		count;
 	size_t	sz;
 
-	sz = ft_strlen(str);
-	sz = (str[0] != '-' && zeus->plus) || zeus->space ? sz + 1 : sz;
-	count = i == 0 ? zeus->min_width - sz : zeus->precision - sz;
-	// printf("(%d)", count);
+	sz = !ft_strchr(s, '.') ? ft_strlen(s) : ft_strlen(ft_strchr(s, '.') + 1);
+	sz = (s[0] != '-' && zeus->plus) || zeus->space ? sz + 1 : sz;
+	if (i)
+		count = i == 2 ? zeus->nprec - 2 : zeus->precision - sz;
+	else
+		count = zeus->min_width - sz;
 	if (count <= 0)
-		return (str);
-	str_zero = (char *)malloc(count + 1);
-	str_zero[count] = '\0';
+		return (s);
+	s0 = (char *)malloc(count + 1);
+	s0[count] = '\0';
 	while (--count >= 0)
-		str_zero[count] = '0';
-	tmp = str;
-	str_zero[0] = (str[0] == '-' && !i ? '-' : str_zero[0]);
-	str[0] = (str[0] == '-' && !i ? '0' : str[0]);
-	str = i ? ft_strjoin(str, str_zero) : ft_strjoin(str_zero, str);
-	free(tmp);
-	free(str_zero);
-	return (str);
+		s0[count] = '0';
+	s0[0] = s[0] == '-' && !i ? '-' : s0[0];
+	s[0] = s[0] == '-' && !i ? '0' : s[0];
+	s = i == 1 ? strnnjoin(s, s0, 0, 0) : strnnjoin(s0, s, 0, 0);
+	return (s);
 }
 
 void				ft_dbl(char **str, t_mod *zeus, va_list ap)
 {
-	double		nbr;
-	int			prc;
+	long double	nbr;
 	char		*strn;
 	size_t		sz;
 
-	prc = (zeus->precision > 1 ? zeus->precision : 6);
-	nbr = (zeus->flag == 5 ? va_arg(ap, long double) : va_arg(ap, double));
-	strn = ft_itoal((long long)nbr, 10, zeus); /* ok */
-	nbr = (ABS(nbr) - ABS((long long)nbr)) * expo(prc - 1, zeus) + 0.5;
-	printf ("(%f)",nbr);
+	zeus->precision = (zeus->dot ? zeus->precision : 6);
+	nbr = va_arg(ap, long double);
+	zeus->flag == 5 ? nbr = (double)nbr : 0;
+	strn = ft_itoal(nbr, 10, zeus);
+	while (nbr != (long long)nbr && zeus->nprec++)
+		nbr *= 10.0000000000000000001;
 	strn = !zeus->precision ? strn : strnnjoin(strn, ft_strdup("."), 0, 0);
-	strn = zeus->precision ? strnnjoin(strn, ft_itoal((long long)nbr, 10, zeus)
-	, 0, 0) : strn;
-	strn = zeus->precision ? dbl_precision(strn, zeus, 1) : strn;
+	strn = !zeus->precision ? strn : strnnjoin(strn, dbl_precision(ft_itoal(nbr,
+	10, zeus), zeus, 2), 0, 0);
+	strn = !zeus->precision ? strn : dbl_precision(strn, zeus, 1);
 	strn = zeus->zero ? dbl_precision(strn, zeus, 0) : strn;
 	if (zeus->plus && strn[0] != '-')
 		strn = strnnjoin(ft_strdup("+"), strn, 0, 0);
