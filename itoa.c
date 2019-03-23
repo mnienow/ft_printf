@@ -35,7 +35,7 @@ char		*ft_itoal(__int128_t nb, int base, t_mod *zeus)
 	int			sign;
 
 	sign = (nb < 0 ? 1 : 0);
-	nb = ft_abs(nb);
+	nb = ABS(nb);
 	len = (ftcount(nb, base) + sign);
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	str[len] = '\0';
